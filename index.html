@@ -1,2 +1,322 @@
-<h2> HELLO WORLD </h2>
-<h2> Testing </h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahima Gokhe - Frontend Engineer</title>
+    <style>
+        :root {
+            --primary-color: #333;
+            --secondary-color: #fff;
+            --accent-color: #8A2BE2; /* Changed to a vibrant purple */
+            --background-color: #fff;
+            --border-color: #ddd;
+            --header-bg: #f9f2ff; /* Light purple for header backgrounds */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.6;
+            color: var(--primary-color);
+            background-color: var(--background-color);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            --primary-color: #f0f0f0;
+            --secondary-color: #333;
+            --accent-color: #9966CC; /* A lighter purple for dark mode */
+            --background-color: #1a1a1a;
+            --border-color: #444;
+            --header-bg: #2a2a2a;
+        }
+
+        h1, h2, h3 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        h1, h2 {
+            color: var(--accent-color);
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 2em;
+        }
+        h3 {
+            font-size: 1.5em;
+        }
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+            transition: background-color 0.3s;
+        }
+        th {
+            background-color: var(--header-bg);
+        }
+        tr:hover td {
+            background-color: var(--header-bg);
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        .animated {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .animated.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .project {
+            margin-bottom: 20px;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 15px;
+        }
+        .project h3 {
+            border-bottom: none;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
+    </div>
+
+    <div class="header animated">
+        <h1>Hi, I'm Mahima Gokhe 👋</h1>
+        <h3>Frontend Engineer | Angular Specialist | System Design Enthusiast</h3>
+    </div>
+
+    <p class="animated">
+        I am a Senior Frontend Developer based in <strong>Pune, India</strong>, with 4+ years of experience building scalable Angular applications. I specialize in performance optimization, reusable architecture, and data visualization.
+    </p>
+
+    <ul class="animated">
+        <li>🔭 <strong>Current Role:</strong> Senior Frontend Developer at <strong>NielsenIQ</strong></li>
+        <li>🚀 <strong>Core Expertise:</strong> Angular, TypeScript, RxJS, and D3.js</li>
+        <li>💡 <strong>Key Achievement:</strong> Delivered complex Angular features end-to-end, ensuring scalability and high performance.</li>
+    </ul>
+
+    <hr>
+
+    <div class="animated">
+        <h2>🛠 Technical Skills</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Domain</th>
+                    <th>Technologies</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Frontend</strong></td>
+                    <td>Angular, TypeScript, JavaScript, HTML5, CSS3, SCSS, RxJS</td>
+                </tr>
+                <tr>
+                    <td><strong>Architecture</strong></td>
+                    <td>Component-Based Architecture, Lazy Loading, Change Detection Strategy</td>
+                </tr>
+                <tr>
+                    <td><strong>Testing</strong></td>
+                    <td>Jasmine, Karma, Unit Testing</td>
+                </tr>
+                <tr>
+                    <td><strong>Backend &amp; DB</strong></td>
+                    <td>Node.js (Exposure), MySQL</td>
+                </tr>
+                <tr>
+                    <td><strong>Tools</strong></td>
+                    <td>Git, Jenkins, Bitbucket, Jira, VS Code</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <div class="animated">
+        <h2>💼 Professional Experience</h2>
+
+        <h3><strong>NielsenIQ</strong> | Senior Frontend Developer</h3>
+        <p><em>Sep 2025 – Present</em></p>
+        <ul>
+            <li>Led peer code reviews and enforced best practices in component-based architecture.</li>
+            <li>Optimized application responsiveness for large datasets using change detection strategies.</li>
+            <li>Collaborated with cross-functional teams to implement seamless REST API integrations.</li>
+        </ul>
+
+        <h3><strong>Tata Consultancy Services (TCS)</strong> | Frontend Developer</h3>
+        <p><em>Oct 2021 – Aug 2025</em></p>
+        <p><strong>Project: NIQ Discover - Data Visualization Platform</strong></p>
+        <ul>
+            <li>Built reusable and modular Angular components, improving development efficiency.</li>
+            <li>Increased code coverage through structured unit testing using Jasmine and Karma.</li>
+        </ul>
+
+        <p><strong>Project: Walmart E-Commerce Application</strong></p>
+        <ul>
+            <li>Developed responsive interactive dashboards using <strong>Angular and D3.js</strong>.</li>
+            <li>Reduced API rendering time by optimizing UI logic.</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div class="animated">
+        <h2>🚀 Personal Projects</h2>
+        <div class="project">
+            <h3>✅ Weather App</h3>
+            <p><em>Technologies: Angular, D3.js, Node.js</em></p>
+            <p>A short description of the project, what it does, and the problems it solves. Highlight key features and your role in the project.</p>
+            <p><a href="#">Live Demo</a> | <a href="#">Source Code</a></p>
+        </div>
+        <div class="project">
+            <h3>📊 Admin Dashboard</h3>
+            <p><em>Technologies: React, Firebase, Material-UI</em></p>
+            <p>Another project description. Explain the architecture and any interesting challenges you faced and overcame.</p>
+            <p><a href="#">Live Demo</a> | <a href="#">Source Code</a></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="animated">
+        <h2>🏆 Certifications & Awards</h2>
+        <ul>
+            <li><strong>Microsoft Certified:</strong> Azure Administrator Associate</li>
+            <li><strong>Microsoft Certified:</strong> Azure Security Engineer Associate</li>
+            <li><strong>Angular Advanced Level Learning</strong></li>
+            <li><strong>Awards:</strong> "On-the-Spot Team Award" for exceptional project delivery.</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div class="footer animated">
+        <p>
+            <a href="https://www.linkedin.com/in/mahima-gokhe-7213a3183">LinkedIn</a> | 
+            <a href="mailto:mahimagokhe@gmail.com">Email</a>
+        </p>
+    </div>
+<script>
+    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.body.classList.add(currentTheme);
+        if (currentTheme === 'dark-mode') {
+            toggleSwitch.checked = true;
+        }
+    }
+
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light-mode');
+        }    
+    }
+
+    toggleSwitch.addEventListener('change', switchTheme, false);
+
+    const animatedEls = document.querySelectorAll('.animated');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    animatedEls.forEach(el => {
+        observer.observe(el);
+    });
+</script>
+</body>
+</html>
