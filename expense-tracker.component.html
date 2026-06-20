@@ -353,7 +353,8 @@ const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov
 let activeMonth = localStorage.getItem('activeMonth') || `${YEAR}-${months[0]}`;
 let data = JSON.parse(localStorage.getItem(activeMonth)) || [];
 
-let budget = Number(localStorage.getItem("budget")) || 10000;
+// monthly budget will be stored per-month under key `${monthKey}-budget`
+let budget = 0; // per-month budget (loaded for activeMonth)
 let editingId = null;
 
 /* CATEGORY */
@@ -392,11 +393,24 @@ function loadMonths() {
 }
 
 loadMonths();
+ 
+// helper to get/set budget per month
+function getBudgetForMonth(monthKey){
+  const b = localStorage.getItem(`${monthKey}-budget`);
+  return b !== null ? Number(b) : 0;
+}
 
+// initialize budget for the restored active month
+budget = getBudgetForMonth(activeMonth);
+const budgetInputEl = document.getElementById('budgetInput');
+if (budgetInputEl) budgetInputEl.value = budget || '';
 /* SWITCH MONTH */
 function switchMonth() {
   activeMonth = document.getElementById("monthSelect").value;
   data = JSON.parse(localStorage.getItem(activeMonth)) || [];
+  // load budget for selected month
+  budget = getBudgetForMonth(activeMonth);
+  const bi = document.getElementById('budgetInput'); if (bi) bi.value = budget || '';
   render();
   localStorage.setItem('activeMonth', activeMonth);
 }
@@ -467,8 +481,10 @@ function getTotal() {
 
 /* BUDGET */
 function setBudget() {
-  budget = Number(document.getElementById("budgetInput").value) || 0;
-  localStorage.setItem("budget", budget);
+  const b = Number(document.getElementById("budgetInput").value) || 0;
+  budget = b;
+  // persist budget for the currently active month only
+  if (activeMonth) localStorage.setItem(`${activeMonth}-budget`, budget);
   render();
 }
 
