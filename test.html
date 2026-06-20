@@ -1,0 +1,245 @@
+// ...existing code...
+    <style>
+        /* ...existing code... */
+
+        /* Technical skills — visual styles */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .skill-card {
+            background: linear-gradient(180deg, rgba(138,43,226,0.05), transparent);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(138,43,226,0.03);
+        }
+        .skill-name {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+        .skill-desc {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .skill-tags { display:flex;flex-wrap:wrap;gap:8px }
+        .tag {
+            font-size: 12px;
+            padding: 6px 8px;
+            border-radius: 999px;
+            background: rgba(138,43,226,0.08);
+            color: var(--accent-color);
+            border: 1px solid rgba(138,43,226,0.12);
+        }
+        .progress {
+            height: 8px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress > i {
+            display:block;
+            height:100%;
+            background: linear-gradient(90deg,var(--accent-color), #9966CC);
+        }
+
+        /* Dark mode adjustments */
+        body.dark-mode .skill-card {
+            background: linear-gradient(180deg, rgba(153,102,204,0.06), rgba(26,26,26,0.02));
+            box-shadow: none;
+            border-color: #333;
+        }
+        body.dark-mode .skill-desc { color: #cfcfcf; }
+    </style>
+// ...existing code...
+    <div class="animated">
+        <h2>🛠 Technical Skills</h2>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-name">Frontend</div>
+                <div class="skill-desc">Component-driven UI, performance & accessibility focus.</div>
+                <div class="skill-tags">
+                    <span class="tag">Angular</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">RxJS</span>
+                    <span class="tag">HTML5</span>
+                    <span class="tag">SCSS</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:90%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Data & Visualization</div>
+                <div class="skill-desc">Interactive charts and performant rendering for large datasets.</div>
+                <div class="skill-tags">
+                    <span class="tag">D3.js</span>
+                    <span class="tag">Canvas / SVG</span>
+                    <span class="tag">DataViz Patterns</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:85%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Architecture</div>
+                <div class="skill-desc">Scalable module design, lazy-loading and reusable libraries.</div>
+                <div class="skill-tags">
+                    <span class="tag">Component Architecture</span>
+                    <span class="tag">State Management</span>
+                    <span class="tag">Lazy Loading</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:88%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Testing & Quality</div>
+                <div class="skill-desc">Unit and integration testing with CI-friendly workflows.</div>
+                <div class="skill-tags">
+                    <span class="tag">Jasmine</span>
+                    <span class="tag">Karma</span>
+                    <span class="tag">E2E</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:82%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Backend & Tools</div>
+                <div class="skill-desc">Familiar with backend integration and developer tooling.</div>
+                <div class="skill-tags">
+                    <span class="tag">Node.js</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">Git</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:70%"></i></div>
+            </div>
+        </div>
+    </div>
+// ...existing code...
+```// filepath: c:\Users\kunal\OneDrive\Desktop\MahimaGokhe\mahimagokhe.github.io\index.html
+// ...existing code...
+    <style>
+        /* ...existing code... */
+
+        /* Technical skills — visual styles */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .skill-card {
+            background: linear-gradient(180deg, rgba(138,43,226,0.05), transparent);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(138,43,226,0.03);
+        }
+        .skill-name {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+        .skill-desc {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .skill-tags { display:flex;flex-wrap:wrap;gap:8px }
+        .tag {
+            font-size: 12px;
+            padding: 6px 8px;
+            border-radius: 999px;
+            background: rgba(138,43,226,0.08);
+            color: var(--accent-color);
+            border: 1px solid rgba(138,43,226,0.12);
+        }
+        .progress {
+            height: 8px;
+            background: rgba(0,0,0,0.06);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress > i {
+            display:block;
+            height:100%;
+            background: linear-gradient(90deg,var(--accent-color), #9966CC);
+        }
+
+        /* Dark mode adjustments */
+        body.dark-mode .skill-card {
+            background: linear-gradient(180deg, rgba(153,102,204,0.06), rgba(26,26,26,0.02));
+            box-shadow: none;
+            border-color: #333;
+        }
+        body.dark-mode .skill-desc { color: #cfcfcf; }
+    </style>
+// ...existing code...
+    <div class="animated">
+        <h2>🛠 Technical Skills</h2>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-name">Frontend</div>
+                <div class="skill-desc">Component-driven UI, performance & accessibility focus.</div>
+                <div class="skill-tags">
+                    <span class="tag">Angular</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">RxJS</span>
+                    <span class="tag">HTML5</span>
+                    <span class="tag">SCSS</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:90%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Data & Visualization</div>
+                <div class="skill-desc">Interactive charts and performant rendering for large datasets.</div>
+                <div class="skill-tags">
+                    <span class="tag">D3.js</span>
+                    <span class="tag">Canvas / SVG</span>
+                    <span class="tag">DataViz Patterns</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:85%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Architecture</div>
+                <div class="skill-desc">Scalable module design, lazy-loading and reusable libraries.</div>
+                <div class="skill-tags">
+                    <span class="tag">Component Architecture</span>
+                    <span class="tag">State Management</span>
+                    <span class="tag">Lazy Loading</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:88%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Testing & Quality</div>
+                <div class="skill-desc">Unit and integration testing with CI-friendly workflows.</div>
+                <div class="skill-tags">
+                    <span class="tag">Jasmine</span>
+                    <span class="tag">Karma</span>
+                    <span class="tag">E2E</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:82%"></i></div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name">Backend & Tools</div>
+                <div class="skill-desc">Familiar with backend integration and developer tooling.</div>
+                <div class="skill-tags">
+                    <span class="tag">Node.js</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">Git</span>
+                </div>
+                <div class="progress" aria-hidden="true"><i style="width:70%"></i></div>
+            </div>
+        </div>
+    </div>
+// ...existing code...

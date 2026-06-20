@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Weather App — Demo</title>
+  <style>
+    :root{--primary:#0277bd;--muted:#666}
+    body{font-family:system-ui,-apple-system,Segoe UI,Arial;padding:20px;max-width:900px;margin:auto;color:#111}
+    h1{color:var(--primary);margin:0 0 12px}
+    .controls, .meta{display:flex;gap:8px;align-items:center;margin:12px 0}
+    select,input,button{padding:8px;border-radius:6px;border:1px solid #ddd}
+    .grid{display:flex;gap:16px;flex-wrap:wrap}
+    .card{flex:1;min-width:260px;background:#fbfbff;border:1px solid #eee;padding:12px;border-radius:8px}
+    canvas{width:100%;height:180px;display:block;background:#fff;border-radius:6px}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    td,th{padding:8px;border-bottom:1px solid #eee;text-align:left;font-size:14px}
+    a.back{display:inline-block;margin-top:16px;color:var(--primary);text-decoration:none}
+  </style>
+</head>
+<body>
+  <h1>✅ Weather App — Interactive Demo</h1>
+  <p class="meta"><strong>Technologies:</strong> Angular, D3.js (demo uses vanilla JS), Node.js (server-side omitted)</p>
+
+  <div class="controls">
+    <label for="city">City</label>
+    <select id="city">
+      <option value="pune">Pune, IN</option>
+      <option value="mumbai">Mumbai, IN</option>
+      <option value="london">London, UK</option>
+      <option value="newyork">New York, US</option>
+    </select>
+
+    <button id="refresh">Generate Sample Data</button>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Current Snapshot</h3>
+      <p><strong id="temp">— °C</strong> • <span id="condition">—</span></p>
+      <p class="muted" id="updated" style="color:var(--muted)">Updated: —</p>
+      <canvas id="chart" width="800" height="180" aria-label="Temperature chart"></canvas>
+    </div>
+
+    <div class="card">
+      <h3>Summary</h3>
+      <table>
+        <tr><th>High</th><td id="high">—</td></tr>
+        <tr><th>Low</th><td id="low">—</td></tr>
+        <tr><th>Wind</th><td id="wind">—</td></tr>
+        <tr><th>Precip</th><td id="precip">—</td></tr>
+      </table>
+      <h4 style="margin-top:12px">Hourly (mock)</h4>
+      <ul id="hours" style="padding-left:18px;margin:6px 0 0 0"></ul>
+    </div>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to home</a>
+
+<script>
+  const cityEl = document.getElementById('city');
+  const refresh = document.getElementById('refresh');
+  const tempEl = document.getElementById('temp');
+  const condEl = document.getElementById('condition');
+  const updatedEl = document.getElementById('updated');
+  const highEl = document.getElementById('high');
+  const lowEl = document.getElementById('low');
+  const windEl = document.getElementById('wind');
+  const precipEl = document.getElementById('precip');
+  const hoursEl = document.getElementById('hours');
+  const canvas = document.getElementById('chart');
+  const ctx = canvas.getContext('2d');
+
+  function randomRange(min,max){return Math.round((Math.random()*(max-min))+min);}
+  function genMock(city){
+    // base temps per city
+    const base = {pune:28,mumbai:30,london:12,newyork:20}[city]||22;
+    const hourly = Array.from({length:24},(_,i)=>({
+      hour:i,
+      temp: Math.round(base + Math.sin(i/3)*4 + randomRange(-2,2)),
+      precip: Math.abs(Math.round(Math.random()*10)),
+      wind: randomRange(5,25)
+    }));
+    return hourly;
+  }
+
+  function renderHourly(hourly){
+    // chart
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+    const temps = hourly.map(d=>d.temp);
+    const min = Math.min(...temps), max = Math.max(...temps);
+    const pad = 20;
+    const stepX = (w - pad*2) / (hourly.length-1);
+    // axes
+    ctx.strokeStyle = '#eee';
+    ctx.beginPath();
+    ctx.moveTo(pad, pad);
+    ctx.lineTo(pad, h-pad);
+    ctx.lineTo(w-pad, h-pad);
+    ctx.stroke();
+    // line
+    ctx.strokeStyle = '#0277bd';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    hourly.forEach((d,i)=>{
+      const x = pad + i*stepX;
+      const y = pad + ((max - d.temp)/(max-min||1))*(h-pad*2);
+      if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    // points
+    ctx.fillStyle='#0277bd';
+    hourly.forEach((d,i)=>{
+      const x = pad + i*stepX;
+      const y = pad + ((max - d.temp)/(max-min||1))*(h-pad*2);
+      ctx.beginPath(); ctx.arc(x,y,2,0,Math.PI*2); ctx.fill();
+    });
+    // fill hours list
+    hoursEl.innerHTML = '';
+    hourly.slice(0,8).forEach(d=>{
+      const li = document.createElement('li');
+      li.textContent = `${String(d.hour).padStart(2,'0')}:00 — ${d.temp}°C • ${d.precip}% precip`;
+      hoursEl.appendChild(li);
+    });
+    // summary
+    tempEl.textContent = `${hourly[6].temp} °C`;
+    condEl.textContent = hourly[6].temp > (max+min)/2 ? 'Sunny' : 'Cloudy';
+    updatedEl.textContent = 'Updated: ' + new Date().toLocaleString();
+    highEl.textContent = Math.max(...temps) + ' °C';
+    lowEl.textContent = Math.min(...temps) + ' °C';
+    windEl.textContent = hourly[Math.floor(hourly.length/2)].wind + ' km/h';
+    precipEl.textContent = hourly.reduce((s,d)=>s+d.precip,0)/hourly.length | 0 + ' %';
+  }
+
+  function update(){
+    const hourly = genMock(cityEl.value);
+    renderHourly(hourly);
+  }
+
+  refresh.addEventListener('click', update);
+  cityEl.addEventListener('change', update);
+  // initial
+  update();
+</script>
+</body>
+</html>

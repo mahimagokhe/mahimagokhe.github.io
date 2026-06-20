@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SpendSense — Expense Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f0f0f;
+      color: white;
+      padding: 20px;
+    }
+
+    h2 { color: #4dd0e1; }
+
+    .grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .box {
+      background: #1c1c1c;
+      padding: 15px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 300px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      background: #4dd0e1;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    canvas {
+      background: #222;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    /* TABLE STYLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #333;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      color: #4dd0e1;
+      font-weight: bold;
+    }
+
+    .delete-btn {
+      background: #ff5252;
+      color: white;
+      padding: 3px 6px;
+      font-size: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .summary {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>📊 Finance Dashboard Pro</h2>
+
+<div class="grid">
+
+  <!-- INPUT -->
+  <div class="box">
+    <h3>➕ Add Expense</h3>
+
+    <input type="number" id="amount" placeholder="Amount ₹">
+
+    <select id="category"></select>
+
+    <button onclick="addExpense()">Add Expense</button>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="box">
+    <h3>⚙ Settings</h3>
+
+    <label>📅 Select Month (2026)</label>
+    <select id="monthSelect" onchange="switchMonth()"></select>
+
+    <label>💰 Monthly Budget (₹)</label>
+    <input type="number" id="budgetInput" placeholder="Set monthly budget">
+    <button onclick="setBudget()">Save Budget</button>
+
+    <p id="budgetStatus"></p>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="box">
+    <h3>💰 Summary</h3>
+
+    <p>Total Expenses: <b id="total"></b></p>
+    <p>Budget Left: <b id="remaining"></b></p>
+  </div>
+
+  <!-- PIE -->
+  <div class="box">
+    <h3>📊 Category %</h3>
+    <canvas id="chart" width="300" height="300"></canvas>
+  </div>
+
+</div>
+
+<!-- LOGS (TABLE) -->
+<div class="box">
+  <h3>📜 Expense Logs</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody id="list"></tbody>
+  </table>
+</div>
+
+<script>
+
+const YEAR = 2026;
+const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+let activeMonth = `${YEAR}-Jan`;
+let data = JSON.parse(localStorage.getItem(activeMonth)) || [];
+
+let budget = Number(localStorage.getItem("budget")) || 10000;
+
+/* CATEGORY */
+const categories = [
+  "Grocery for Kitchen",
+  "Rent",
+  "Travel",
+  "Shopping",
+  "Food",
+  "Entertainment",
+  "Health",
+  "Petrol"
+];
+
+let cat = document.getElementById("category");
+categories.forEach(c=>{
+  let o = document.createElement("option");
+  o.textContent = c;
+  cat.appendChild(o);
+});
+
+/* MONTHS */
+function loadMonths() {
+  let select = document.getElementById("monthSelect");
+  select.innerHTML = "";
+
+  months.forEach(m=>{
+    let key = `${YEAR}-${m}`;
+    let o = document.createElement("option");
+    o.value = key;
+    o.textContent = `${m} ${YEAR}`;
+    select.appendChild(o);
+  });
+
+  select.value = activeMonth;
+}
+
+loadMonths();
+
+/* SWITCH MONTH */
+function switchMonth() {
+  activeMonth = document.getElementById("monthSelect").value;
+  data = JSON.parse(localStorage.getItem(activeMonth)) || [];
+  render();
+}
+
+/* SAVE */
+function save() {
+  localStorage.setItem(activeMonth, JSON.stringify(data));
+}
+
+/* ADD */
+function addExpense() {
+  let amount = parseFloat(document.getElementById("amount").value);
+  let category = document.getElementById("category").value;
+
+  if (!amount || amount <= 0) return;
+
+  data.push({
+    id: Date.now(),
+    amount,
+    category,
+    date: new Date().toDateString()
+  });
+
+  save();
+  render();
+  document.getElementById('amount').value = '';
+}
+
+/* DELETE */
+function deleteExpense(id) {
+  data = data.filter(e => e.id !== id);
+  save();
+  render();
+}
+
+/* TOTAL */
+function getTotal() {
+  return data.reduce((s,e)=>s+e.amount,0);
+}
+
+/* BUDGET */
+function setBudget() {
+  budget = Number(document.getElementById("budgetInput").value) || 0;
+  localStorage.setItem("budget", budget);
+  render();
+}
+
+/* CHART */
+function drawChart() {
+  const canvas = document.getElementById('chart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  // aggregate totals per category
+  const totals = {};
+  data.forEach(e => { totals[e.category] = (totals[e.category] || 0) + Number(e.amount); });
+  const labels = Object.keys(totals);
+  const sum = labels.reduce((s, l) => s + totals[l], 0);
+
+  if (sum === 0) {
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px Arial';
+    ctx.fillText('No expenses for this month', 10, 20);
+    return;
+  }
+
+  const colors = ['#4dd0e1','#ffb74d','#e57373','#aed581','#ba68c8','#64b5f6','#ffd54f','#f06292'];
+  const cx = w / 2;
+  const cy = h / 2;
+  const radius = Math.min(w, h) / 2 - 12;
+
+  let start = -0.5 * Math.PI;
+  labels.forEach((l, i) => {
+    const slice = totals[l] / sum;
+    const end = start + slice * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, radius, start, end);
+    ctx.closePath();
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+    start = end;
+  });
+
+  // legend on right
+  ctx.font = '12px Arial';
+  labels.forEach((l, i) => {
+    const pct = ((totals[l] / sum) * 100).toFixed(1);
+    const y = 18 + i * 18;
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fillRect(w - 140, y - 12, 12, 12);
+    ctx.fillStyle = '#fff';
+    ctx.fillText(`${l}: ${pct}% (₹${totals[l]})`, w - 120, y);
+  });
+}
+
+/* RENDER */
+function render() {
+  let total = getTotal();
+  let remaining = budget - total;
+
+  document.getElementById("total").innerText = "₹" + total;
+  document.getElementById("remaining").innerText = "₹" + remaining;
+
+  document.getElementById("budgetStatus").innerText =
+    total > budget ? "⚠ Over Budget" : "✔ Within Budget";
+
+  /* TABLE RENDER */
+  let list = document.getElementById("list");
+  list.innerHTML = "";
+
+  data.slice().reverse().forEach(e=>{
+    let row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${e.date}</td>
+      <td>${e.category}</td>
+      <td>₹${e.amount}</td>
+      <td><button class="delete-btn" onclick="deleteExpense(${e.id})">×</button></td>
+    `;
+
+    list.appendChild(row);
+  });
+
+  drawChart();
+}
+
+render();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Dashboard — Demo</title>
+  <style>
+    :root{--accent:#6a1b9a;--muted:#666}
+    body{font-family:system-ui,-apple-system,Segoe UI,Arial;padding:20px;max-width:1100px;margin:auto;color:#111}
+    h1{color:var(--accent);margin:0 0 12px}
+    .top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+    .card{background:#fff;border:1px solid #eee;padding:12px;border-radius:8px;min-width:180px;flex:1}
+    .cards{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+    button{padding:8px 10px;border-radius:6px;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
+    .controls{display:flex;gap:8px;align-items:center}
+    .chart{width:100%;height:160px;background:#fff;border-radius:8px;border:1px solid #eee;margin-top:12px}
+    a.back{display:inline-block;margin-top:16px;color:var(--accent);text-decoration:none}
+  </style>
+</head>
+<body>
+  <h1>📊 Admin Dashboard — Demo</h1>
+  <p style="color:var(--muted)"><strong>Technologies:</strong> Angular, Firebase (simulated), Material-UI</p>
+
+  <div class="top">
+    <div class="controls">
+      <input id="newUserName" placeholder="New user name" />
+      <button id="addUser">Add User</button>
+      <button id="resetData">Reset Demo Data</button>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Total Users</h3>
+      <div id="totalUsers">0</div>
+    </div>
+    <div class="card">
+      <h3>Active Sessions</h3>
+      <div id="activeSessions">0</div>
+    </div>
+    <div class="card">
+      <h3>Monthly Revenue</h3>
+      <div id="revenue">$0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Users</h3>
+    <table id="usersTable">
+      <thead><tr><th>Name</th><th>Role</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="chart" id="barChart" aria-hidden="false"></div>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to home</a>
+
+<script>
+  const STORAGE_KEY = 'demo_admin_users_v1';
+  const defaultUsers = [
+    {id:1,name:'Alice Johnson',role:'Admin',active:true},
+    {id:2,name:'Rahul Sharma',role:'Operator',active:false},
+    {id:3,name:'Mina Patel',role:'Analyst',active:true},
+    {id:4,name:'John Doe',role:'Viewer',active:false}
+  ];
+
+  function load(){ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultUsers.slice(); }
+  function save(users){ localStorage.setItem(STORAGE_KEY, JSON.stringify(users)); }
+  function reset(){ localStorage.removeItem(STORAGE_KEY); render(); }
+
+  function render(){
+    const users = load();
+    const tbody = document.querySelector('#usersTable tbody');
+    tbody.innerHTML = '';
+    users.forEach(u=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${u.name}</td><td>${u.role}</td>
+        <td><button data-id="${u.id}" class="toggle">${u.active? 'Deactivate' : 'Activate'}</button>
+        <button data-id="${u.id}" class="del" style="margin-left:8px">Delete</button></td>`;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('totalUsers').textContent = users.length;
+    document.getElementById('activeSessions').textContent = users.filter(u=>u.active).length;
+    document.getElementById('revenue').textContent = '$' + (users.length * 1250).toLocaleString();
+    renderChart(users);
+  }
+
+  document.addEventListener('click', e=>{
+    if(e.target.classList.contains('toggle')){
+      const id = Number(e.target.dataset.id);
+      const users = load().map(u=>u.id===id? {...u,active:!u.active} : u);
+      save(users); render();
+    }
+    if(e.target.classList.contains('del')){
+      const id = Number(e.target.dataset.id);
+      const users = load().filter(u=>u.id!==id);
+      save(users); render();
+    }
+  });
+
+  document.getElementById('addUser').addEventListener('click', ()=>{
+    const name = document.getElementById('newUserName').value.trim();
+    if(!name) return alert('Enter a name');
+    const users = load();
+    const id = (users.reduce((m,u)=>Math.max(m,u.id),0) || 0) + 1;
+    users.push({id,name,role:'Viewer',active:false});
+    save(users);
+    document.getElementById('newUserName').value = '';
+    render();
+  });
+
+  document.getElementById('resetData').addEventListener('click', ()=>{
+    if(confirm('Reset demo data?')) reset();
+  });
+
+  function renderChart(users){
+    const el = document.getElementById('barChart');
+    const ctx = el.getContext?.('2d');
+    // simple DOM-based bar chart if no canvas context
+    if(!ctx){
+      el.innerHTML = '';
+      const byRole = users.reduce((s,u)=>{ s[u.role]=(s[u.role]||0)+1; return s; },{});
+      Object.entries(byRole).forEach(([role,count])=>{
+        const row = document.createElement('div');
+        row.style.display='flex';row.style.alignItems='center';row.style.margin='6px 0';
+        const label = document.createElement('div'); label.textContent = role; label.style.width='120px';
+        const bar = document.createElement('div'); bar.style.height='14px'; bar.style.background='#6a1b9a';
+        bar.style.width = Math.max(20,count*40)+'px'; bar.style.borderRadius='6px';
+        const num = document.createElement('div'); num.textContent = ' '+count; num.style.marginLeft='8px';
+        row.appendChild(label); row.appendChild(bar); row.appendChild(num);
+        el.appendChild(row);
+      });
+      return;
+    }
+    // canvas chart (not used normally)
+    ctx.clearRect(0,0,el.width,el.height);
+  }
+
+  // initial render
+  render();
+</script>
+</body>
+</html>
