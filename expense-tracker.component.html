@@ -541,10 +541,17 @@ function downloadAllMonths(){
 
 /* THEME: light/dark toggle */
 function setTheme(mode){
-  if (mode === 'light') document.documentElement.classList.add('light-mode');
-  else document.documentElement.classList.remove('light-mode');
+  if (mode === 'light') {
+    document.documentElement.classList.add('light-mode');
+    if (document.body) document.body.classList.add('light-mode');
+  } else {
+    document.documentElement.classList.remove('light-mode');
+    if (document.body) document.body.classList.remove('light-mode');
+  }
   localStorage.setItem('theme', mode);
   updateThemeButton();
+  // refresh UI immediately so canvas/text colors reflect the new theme
+  try { render(); } catch (e) { /* ignore if render not ready */ }
 }
 
 function toggleTheme(){
@@ -585,7 +592,9 @@ function drawChart() {
   const sum = labels.reduce((s, l) => s + totals[l], 0);
 
   if (sum === 0) {
-    ctx.fillStyle = '#fff';
+    // respect theme for the "no data" canvas message
+    const isLight = document.documentElement.classList.contains('light-mode');
+    ctx.fillStyle = isLight ? '#000000' : '#ffffff';
     ctx.font = '14px Arial';
     ctx.fillText('No expenses for this month', 10, 20);
     return;
