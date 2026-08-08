@@ -3,144 +3,1072 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Admin Dashboard — Demo</title>
+  <title>Admin Analytics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--accent:#6a1b9a;--muted:#666}
-    body{font-family:system-ui,-apple-system,Segoe UI,Arial;padding:20px;max-width:1100px;margin:auto;color:#111}
-    h1{color:var(--accent);margin:0 0 12px}
-    .top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-    .card{background:#fff;border:1px solid #eee;padding:12px;border-radius:8px;min-width:180px;flex:1}
-    .cards{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-    table{width:100%;border-collapse:collapse;margin-top:8px}
-    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
-    button{padding:8px 10px;border-radius:6px;border:1px solid #ccc;background:#f7f7f7;cursor:pointer}
-    .controls{display:flex;gap:8px;align-items:center}
-    .chart{width:100%;height:160px;background:#fff;border-radius:8px;border:1px solid #eee;margin-top:12px}
-    a.back{display:inline-block;margin-top:16px;color:var(--accent);text-decoration:none}
+    :root {
+      --bg: #f5f6fa;
+      --surface: #ffffff;
+      --surface-muted: #f0f2f8;
+      --text: #121828;
+      --text-muted: #566174;
+      --border: #e6eaf3;
+      --accent: #5b4cff;
+      --accent-soft: rgba(91, 76, 255, 0.12);
+      --success: #00b894;
+      --warning: #ffb020;
+      --danger: #ef5350;
+      --shadow: 0 24px 60px rgba(16, 32, 81, 0.08);
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --surface: #111827;
+      --surface-muted: #1f2937;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border: #293541;
+      --accent-soft: rgba(91, 76, 255, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    button, input, select {
+      font: inherit;
+    }
+    .app-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: width .24s ease;
+      overflow: hidden;
+    }
+    .sidebar.collapsed { width: 80px; }
+    .sidebar .brand {
+      padding: 28px 24px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar .brand img {
+      height: 34px;
+      width: auto;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0 10px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      transition: background .2s ease;
+    }
+    .nav-item.active,
+    .nav-item:hover {
+      background: var(--accent-soft);
+    }
+    .nav-item span.icon { width: 24px; text-align: center; }
+    .nav-item span.label { flex: 1; }
+    .sidebar.collapsed .nav-item span.label { display: none; }
+    .sidebar.collapsed .brand { text-align: center; padding-left: 0; }
+    .sidebar-toggle {
+      margin: auto 16px 24px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-muted);
+      cursor: pointer;
+    }
+    .main-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .page-title h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 2.2vw, 2.4rem);
+      letter-spacing: -0.02em;
+    }
+    .page-title p {
+      margin: 8px 0 0;
+      color: var(--text-muted);
+      max-width: 540px;
+    }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-input,
+    .date-range {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .search-input input,
+    .date-range input,
+    .date-range select {
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      min-width: 120px;
+    }
+    .top-actions button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 14px;
+      cursor: pointer;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .kpi-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-radius: 20px;
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245,246,250,0.98));
+    }
+    .kpi-card .label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .kpi-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .kpi-card .meta {
+      display: flex;
+      gap: 10px;
+      color: var(--text-muted);
+      align-items: center;
+      font-size: 0.94rem;
+    }
+    .kpi-card .meta span.badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--success);
+      font-weight: 600;
+    }
+    .kpi-card .meta span.badge.down { color: var(--danger); }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+    }
+    .chart-card {
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+    .chart-header h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .chart-header .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .chart-holder {
+      flex: 1;
+      min-height: 280px;
+    }
+    .chart-holder > div {
+      width: 100%;
+      height: 100%;
+    }
+    .table-panel {
+      padding: 20px;
+    }
+    .table-panel .table-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .table-panel .table-actions .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 960px;
+    }
+    table.data-table thead th,
+    table.data-table tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+    }
+    table.data-table thead th {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    table.data-table tbody tr:hover {
+      background: var(--surface-muted);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--text);
+      background: rgba(91,76,255,0.08);
+    }
+    .status-pill.active { background: rgba(0,184,148,0.12); }
+    .status-pill.inactive { background: rgba(239,83,80,0.12); }
+    .status-pill.pending { background: rgba(255,176,32,0.12); }
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .pagination button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+    .filters-panel {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .filter-group label { color: var(--text-muted); font-size: 0.88rem; }
+    .filter-group input,
+    .filter-group select {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .filter-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .filter-actions button {
+      flex: 1;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+    }
+    .filter-actions .apply { background: var(--accent); color: white; }
+    .filter-actions .reset { background: transparent; border: 1px solid var(--border); }
+    .chart-toolbar button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      color: var(--text);
+    }
+    @media (max-width: 1280px) {
+      .app-shell { grid-template-columns: 80px 1fr; }
+      .sidebar.collapsed { width: 80px; }
+      .sidebar:not(.collapsed) { width: 260px; }
+      .chart-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .filters-panel { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 900px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { position: fixed; inset: 0 auto 0 0; z-index: 20; transform: translateX(-100%); width: 260px; transition: transform .3s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { padding: 20px 16px; }
+      .filters-panel { grid-template-columns: 1fr; }
+      .top-actions { width: 100%; }
+      .page-title p { max-width: 100%; }
+    }
   </style>
 </head>
-<body>
-  <h1>📊 Admin Dashboard — Demo</h1>
-  <p style="color:var(--muted)"><strong>Technologies:</strong> Angular, Firebase (simulated), Material-UI</p>
+<body data-theme="light">
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">Mahima Gokhe</div>
+      <nav class="nav-menu" id="navMenu"></nav>
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">Collapse</button>
+    </aside>
 
-  <div class="top">
-    <div class="controls">
-      <input id="newUserName" placeholder="New user name" />
-      <button id="addUser">Add User</button>
-      <button id="resetData">Reset Demo Data</button>
-    </div>
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title">
+          <h1>Admin Analytics Dashboard</h1>
+          <p>Monitor KPIs, system performance, user growth, and data trends with a modern enterprise analytics experience.</p>
+        </div>
+
+        <div class="top-actions">
+          <div class="search-input">
+            <span>🔍</span>
+            <input id="globalSearch" placeholder="Search dashboards, users, metrics" />
+          </div>
+          <div class="date-range">
+            <label for="fromDate">From</label>
+            <input id="fromDate" type="date" />
+            <label for="toDate">To</label>
+            <input id="toDate" type="date" />
+          </div>
+          <button id="themeToggle">Toggle Theme</button>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="kpi-grid" id="kpiGrid"></div>
+      </section>
+
+      <section class="panel">
+        <div class="filters-panel">
+          <div class="filter-group">
+            <label for="filterCountry">Country</label>
+            <select id="filterCountry"><option>All</option><option>USA</option><option>India</option><option>Germany</option><option>Brazil</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="filterCategory">Category</label>
+            <select id="filterCategory"><option>All</option><option>Electronics</option><option>Clothing</option><option>Home</option><option>Beauty</option><option>Sports</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="filterRole">User Type</label>
+            <select id="filterRole"><option>All</option><option>Admin</option><option>Manager</option><option>Analyst</option><option>Viewer</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="filterStatus">Status</label>
+            <select id="filterStatus"><option>All</option><option>Active</option><option>Inactive</option><option>Pending</option></select>
+          </div>
+        </div>
+        <div class="filter-actions">
+          <button class="apply" id="applyFilters">Apply Filters</button>
+          <button class="reset" id="resetFilters">Reset Filters</button>
+        </div>
+      </section>
+
+      <section class="chart-grid">
+        <article class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2>Revenue Trend</h2>
+              <p style="margin:4px 0 0;color:var(--text-muted);font-size:.95rem;">Revenue vs previous period with zoom and download.</p>
+            </div>
+            <div class="chart-toolbar">
+              <button data-chart="revenueTrend">Download</button>
+              <button data-chart="revenueTrend">Fullscreen</button>
+            </div>
+          </div>
+          <div class="chart-holder"><div id="revenueTrendChart"></div></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-header">
+            <div><h2>User Growth</h2></div>
+            <div class="chart-toolbar">
+              <button data-chart="userGrowth">Download</button>
+              <button data-chart="userGrowth">Fullscreen</button>
+            </div>
+          </div>
+          <div class="chart-holder"><div id="userGrowthChart"></div></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-header">
+            <div><h2>Revenue by Category</h2></div>
+            <div class="chart-toolbar">
+              <button data-chart="categoryRevenue">Download</button>
+              <button data-chart="categoryRevenue">Fullscreen</button>
+            </div>
+          </div>
+          <div class="chart-holder"><div id="categoryRevenueChart"></div></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-header">
+            <div><h2>User Distribution</h2></div>
+            <div class="chart-toolbar">
+              <button data-chart="userDistribution">Download</button>
+              <button data-chart="userDistribution">Fullscreen</button>
+            </div>
+          </div>
+          <div class="chart-holder"><div id="userDistributionChart"></div></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-header">
+            <div><h2>Geographic Performance</h2></div>
+            <div class="chart-toolbar">
+              <button data-chart="geoPerformance">Download</button>
+              <button data-chart="geoPerformance">Fullscreen</button>
+            </div>
+          </div>
+          <div class="chart-holder"><div id="geoPerformanceChart"></div></div>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-header">
+            <div><h2>Performance Comparison</h2></div>
+            <div class="chart-toolbar">
+              <button data-chart="performanceComparison">Download</button>
+              <button data-chart="performanceComparison">Fullscreen</button>
+            </div>
+          </div>
+          <div class="chart-holder"><div id="performanceComparisonChart"></div></div>
+        </article>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="table-actions">
+          <div><h2 style="margin:0">Active Users</h2></div>
+          <div class="button-group">
+            <button id="exportCsv">Export CSV</button>
+            <button id="exportExcel">Export Excel</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-key="id">ID</th>
+                <th data-key="name">Name</th>
+                <th data-key="email">Email</th>
+                <th data-key="role">Role</th>
+                <th data-key="department">Department</th>
+                <th data-key="status">Status</th>
+                <th data-key="lastActive">Last Active</th>
+                <th data-key="created">Created Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </section>
+    </main>
   </div>
 
-  <div class="cards">
-    <div class="card">
-      <h3>Total Users</h3>
-      <div id="totalUsers">0</div>
-    </div>
-    <div class="card">
-      <h3>Active Sessions</h3>
-      <div id="activeSessions">0</div>
-    </div>
-    <div class="card">
-      <h3>Monthly Revenue</h3>
-      <div id="revenue">$0</div>
-    </div>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script>
+    const DEFAULT_STATE = {
+      sidebarCollapsed: false,
+      theme: 'light',
+      filters: {
+        query: '',
+        fromDate: '2026-08-01',
+        toDate: '2026-08-31',
+        country: 'All',
+        category: 'All',
+        role: 'All',
+        status: 'All'
+      },
+      table: {
+        sortKey: 'name',
+        sortAsc: true,
+        page: 1,
+        pageSize: 8
+      }
+    };
 
-  <div class="card">
-    <h3>Users</h3>
-    <table id="usersTable">
-      <thead><tr><th>Name</th><th>Role</th><th>Actions</th></tr></thead>
-      <tbody></tbody>
-    </table>
+    const metrics = {
+      kpis: [
+        { title: 'Total Users', value: 125430, change: 12.5, compare: 'vs previous month', icon: '👥' },
+        { title: 'Active Users', value: 98432, change: 8.3, compare: 'vs previous month', icon: '⚡' },
+        { title: 'Revenue', value: 9243000, change: 16.9, compare: 'vs previous month', icon: '💰' },
+        { title: 'Conversion Rate', value: 5.6, change: 0.8, compare: 'vs previous month', icon: '📈' },
+        { title: 'Avg. Session Time', value: '04m 22s', change: 4.1, compare: 'vs previous month', icon: '⏱️' },
+        { title: 'System Performance', value: '99.8%', change: 1.2, compare: 'uptime', icon: '🖥️' }
+      ],
+      revenueTrend: {
+        labels: ['Jul 1','Jul 5','Jul 10','Jul 15','Jul 20','Jul 25','Jul 30'],
+        revenue: [820000, 910000, 960000, 1030000, 980000, 1120000, 1180000],
+        previous: [760000, 860000, 890000, 940000, 930000, 1010000, 1050000]
+      },
+      userGrowth: {
+        labels: ['Jul 1','Jul 6','Jul 11','Jul 16','Jul 21','Jul 26','Jul 31'],
+        newUsers: [320, 420, 530, 610, 690, 730, 780],
+        activeUsers: [8200, 8500, 8800, 9100, 9400, 9700, 10100],
+        returningUsers: [4200, 4500, 4700, 4900, 5200, 5400, 5800]
+      },
+      categoryRevenue: [
+        { category: 'Electronics', value: 2.4 },
+        { category: 'Clothing', value: 1.9 },
+        { category: 'Home', value: 1.6 },
+        { category: 'Beauty', value: 1.2 },
+        { category: 'Sports', value: 1.0 }
+      ],
+      userDistribution: [
+        { role: 'Admin', value: 14 },
+        { role: 'Manager', value: 22 },
+        { role: 'Developer', value: 26 },
+        { role: 'Analyst', value: 19 },
+        { role: 'Viewer', value: 19 }
+      ],
+      geoPerformance: [
+        { region: 'USA', revenue: 3.4, users: 49200, conversion: 6.3 },
+        { region: 'India', revenue: 1.8, users: 28200, conversion: 5.4 },
+        { region: 'Germany', revenue: 1.1, users: 13200, conversion: 5.7 },
+        { region: 'Brazil', revenue: 0.9, users: 9800, conversion: 4.9 }
+      ],
+      performanceComparison: [
+        { metric: 'Revenue', current: 32, previous: 27 },
+        { metric: 'Users', current: 68, previous: 63 },
+        { metric: 'Conversion', current: 18, previous: 15 },
+        { metric: 'Satisfaction', current: 84, previous: 79 }
+      ]
+    };
 
-    <div class="chart" id="barChart" aria-hidden="false"></div>
-  </div>
+    const users = [
+      { id: 'U1001', name: 'Aditi Mehra', email: 'aditi.mehra@niq.com', role: 'Admin', department: 'Analytics', status: 'Active', lastActive: '2026-08-07', created: '2025-05-12', country: 'India', category: 'Electronics' },
+      { id: 'U1002', name: 'Noah Patel', email: 'noah.patel@niq.com', role: 'Manager', department: 'Operations', status: 'Active', lastActive: '2026-08-07', created: '2024-11-03', country: 'USA', category: 'Home' },
+      { id: 'U1003', name: 'Sara Vogel', email: 'sara.vogel@niq.com', role: 'Analyst', department: 'Growth', status: 'Pending', lastActive: '2026-08-06', created: '2026-01-25', country: 'Germany', category: 'Clothing' },
+      { id: 'U1004', name: 'Rohan Singh', email: 'rohan.singh@niq.com', role: 'Viewer', department: 'Sales', status: 'Inactive', lastActive: '2026-08-02', created: '2023-08-19', country: 'Brazil', category: 'Sports' },
+      { id: 'U1005', name: 'Mina Shah', email: 'mina.shah@niq.com', role: 'Developer', department: 'Engineering', status: 'Active', lastActive: '2026-08-07', created: '2025-09-14', country: 'India', category: 'Beauty' },
+      { id: 'U1006', name: 'Liam Brooks', email: 'liam.brooks@niq.com', role: 'Analyst', department: 'Finance', status: 'Active', lastActive: '2026-08-07', created: '2025-12-02', country: 'USA', category: 'Electronics' },
+      { id: 'U1007', name: 'Elena Weber', email: 'elena.weber@niq.com', role: 'Manager', department: 'Product', status: 'Active', lastActive: '2026-08-06', created: '2024-03-22', country: 'Germany', category: 'Home' },
+      { id: 'U1008', name: 'Lucas Costa', email: 'lucas.costa@niq.com', role: 'Viewer', department: 'Support', status: 'Pending', lastActive: '2026-08-05', created: '2026-04-17', country: 'Brazil', category: 'Sports' },
+      { id: 'U1009', name: 'Priya Shah', email: 'priya.shah@niq.com', role: 'Admin', department: 'Security', status: 'Active', lastActive: '2026-08-07', created: '2024-06-08', country: 'India', category: 'Clothing' },
+      { id: 'U1010', name: 'Mason Lee', email: 'mason.lee@niq.com', role: 'Developer', department: 'Engineering', status: 'Active', lastActive: '2026-08-07', created: '2025-11-09', country: 'USA', category: 'Electronics' }
+    ];
 
-  <a class="back" href="index.html">&larr; Back to home</a>
+    const chartMap = {};
+    const state = JSON.parse(localStorage.getItem('dashboard_state_v1') || 'null') || DEFAULT_STATE;
 
-<script>
-  const STORAGE_KEY = 'demo_admin_users_v1';
-  const defaultUsers = [
-    {id:1,name:'Alice Johnson',role:'Admin',active:true},
-    {id:2,name:'Rahul Sharma',role:'Operator',active:false},
-    {id:3,name:'Mina Patel',role:'Analyst',active:true},
-    {id:4,name:'John Doe',role:'Viewer',active:false}
-  ];
-
-  function load(){ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultUsers.slice(); }
-  function save(users){ localStorage.setItem(STORAGE_KEY, JSON.stringify(users)); }
-  function reset(){ localStorage.removeItem(STORAGE_KEY); render(); }
-
-  function render(){
-    const users = load();
-    const tbody = document.querySelector('#usersTable tbody');
-    tbody.innerHTML = '';
-    users.forEach(u=>{
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${u.name}</td><td>${u.role}</td>
-        <td><button data-id="${u.id}" class="toggle">${u.active? 'Deactivate' : 'Activate'}</button>
-        <button data-id="${u.id}" class="del" style="margin-left:8px">Delete</button></td>`;
-      tbody.appendChild(tr);
-    });
-    document.getElementById('totalUsers').textContent = users.length;
-    document.getElementById('activeSessions').textContent = users.filter(u=>u.active).length;
-    document.getElementById('revenue').textContent = '$' + (users.length * 1250).toLocaleString();
-    renderChart(users);
-  }
-
-  document.addEventListener('click', e=>{
-    if(e.target.classList.contains('toggle')){
-      const id = Number(e.target.dataset.id);
-      const users = load().map(u=>u.id===id? {...u,active:!u.active} : u);
-      save(users); render();
+    function saveState() {
+      localStorage.setItem('dashboard_state_v1', JSON.stringify(state));
     }
-    if(e.target.classList.contains('del')){
-      const id = Number(e.target.dataset.id);
-      const users = load().filter(u=>u.id!==id);
-      save(users); render();
+
+    function formatNumber(value) {
+      return typeof value === 'number' ? value.toLocaleString('en-US') : value;
     }
-  });
 
-  document.getElementById('addUser').addEventListener('click', ()=>{
-    const name = document.getElementById('newUserName').value.trim();
-    if(!name) return alert('Enter a name');
-    const users = load();
-    const id = (users.reduce((m,u)=>Math.max(m,u.id),0) || 0) + 1;
-    users.push({id,name,role:'Viewer',active:false});
-    save(users);
-    document.getElementById('newUserName').value = '';
-    render();
-  });
-
-  document.getElementById('resetData').addEventListener('click', ()=>{
-    if(confirm('Reset demo data?')) reset();
-  });
-
-  function renderChart(users){
-    const el = document.getElementById('barChart');
-    const ctx = el.getContext?.('2d');
-    // simple DOM-based bar chart if no canvas context
-    if(!ctx){
-      el.innerHTML = '';
-      const byRole = users.reduce((s,u)=>{ s[u.role]=(s[u.role]||0)+1; return s; },{});
-      Object.entries(byRole).forEach(([role,count])=>{
-        const row = document.createElement('div');
-        row.style.display='flex';row.style.alignItems='center';row.style.margin='6px 0';
-        const label = document.createElement('div'); label.textContent = role; label.style.width='120px';
-        const bar = document.createElement('div'); bar.style.height='14px'; bar.style.background='#6a1b9a';
-        bar.style.width = Math.max(20,count*40)+'px'; bar.style.borderRadius='6px';
-        const num = document.createElement('div'); num.textContent = ' '+count; num.style.marginLeft='8px';
-        row.appendChild(label); row.appendChild(bar); row.appendChild(num);
-        el.appendChild(row);
+    function buildNav() {
+      const navItems = [
+        { key: 'dashboard', icon: '🏠', label: 'Dashboard' },
+        { key: 'analytics', icon: '📊', label: 'Analytics' },
+        { key: 'users', icon: '👥', label: 'Users' },
+        { key: 'reports', icon: '📈', label: 'Reports' },
+        { key: 'data', icon: '📋', label: 'Data Management' },
+        { key: 'notifications', icon: '🔔', label: 'Notifications' },
+        { key: 'settings', icon: '⚙️', label: 'Settings' }
+      ];
+      const menu = document.getElementById('navMenu');
+      menu.innerHTML = '';
+      navItems.forEach(item => {
+        const button = document.createElement('button');
+        button.className = 'nav-item' + (item.key === 'dashboard' ? ' active' : '');
+        button.innerHTML = `<span class="icon">${item.icon}</span><span class="label">${item.label}</span>`;
+        button.addEventListener('click', () => setActiveNav(button));
+        menu.appendChild(button);
       });
-      return;
     }
-    // canvas chart (not used normally)
-    ctx.clearRect(0,0,el.width,el.height);
-  }
 
-  // initial render
-  render();
-</script>
+    function setActiveNav(button) {
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      state.sidebarCollapsed = !state.sidebarCollapsed;
+      sidebar.classList.toggle('collapsed', state.sidebarCollapsed);
+      document.body.classList.toggle('sidebar-collapsed', state.sidebarCollapsed);
+      saveState();
+    }
+
+    function toggleTheme() {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', state.theme);
+      saveState();
+    }
+
+    function renderKPIs() {
+      const grid = document.getElementById('kpiGrid');
+      grid.innerHTML = metrics.kpis.map(kpi => `
+        <article class="kpi-card">
+          <div class="label"><span>${kpi.icon}</span><span>${kpi.title}</span></div>
+          <div class="value">${kpi.title === 'Revenue' ? '$' + formatNumber(kpi.value) : formatNumber(kpi.value)}</div>
+          <div class="meta"><span class="badge ${kpi.change >= 0 ? '' : 'down'}">${kpi.change >= 0 ? '▲' : '▼'} ${Math.abs(kpi.change)}%</span><span>${kpi.compare}</span></div>
+        </article>
+      `).join('');
+    }
+
+    function getFilteredUsers() {
+      return users.filter(user => {
+        const { query, fromDate, toDate, country, category, role, status } = state.filters;
+        const search = query.toLowerCase();
+        const matchesText = !search || [user.name, user.email, user.role, user.department].some(field => field.toLowerCase().includes(search));
+        const matchesCountry = country === 'All' || user.country === country;
+        const matchesCategory = category === 'All' || user.category === category;
+        const matchesRole = role === 'All' || user.role === role;
+        const matchesStatus = status === 'All' || user.status === status;
+        const dateFrom = fromDate ? new Date(fromDate) : null;
+        const dateTo = toDate ? new Date(toDate) : null;
+        const lastActiveDate = new Date(user.lastActive);
+        const matchesDate = (!dateFrom || lastActiveDate >= dateFrom) && (!dateTo || lastActiveDate <= dateTo);
+        return matchesText && matchesCountry && matchesCategory && matchesRole && matchesStatus && matchesDate;
+      });
+    }
+
+    function updateChartData() {
+      const filtered = getFilteredUsers();
+      const totalUsers = filtered.length;
+      const activeUsers = filtered.filter(user => user.status === 'Active').length;
+      const returningUsers = filtered.filter(user => ['Viewer', 'Analyst', 'Developer'].includes(user.role)).length;
+      const categories = filtered.reduce((acc, user) => {
+        acc[user.category] = (acc[user.category] || 0) + 1;
+        return acc;
+      }, {});
+      const regions = filtered.reduce((acc, user) => {
+        acc[user.country] = (acc[user.country] || 0) + 1;
+        return acc;
+      }, {});
+
+      metrics.kpis[0].value = totalUsers || 0;
+      metrics.kpis[1].value = activeUsers || 0;
+      metrics.kpis[2].value = 4200000 + Math.round(totalUsers * 17600);
+      metrics.kpis[3].value = Number((Math.min(12, 2.8 + totalUsers / 80)).toFixed(1));
+      const avgSessionMinutes = Math.max(3, Math.min(5, 4 + totalUsers / 120));
+      const avgSessionSeconds = Math.max(18, Math.min(58, 22 + totalUsers % 32));
+      metrics.kpis[4].value = `${String(Math.floor(avgSessionMinutes)).padStart(2, '0')}m ${String(Math.floor(avgSessionSeconds)).padStart(2, '0')}s`;
+
+      metrics.revenueTrend.revenue = metrics.revenueTrend.labels.map((label, index) => Math.round(480000 + totalUsers * 950 + index * 22000));
+      metrics.revenueTrend.previous = metrics.revenueTrend.revenue.map(value => Math.round(value * 0.88));
+
+      metrics.userGrowth.newUsers = metrics.userGrowth.labels.map((_, index) => Math.max(60, Math.round(totalUsers * (0.08 + index * 0.007))));
+      metrics.userGrowth.activeUsers = metrics.userGrowth.labels.map(() => Math.max(activeUsers, 2200 + Math.round(totalUsers * 0.28)));
+      metrics.userGrowth.returningUsers = metrics.userGrowth.labels.map((_, index) => Math.max(40, Math.round(returningUsers * (0.18 + index * 0.01))));
+
+      metrics.categoryRevenue = Object.entries(categories).map(([category, count]) => ({ category, value: Number((0.65 + count * 0.42).toFixed(2)) }));
+      if (!metrics.categoryRevenue.length) metrics.categoryRevenue = [
+        { category: 'Electronics', value: 2.4 },
+        { category: 'Clothing', value: 1.9 },
+        { category: 'Home', value: 1.6 },
+        { category: 'Beauty', value: 1.2 },
+        { category: 'Sports', value: 1.0 }
+      ];
+
+      metrics.userDistribution = Object.entries(filtered.reduce((acc, user) => {
+        acc[user.role] = (acc[user.role] || 0) + 1;
+        return acc;
+      }, {})).map(([role, count]) => ({ role, value: Math.round((count / Math.max(totalUsers, 1)) * 100) }));
+      if (!metrics.userDistribution.length) metrics.userDistribution = [
+        { role: 'Admin', value: 14 },
+        { role: 'Manager', value: 22 },
+        { role: 'Developer', value: 26 },
+        { role: 'Analyst', value: 19 },
+        { role: 'Viewer', value: 19 }
+      ];
+
+      metrics.geoPerformance = Object.entries(regions).map(([region, count]) => ({
+        region,
+        revenue: Number((0.9 + count * 0.42).toFixed(2)),
+        users: Math.max(count * 1200, 8600),
+        conversion: Number((3.8 + count * 0.4).toFixed(1))
+      }));
+      if (!metrics.geoPerformance.length) metrics.geoPerformance = [
+        { region: 'USA', revenue: 3.4, users: 49200, conversion: 6.3 },
+        { region: 'India', revenue: 1.8, users: 28200, conversion: 5.4 },
+        { region: 'Germany', revenue: 1.1, users: 13200, conversion: 5.7 },
+        { region: 'Brazil', revenue: 0.9, users: 9800, conversion: 4.9 }
+      ];
+
+      metrics.performanceComparison = [
+        { metric: 'Revenue', current: Math.min(100, 25 + Math.round(totalUsers / 4)), previous: Math.max(10, Math.min(90, Math.round(totalUsers / 5))) },
+        { metric: 'Users', current: Math.min(100, 45 + Math.round(totalUsers / 2)), previous: Math.max(20, Math.min(95, Math.round(totalUsers / 2.3))) },
+        { metric: 'Conversion', current: Number((4 + totalUsers / 15).toFixed(1)), previous: Number((3 + totalUsers / 18).toFixed(1)) },
+        { metric: 'Satisfaction', current: Math.min(100, 72 + Math.round(totalUsers / 5)), previous: Math.max(55, Math.min(90, Math.round(totalUsers / 5.5))) }
+      ];
+
+      if (chartMap.categoryRevenue) {
+        chartMap.categoryRevenue.setOption({
+          yAxis: { data: metrics.categoryRevenue.map(item => item.category) },
+          series: [{ data: metrics.categoryRevenue.map(item => item.value) }]
+        });
+      }
+      if (chartMap.userDistribution) {
+        chartMap.userDistribution.setOption({
+          legend: { data: metrics.userDistribution.map(item => item.role) },
+          series: [{ data: metrics.userDistribution.map(item => ({ value: item.value, name: item.role })) }]
+        });
+      }
+      if (chartMap.geoPerformance) {
+        chartMap.geoPerformance.setOption({
+          xAxis: { data: metrics.geoPerformance.map(item => item.region) },
+          series: [
+            { data: metrics.geoPerformance.map(item => item.revenue) },
+            { data: metrics.geoPerformance.map(item => item.users) },
+            { data: metrics.geoPerformance.map(item => item.conversion) }
+          ]
+        });
+      }
+      if (chartMap.performanceComparison) {
+        chartMap.performanceComparison.setOption({
+          xAxis: { data: metrics.performanceComparison.map(item => item.metric) },
+          series: [
+            { data: metrics.performanceComparison.map(item => item.current) },
+            { data: metrics.performanceComparison.map(item => item.previous) }
+          ]
+        });
+      }
+      if (chartMap.userGrowth) {
+        chartMap.userGrowth.setOption({
+          xAxis: { data: metrics.userGrowth.labels },
+          series: [
+            { data: metrics.userGrowth.newUsers },
+            { data: metrics.userGrowth.activeUsers },
+            { data: metrics.userGrowth.returningUsers }
+          ]
+        });
+      }
+      if (chartMap.revenueTrend) {
+        chartMap.revenueTrend.setOption({
+          series: [
+            { data: metrics.revenueTrend.revenue },
+            { data: metrics.revenueTrend.previous }
+          ]
+        });
+      }
+    }
+
+    function renderTable() {
+      const body = document.getElementById('userTableBody');
+      const filtered = getFilteredUsers();
+      const { sortKey, sortAsc, page, pageSize } = state.table;
+      const sorted = [...filtered].sort((a, b) => {
+        const first = a[sortKey] || '';
+        const second = b[sortKey] || '';
+        return (first > second ? 1 : -1) * (sortAsc ? 1 : -1);
+      });
+      const pageCount = Math.ceil(sorted.length / pageSize) || 1;
+      state.table.page = Math.min(page, pageCount);
+      const start = (state.table.page - 1) * pageSize;
+      const paged = sorted.slice(start, start + pageSize);
+
+      body.innerHTML = paged.map(user => `
+        <tr>
+          <td>${user.id}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.role}</td>
+          <td>${user.department}</td>
+          <td><span class="status-pill ${user.status.toLowerCase()}">${user.status}</span></td>
+          <td>${user.lastActive}</td>
+          <td>${user.created}</td>
+          <td><button onclick="alert('View ${user.name}')">View</button></td>
+        </tr>
+      `).join('');
+
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = `
+        <button ${state.table.page === 1 ? 'disabled' : ''} onclick="changePage(${state.table.page - 1})">Previous</button>
+        <span style="align-self:center;color:var(--text-muted)">Page ${state.table.page} of ${pageCount}</span>
+        <button ${state.table.page === pageCount ? 'disabled' : ''} onclick="changePage(${state.table.page + 1})">Next</button>
+      `;
+      saveState();
+    }
+
+    function changePage(page) {
+      state.table.page = page;
+      renderTable();
+    }
+
+    function renderFilters() {
+      document.getElementById('globalSearch').value = state.filters.query;
+      document.getElementById('fromDate').value = state.filters.fromDate;
+      document.getElementById('toDate').value = state.filters.toDate;
+      document.getElementById('filterCountry').value = state.filters.country;
+      document.getElementById('filterCategory').value = state.filters.category;
+      document.getElementById('filterRole').value = state.filters.role;
+      document.getElementById('filterStatus').value = state.filters.status;
+    }
+
+    function syncFilterState() {
+      state.filters.query = document.getElementById('globalSearch').value.trim();
+      state.filters.fromDate = document.getElementById('fromDate').value;
+      state.filters.toDate = document.getElementById('toDate').value;
+      state.filters.country = document.getElementById('filterCountry').value;
+      state.filters.category = document.getElementById('filterCategory').value;
+      state.filters.role = document.getElementById('filterRole').value;
+      state.filters.status = document.getElementById('filterStatus').value;
+    }
+
+    function applyFilters() {
+      syncFilterState();
+      state.table.page = 1;
+      updateChartData();
+      renderKPIs();
+      renderTable();
+      saveState();
+    }
+
+    function resetFilters() {
+      Object.assign(state.filters, DEFAULT_STATE.filters);
+      state.table.page = 1;
+      renderFilters();
+      updateChartData();
+      renderKPIs();
+      renderTable();
+      saveState();
+    }
+
+    function renderRevenueTrendChart() {
+      const container = document.getElementById('revenueTrendChart');
+      chartMap.revenueTrend = echarts.init(container, null, { renderer: 'svg' });
+      chartMap.revenueTrend.setOption({
+        tooltip: { trigger: 'axis', formatter: params => params.map(item => `${item.marker} ${item.seriesName}: ${item.value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`).join('<br/>') },
+        legend: { data: ['Revenue', 'Previous'] },
+        grid: { top: 40, left: 22, right: 16, bottom: 22 },
+        xAxis: { type: 'category', data: metrics.revenueTrend.labels, boundaryGap: false },
+        yAxis: { type: 'value', axisLabel: { formatter: value => '$' + (value / 1000) + 'k' } },
+        series: [
+          { name: 'Revenue', type: 'line', smooth: true, symbol: 'circle', symbolSize: 8, lineStyle: { width: 3 }, data: metrics.revenueTrend.revenue, areaStyle: { opacity: 0.16 } },
+          { name: 'Previous', type: 'line', smooth: true, symbol: 'circle', symbolSize: 8, data: metrics.revenueTrend.previous, lineStyle: { width: 2, opacity: 0.72 } }
+        ]
+      });
+    }
+
+    function renderUserGrowthChart() {
+      const container = document.getElementById('userGrowthChart');
+      chartMap.userGrowth = echarts.init(container, null, { renderer: 'svg' });
+      chartMap.userGrowth.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['New Users', 'Active Users', 'Returning Users'] },
+        xAxis: { type: 'category', data: metrics.userGrowth.labels },
+        yAxis: { type: 'value' },
+        series: [
+          { name: 'New Users', type: 'line', data: metrics.userGrowth.newUsers, smooth: true },
+          { name: 'Active Users', type: 'line', data: metrics.userGrowth.activeUsers, smooth: true },
+          { name: 'Returning Users', type: 'line', data: metrics.userGrowth.returningUsers, smooth: true }
+        ]
+      });
+    }
+
+    function renderCategoryRevenueChart() {
+      const container = document.getElementById('categoryRevenueChart');
+      chartMap.categoryRevenue = echarts.init(container, null, { renderer: 'svg' });
+      chartMap.categoryRevenue.setOption({
+        tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+        grid: { left: '16%', right: '10%', bottom: '22%' },
+        xAxis: { type: 'value', axisLabel: { formatter: value => '$' + value + 'M' } },
+        yAxis: { type: 'category', data: metrics.categoryRevenue.map(item => item.category) },
+        series: [{ type: 'bar', data: metrics.categoryRevenue.map(item => item.value), itemStyle: { color: 'rgba(91,76,255,0.78)' }, label: { show: true, position: 'right', formatter: '{c}M' } }]
+      });
+    }
+
+    function renderUserDistributionChart() {
+      const container = document.getElementById('userDistributionChart');
+      chartMap.userDistribution = echarts.init(container, null, { renderer: 'svg' });
+      chartMap.userDistribution.setOption({
+        tooltip: { trigger: 'item', formatter: '{b}: {c}% ({d}%)' },
+        legend: { bottom: 0, data: metrics.userDistribution.map(item => item.role) },
+        series: [{ name: 'Users', type: 'pie', radius: ['45%', '70%'], avoidLabelOverlap: false, label: { show: false, position: 'center' }, emphasis: { label: { show: true, fontSize: 14, fontWeight: 'bold' } }, data: metrics.userDistribution.map(item => ({ value: item.value, name: item.role })) }]
+      });
+    }
+
+    function renderGeoPerformanceChart() {
+      const container = document.getElementById('geoPerformanceChart');
+      chartMap.geoPerformance = echarts.init(container, null, { renderer: 'svg' });
+      chartMap.geoPerformance.setOption({
+        tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+        legend: { data: ['Revenue', 'Users', 'Conversion'], top: 10 },
+        xAxis: { type: 'category', data: metrics.geoPerformance.map(item => item.region) },
+        yAxis: [{ type: 'value', name: 'Revenue ($M)' }, { type: 'value', name: 'Users', position: 'right' }],
+        series: [
+          { name: 'Revenue', type: 'bar', data: metrics.geoPerformance.map(item => item.revenue), itemStyle: { color: 'rgba(91,76,255,0.85)' } },
+          { name: 'Users', type: 'line', yAxisIndex: 1, data: metrics.geoPerformance.map(item => item.users), smooth: true, lineStyle: { width: 3 } },
+          { name: 'Conversion', type: 'line', yAxisIndex: 1, data: metrics.geoPerformance.map(item => item.conversion), smooth: true, lineStyle: { width: 2, type: 'dashed' } }
+        ]
+      });
+    }
+
+    function renderPerformanceComparisonChart() {
+      const container = document.getElementById('performanceComparisonChart');
+      chartMap.performanceComparison = echarts.init(container, null, { renderer: 'svg' });
+      chartMap.performanceComparison.setOption({
+        tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+        legend: { data: ['Current', 'Previous'] },
+        grid: { left: '16%', right: '16%', bottom: '18%' },
+        xAxis: { type: 'category', data: metrics.performanceComparison.map(item => item.metric) },
+        yAxis: { type: 'value' },
+        series: [
+          { name: 'Current', type: 'bar', data: metrics.performanceComparison.map(item => item.current), itemStyle: { color: '#5b4cff' } },
+          { name: 'Previous', type: 'bar', data: metrics.performanceComparison.map(item => item.previous), itemStyle: { color: '#8f93ff' } }
+        ]
+      });
+    }
+
+    function resizeCharts() {
+      Object.values(chartMap).forEach(chart => chart?.resize());
+    }
+
+    function downloadChartData(chartKey) {
+      const chart = chartMap[chartKey];
+      if (!chart) return;
+      const url = chart.getDataURL({ pixelRatio: 2, backgroundColor: document.body.getAttribute('data-theme') === 'dark' ? '#111827' : '#ffffff' });
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${chartKey}-chart.png`;
+      a.click();
+    }
+
+    function enterFullscreen(chartKey) {
+      const element = document.getElementById(`${chartKey}Chart`).parentElement;
+      if (element.requestFullscreen) element.requestFullscreen();
+    }
+
+    function exportCSV() {
+      const data = getFilteredUsers();
+      const headers = ['ID', 'Name', 'Email', 'Role', 'Department', 'Status', 'Last Active', 'Created Date'];
+      const rows = data.map(user => [user.id, user.name, user.email, user.role, user.department, user.status, user.lastActive, user.created]);
+      const csv = [headers.join(','), ...rows.map(row => row.map(value => `"${value}"`).join(','))].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'active-users.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportExcel() {
+      const data = getFilteredUsers();
+      const rows = data.map(user => [user.id, user.name, user.email, user.role, user.department, user.status, user.lastActive, user.created]);
+      const csv = ['ID\tName\tEmail\tRole\tDepartment\tStatus\tLast Active\tCreated Date', ...rows.map(row => row.join('\t'))].join('\n');
+      const blob = new Blob([csv], { type: 'application/vnd.ms-excel' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'active-users.xls';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function attachEvents() {
+      document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+      document.getElementById('applyFilters').addEventListener('click', applyFilters);
+      document.getElementById('resetFilters').addEventListener('click', resetFilters);
+      document.getElementById('exportCsv').addEventListener('click', exportCSV);
+      document.getElementById('exportExcel').addEventListener('click', exportExcel);
+      document.querySelectorAll('#filterCountry, #filterCategory, #filterRole, #filterStatus, #fromDate, #toDate').forEach(select => select.addEventListener('change', applyFilters));
+      document.querySelectorAll('.chart-toolbar button').forEach(button => {
+        button.addEventListener('click', () => {
+          const chartKey = button.dataset.chart;
+          if (button.textContent.includes('Download')) downloadChartData(chartKey);
+          else enterFullscreen(chartKey);
+        });
+      });
+      window.addEventListener('resize', resizeCharts);
+      document.querySelectorAll('th[data-key]').forEach(th => th.addEventListener('click', () => {
+        const key = th.dataset.key;
+        if (state.table.sortKey === key) state.table.sortAsc = !state.table.sortAsc;
+        else { state.table.sortKey = key; state.table.sortAsc = true; }
+        renderTable();
+      }));
+    }
+
+    function initialize() {
+      document.body.setAttribute('data-theme', state.theme);
+      if (state.sidebarCollapsed) document.getElementById('sidebar').classList.add('collapsed');
+      buildNav();
+      renderFilters();
+      renderKPIs();
+      renderTable();
+      updateChartData();
+      renderRevenueTrendChart();
+      renderUserGrowthChart();
+      renderCategoryRevenueChart();
+      renderUserDistributionChart();
+      renderGeoPerformanceChart();
+      renderPerformanceComparisonChart();
+      attachEvents();
+    }
+
+    window.changePage = changePage;
+    window.exportCSV = exportCSV;
+    window.exportExcel = exportExcel;
+    window.onload = initialize;
+  </script>
 </body>
 </html>

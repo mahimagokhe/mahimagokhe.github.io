@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>SpendSense — Expense Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,9 @@
       padding: 20px;
     }
 
-    h2 { color: #4dd0e1; }
+    h2 {
+      color: #4dd0e1;
+    }
 
     .grid {
       display: flex;
@@ -30,25 +33,35 @@
     }
 
     /* chart tooltip */
-    .chart-wrapper { position: relative; display: flex; justify-content: center; align-items: center; flex-direction: column; width: 100%; }
+    .chart-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+    }
+
     .chart-tooltip {
       position: absolute;
       pointer-events: none;
-      background: rgba(15,23,36,0.95);
+      background: rgba(15, 23, 36, 0.95);
       color: #e6eef8;
       padding: 8px 10px;
       border-radius: 6px;
       font-size: 13px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
       transform: translate(-50%, -120%);
       white-space: nowrap;
       display: none;
       z-index: 10;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
-      padding: 10px 36px 10px 10px; /* extra right padding for spinners/controls */
+      padding: 10px 36px 10px 10px;
+      /* extra right padding for spinners/controls */
       margin-top: 5px;
       border-radius: 6px;
       border: none;
@@ -67,56 +80,99 @@
     }
 
     canvas {
-      background: transparent; /* remove pie background container */
+      background: transparent;
+      /* remove pie background container */
       border-radius: 0;
       margin: 10px auto;
       display: block;
       width: 100%;
-      max-width: 300px; /* reduce visual size */
+      max-width: 300px;
+      /* reduce visual size */
       height: auto;
     }
 
     /* HTML legend below chart */
-    .chart-legend { margin-top: 12px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; }
-    .legend-item { display:flex; align-items:center; background:transparent; padding:4px 6px; border-radius:6px; }
-    .legend-swatch { width:14px; height:14px; border-radius:3px; display:inline-block; flex:0 0 14px; margin-right:8px; border:1px solid #111; }
+    .chart-legend {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      background: transparent;
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      display: inline-block;
+      flex: 0 0 14px;
+      margin-right: 8px;
+      border: 1px solid #111;
+    }
+
     /* legend label default (dark mode) */
-    .chart-legend .legend-item span { color: #e6eef8; font-weight: 600; }
+    .chart-legend .legend-item span {
+      color: #e6eef8;
+      font-weight: 600;
+    }
 
     /* TABLE STYLE */
-    .logs-wrap { margin-top: 10px; }
+    .logs-wrap {
+      margin-top: 10px;
+    }
+
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
       margin-top: 10px;
       font-size: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
       border-radius: 8px;
       overflow: hidden;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px 14px;
       text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
 
     th {
-      background: linear-gradient(90deg,#13202b,#0b1620);
+      background: linear-gradient(90deg, #13202b, #0b1620);
       color: #cfe8ff;
       font-weight: 700;
       letter-spacing: 0.4px;
       font-size: 13px;
     }
 
-    tbody tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
-    tbody tr:hover td { background: rgba(77,208,225,0.04); transform: translateY(-1px); }
-    tbody tr { transition: background 120ms, transform 120ms; }
+    tbody tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    tbody tr:hover td {
+      background: rgba(77, 208, 225, 0.04);
+      transform: translateY(-1px);
+    }
+
+    tbody tr {
+      transition: background 120ms, transform 120ms;
+    }
 
     /* action buttons (small, inline) */
-    .edit-btn, .delete-btn {
+    .edit-btn,
+    .delete-btn {
       width: auto !important;
       display: inline-block;
       padding: 4px 6px;
@@ -130,9 +186,20 @@
       min-width: 28px;
       text-align: center;
     }
-    .edit-btn { background: #ffd54f; color: #111; }
-    .delete-btn { background: #ff5252; color: #fff; }
-    td.actions { white-space: nowrap; }
+
+    .edit-btn {
+      background: #ffd54f;
+      color: #111;
+    }
+
+    .delete-btn {
+      background: #ff5252;
+      color: #fff;
+    }
+
+    td.actions {
+      white-space: nowrap;
+    }
 
     .download-btn {
       background: #4dd0e1;
@@ -149,39 +216,56 @@
     .summary {
       font-weight: bold;
     }
+
     /* light mode overrides */
     .light-mode body {
       background: #f6f7fb;
       color: #071422;
     }
+
     .light-mode .box {
       background: #ffffff;
       color: #071422;
-      border: 1px solid rgba(4,16,23,0.04);
+      border: 1px solid rgba(4, 16, 23, 0.04);
     }
-    .light-mode input, .light-mode select {
+
+    .light-mode input,
+    .light-mode select {
       background: #fff;
       color: #071422;
     }
-    .light-mode .chart-tooltip { background: rgba(255,255,255,0.96); color: #041017; }
-    .light-mode th { background: linear-gradient(90deg,#eaf6fb,#dfeef6); color: #041017; }
+
+    .light-mode .chart-tooltip {
+      background: rgba(255, 255, 255, 0.96);
+      color: #041017;
+    }
+
+    .light-mode th {
+      background: linear-gradient(90deg, #eaf6fb, #dfeef6);
+      color: #041017;
+    }
+
     /* highlight dropdown in light mode */
     .light-mode select {
-      background: linear-gradient(180deg,#ffffff,#f4fbff);
+      background: linear-gradient(180deg, #ffffff, #f4fbff);
       border: 1px solid #cfe8ff;
-      box-shadow: 0 4px 12px rgba(16,54,88,0.04) inset;
-      padding-right: 42px; /* keep space for dropdown arrow */
+      box-shadow: 0 4px 12px rgba(16, 54, 88, 0.04) inset;
+      padding-right: 42px;
+      /* keep space for dropdown arrow */
     }
+
     .light-mode select:focus {
       outline: none;
-      box-shadow: 0 6px 18px rgba(30,64,175,0.08);
+      box-shadow: 0 6px 18px rgba(30, 64, 175, 0.08);
       border-color: #60a5fa;
     }
+
     /* legend swatch adjustments for light mode */
     .light-mode .legend-swatch {
-      border: 1px solid rgba(4,16,23,0.06);
-      box-shadow: 0 2px 6px rgba(4,16,23,0.06);
+      border: 1px solid rgba(4, 16, 23, 0.06);
+      box-shadow: 0 2px 6px rgba(4, 16, 23, 0.06);
     }
+
     /* ensure legend label uses a dark color in light mode */
     .light-mode .chart-legend .legend-item span {
       color: #141415 !important;
@@ -191,47 +275,110 @@
     /* highlight chat and inputs in light mode */
     /* chat window styles (dark default, light overrides) */
     #chatWindow {
-      height:160px;
-      overflow:auto;
-      padding:10px;
-      border-radius:8px;
-      border:1px solid #222;
-      margin-bottom:8px;
-      font-size:13px;
+      height: 160px;
+      overflow: auto;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #222;
+      margin-bottom: 8px;
+      font-size: 13px;
       background: #0b0b0b;
       color: #e6eef8;
     }
+
     .light-mode #chatWindow {
-      background: linear-gradient(180deg,#ffffff,#f3f6f9);
+      background: linear-gradient(180deg, #ffffff, #f3f6f9);
       color: #041017;
-      border: 1px solid rgba(4,16,23,0.06);
-      box-shadow: 0 6px 18px rgba(4,16,23,0.04) inset;
+      border: 1px solid rgba(4, 16, 23, 0.06);
+      box-shadow: 0 6px 18px rgba(4, 16, 23, 0.04) inset;
+    }
+
+    .chart-toggle {
+      display: flex;
+      gap: 8px;
+    }
+
+    .toggle-btn {
+      width: auto !important;
+      padding: 6px 12px;
+      background: #2a2a2a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .toggle-btn.active {
+      background: #4dd0e1;
+      color: black;
+      font-weight: bold;
+    }
+
+    .light-mode .toggle-btn {
+      background: #e5e7eb;
+      color: black;
+    }
+
+    .light-mode .toggle-btn.active {
+      background: #4dd0e1;
     }
 
     /* message classes */
-    .bot-msg { margin-bottom:8px; color:#cfe8ff; }
-    .user-msg { margin-bottom:8px; color:#fff; text-align:right; }
-    .light-mode .bot-msg { color:#334155; }
-    .light-mode .user-msg { color:#0b0b0b; }
-    .light-mode #chatInput, .light-mode input[type="number"] {
+    .bot-msg {
+      margin-bottom: 8px;
+      color: #cfe8ff;
+    }
+
+    .user-msg {
+      margin-bottom: 8px;
+      color: #fff;
+      text-align: right;
+    }
+
+    .light-mode .bot-msg {
+      color: #334155;
+    }
+
+    .light-mode .user-msg {
+      color: #0b0b0b;
+    }
+
+    .light-mode #chatInput,
+    .light-mode input[type="number"] {
       background: #fff;
       color: #041017;
-      border: 1px solid rgba(4,16,23,0.06);
-      box-shadow: 0 4px 12px rgba(4,16,23,0.03) inset;
+      border: 1px solid rgba(4, 16, 23, 0.06);
+      box-shadow: 0 4px 12px rgba(4, 16, 23, 0.03) inset;
       padding-right: 36px;
     }
+
     /* make legend swatches more distinct on light bg */
-    .light-mode .legend-swatch { border: 1px solid rgba(0,0,0,0.12); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .light-mode .legend-swatch {
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
 
     /* floating theme button */
-    .theme-floating { position: fixed; top: 14px; right: 14px; z-index: 60; }
-    .theme-floating .download-btn { padding: 8px 10px; border-radius: 999px; box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
+    .theme-floating {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 60;
+    }
+
+    .theme-floating .download-btn {
+      padding: 8px 10px;
+      border-radius: 999px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    }
+
     /* voice button state */
     .voice-btn-listening {
-      background: linear-gradient(90deg,#ffb74d,#ff9800);
+      background: linear-gradient(90deg, #ffb74d, #ff9800);
       color: #071422;
-      box-shadow: 0 6px 18px rgba(255,152,0,0.12) !important;
+      box-shadow: 0 6px 18px rgba(255, 152, 0, 0.12) !important;
     }
+
     .voice-btn {
       padding: 0 !important;
       width: 34px;
@@ -241,526 +388,557 @@
       justify-content: center;
       font-size: 18px;
       border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       background: transparent;
       color: inherit;
       cursor: pointer;
     }
-    .voice-hint { font-size: 12px; color: #aaa; }
-    .light-mode .voice-hint { color: #475569; }
+
+    .voice-hint {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .light-mode .voice-hint {
+      color: #475569;
+    }
   </style>
 </head>
 
 <body>
 
-<h2>📊 SpendSense — Expense Tracker</h2>
+  <h2>📊 SpendSense — Expense Tracker</h2>
 
-<!-- floating theme toggle (top-right) -->
-<div class="theme-floating">
-  <button id="topThemeBtn" class="download-btn" onclick="toggleTheme()">Theme</button>
-</div>
+  <!-- floating theme toggle (top-right) -->
+  <div class="theme-floating">
+    <button id="topThemeBtn" class="download-btn" onclick="toggleTheme()">Theme</button>
+  </div>
 
-<div class="grid">
+  <div class="grid">
 
-  <!-- INPUT -->
-  <div class="box">
-    <h3>➕ Add Expense</h3>
+    <!-- INPUT -->
+    <div class="box">
+      <h3>➕ Add Expense</h3>
 
-    <input type="number" id="amount" placeholder="Amount ₹">
+      <input type="number" id="amount" placeholder="Amount ₹">
 
-    <select id="category"></select>
+      <select id="category"></select>
 
-    <button id="addBtn" onclick="addExpense()">Add Expense</button>
-    
-    <!-- Assistant moved here -->
-    <div style="margin-top:12px;border-top:1px dashed rgba(255,255,255,0.03);padding-top:10px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0 8px;">
-        <h4 style="margin:0">🤖 Assistant (Chat to add expenses)</h4>
-        <button id="voiceBtn" class="voice-btn" title="Speak to add expense">🎙</button>
+      <button id="addBtn" onclick="addExpense()">Add Expense</button>
+
+      <!-- Assistant moved here -->
+      <div style="margin-top:12px;border-top:1px dashed rgba(255,255,255,0.03);padding-top:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0 8px;">
+          <h4 style="margin:0">🤖 Assistant (Chat to add expenses)</h4>
+          <button id="voiceBtn" class="voice-btn" title="Speak to add expense">🎙</button>
+        </div>
+        <div class="voice-hint" style="margin-bottom:6px;">Tip: Click the mic and Allow continuous listening - say e.g.
+          "I spent 10 on tea today" — I'll add it.</div>
+        <div id="chatWindow"></div>
+        <input type="text" id="chatInput" placeholder="e.g. today I spent 20 rs for tea" style="margin-top:6px;">
+        <div style="display:flex;gap:8px;margin-top:6px;">
+          <button onclick="sendChat()" style="flex:0 0 auto;">Send</button>
+        </div>
+        <p style="font-size:12px;color:#aaa;margin-top:6px">Tip: Say things like "I spent 50 on petrol today" or "add
+          200 grocery on 05/06/2026"</p>
       </div>
-      <div class="voice-hint" style="margin-bottom:6px;">Tip: Click the mic and Allow continuous listening - say e.g. "I spent 10 on tea today" — I'll add it.</div>
-      <div id="chatWindow"></div>
-      <input type="text" id="chatInput" placeholder="e.g. today I spent 20 rs for tea" style="margin-top:6px;">
-      <div style="display:flex;gap:8px;margin-top:6px;">
-        <button onclick="sendChat()" style="flex:0 0 auto;">Send</button>
-      </div>
-      <p style="font-size:12px;color:#aaa;margin-top:6px">Tip: Say things like "I spent 50 on petrol today" or "add 200 grocery on 05/06/2026"</p>
     </div>
-  </div>
 
-  <!-- SETTINGS -->
-  <div class="box">
-    <h3>⚙ Settings</h3>
+    <!-- SETTINGS -->
+    <div class="box">
+      <h3>⚙ Settings</h3>
 
-    <label>📅 Select Month (2026)</label>
-    <select id="monthSelect" onchange="switchMonth()"></select>
+      <label>📅 Select Month (2026)</label>
+      <select id="monthSelect" onchange="switchMonth()"></select>
 
-    <label>💰 Monthly Budget (₹)</label>
-    <input type="number" id="budgetInput" placeholder="Set monthly budget">
-    <button onclick="setBudget()">Save Budget</button>
+      <label>💰 Monthly Budget (₹)</label>
+      <input type="number" id="budgetInput" placeholder="Set monthly budget">
+      <button onclick="setBudget()">Save Budget</button>
 
-    <!-- Wake word control removed; use microphone button to start listening -->
+      <!-- Wake word control removed; use microphone button to start listening -->
 
-    <p id="budgetStatus"></p>
-    
-    <!-- theme toggle moved to top-right; removed from settings -->
+      <p id="budgetStatus"></p>
 
-    <p style="margin-top:8px">Total Expenses: <b id="total"></b></p>
-    <p>Budget Left: <b id="remaining"></b> &nbsp;|&nbsp; Total Budget: <b id="totalBudget"></b></p>
-  </div>
+      <!-- theme toggle moved to top-right; removed from settings -->
+
+      <p style="margin-top:8px">Total Expenses: <b id="total"></b></p>
+      <p>Budget Left: <b id="remaining"></b> &nbsp;|&nbsp; Total Budget: <b id="totalBudget"></b></p>
+    </div>
 
 
-  <!-- PIE -->
-  <div class="box">
+    <!-- PIE -->
+    <!-- <div class="box">
     <h3>📊 Category %</h3>
     <div class="chart-wrapper">
       <canvas id="chart" width="260" height="260"></canvas>
       <div id="chartTooltip" class="chart-tooltip"></div>
       <div id="chartLegend" class="chart-legend" aria-hidden="false"></div>
     </div>
+  </div> -->
+    <div class="box">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>📊 Category Analysis</h3>
+
+        <div class="chart-toggle">
+          <button id="pieBtn" class="toggle-btn active" onclick="switchChart('pie')">
+            🥧 Pie
+          </button>
+
+          <button id="barBtn" class="toggle-btn" onclick="switchChart('bar')">
+            📊 Bar
+          </button>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas id="chart" width="350" height="300"></canvas>
+
+        <div id="chartTooltip" class="chart-tooltip"></div>
+
+        <div id="chartLegend" class="chart-legend"></div>
+      </div>
+    </div>
   </div>
 
-</div>
+  <!-- LOGS (TABLE) -->
+  <div class="box">
+    <h3 style="display:flex;justify-content:space-between;align-items:center">
+      <span>📜 Expense Logs</span>
+      <button class="download-btn" onclick="downloadAllMonths()">Download Excel</button>
+    </h3>
 
-<!-- LOGS (TABLE) -->
-<div class="box">
-  <h3 style="display:flex;justify-content:space-between;align-items:center">
-    <span>📜 Expense Logs</span>
-    <button class="download-btn" onclick="downloadAllMonths()">Download Excel</button>
-  </h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Category</th>
-        <th>Amount</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+      <tbody id="list"></tbody>
+    </table>
+  </div>
 
-    <tbody id="list"></tbody>
-  </table>
-</div>
+  <script>
 
-<script>
+    const YEAR = 2026;
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const YEAR = 2026;
-const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    // restore previously active month (so chat-added entries are visible after reload)
+    let activeMonth = localStorage.getItem('activeMonth') || `${YEAR}-${months[0]}`;
+    let data = JSON.parse(localStorage.getItem(activeMonth)) || [];
 
-// restore previously active month (so chat-added entries are visible after reload)
-let activeMonth = localStorage.getItem('activeMonth') || `${YEAR}-${months[0]}`;
-let data = JSON.parse(localStorage.getItem(activeMonth)) || [];
+    // monthly budget will be stored per-month under key `${monthKey}-budget`
+    let budget = 0; // per-month budget (loaded for activeMonth)
+    let editingId = null;
 
-// monthly budget will be stored per-month under key `${monthKey}-budget`
-let budget = 0; // per-month budget (loaded for activeMonth)
-let editingId = null;
+    /* CATEGORY */
+    const categories = [
+      "Grocery for Kitchen",
+      "Rent",
+      "Travel",
+      "Shopping",
+      "Food",
+      "Entertainment",
+      "Health",
+      "Petrol"
+    ];
 
-/* CATEGORY */
-const categories = [
-  "Grocery for Kitchen",
-  "Rent",
-  "Travel",
-  "Shopping",
-  "Food",
-  "Entertainment",
-  "Health",
-  "Petrol"
-];
-
-let cat = document.getElementById("category");
-categories.forEach(c=>{
-  let o = document.createElement("option");
-  o.textContent = c;
-  cat.appendChild(o);
-});
-
-/* MONTHS */
-function loadMonths() {
-  let select = document.getElementById("monthSelect");
-  select.innerHTML = "";
-
-  months.forEach(m=>{
-    let key = `${YEAR}-${m}`;
-    let o = document.createElement("option");
-    o.value = key;
-    o.textContent = `${m} ${YEAR}`;
-    select.appendChild(o);
-  });
-
-  select.value = activeMonth;
-}
-
-loadMonths();
- 
-// helper to get/set budget per month
-function getBudgetForMonth(monthKey){
-  const b = localStorage.getItem(`${monthKey}-budget`);
-  return b !== null ? Number(b) : 0;
-}
-
-// initialize budget for the restored active month
-budget = getBudgetForMonth(activeMonth);
-const budgetInputEl = document.getElementById('budgetInput');
-if (budgetInputEl) budgetInputEl.value = budget || '';
-/* SWITCH MONTH */
-function switchMonth() {
-  activeMonth = document.getElementById("monthSelect").value;
-  data = JSON.parse(localStorage.getItem(activeMonth)) || [];
-  // load budget for selected month
-  budget = getBudgetForMonth(activeMonth);
-  const bi = document.getElementById('budgetInput'); if (bi) bi.value = budget || '';
-  render();
-  localStorage.setItem('activeMonth', activeMonth);
-}
-
-/* SAVE */
-function save() {
-  localStorage.setItem(activeMonth, JSON.stringify(data));
-}
-
-/* ADD */
-function addExpense() {
-  let amount = parseFloat(document.getElementById("amount").value);
-  let category = document.getElementById("category").value;
-
-  if (!amount || amount <= 0) return;
-
-  const now = new Date();
-  if (editingId) {
-    // update existing
-    for (let i=0;i<data.length;i++){
-      if (data[i].id === editingId) {
-        data[i].amount = amount;
-        data[i].category = category;
-        data[i].time = now.toLocaleTimeString();
-        break;
-      }
-    }
-    editingId = null;
-    const btn = document.getElementById('addBtn'); if (btn) btn.innerText = 'Add Expense';
-  } else {
-    data.push({
-      id: Date.now(),
-      amount,
-      category,
-      date: now.toDateString(),
-      time: now.toLocaleTimeString(),
-      source: 'ui'
-    });
-  }
-
-  save();
-  render();
-  document.getElementById('amount').value = '';
-}
-
-/* DELETE */
-function deleteExpense(id) {
-  data = data.filter(e => e.id !== id);
-  save();
-  render();
-}
-
-function editExpense(id) {
-  const item = data.find(d=>d.id===id);
-  if (!item) return;
-  document.getElementById('amount').value = item.amount;
-  document.getElementById('category').value = item.category;
-  editingId = id;
-  const btn = document.getElementById('addBtn'); if (btn) btn.innerText = 'Update Expense';
-  // focus amount input for quick edit
-  const amt = document.getElementById('amount'); if (amt) { amt.focus(); amt.select(); }
-}
-
-/* TOTAL */
-function getTotal() {
-  return data.reduce((s,e)=>s+e.amount,0);
-}
-
-/* BUDGET */
-function setBudget() {
-  const b = Number(document.getElementById("budgetInput").value) || 0;
-  budget = b;
-  // persist budget for the currently active month only
-  if (activeMonth) localStorage.setItem(`${activeMonth}-budget`, budget);
-  render();
-}
-
-/* render HTML legend below the chart */
-function renderLegend(slices, denom) {
-  const el = document.getElementById('chartLegend');
-  if (!el) return;
-  el.innerHTML = '';
-  slices.forEach(s => {
-    const pct = ((s.value / (denom || 1)) * 100).toFixed(1);
-    const item = document.createElement('div');
-    item.className = 'legend-item';
-    const sw = document.createElement('span');
-    sw.className = 'legend-swatch';
-    sw.style.background = s.color;
-    const label = document.createElement('span');
-    label.textContent = `${s.label}: ${pct}% (₹${s.value})`;
-    item.appendChild(sw);
-    item.appendChild(label);
-    el.appendChild(item);
-  });
-}
-
-/* Export all months into a multi-sheet Excel (SpreadsheetML) file */
-function escapeXML(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function downloadAllMonths(){
-  const sheets = [];
-  months.forEach(m=>{
-    const key = `${YEAR}-${m}`;
-    const arr = JSON.parse(localStorage.getItem(key) || '[]');
-    if (arr && arr.length > 0) sheets.push({ name: `${m} ${YEAR}`, rows: arr });
-  });
-
-  // build SpreadsheetML
-  let xml = '<?xml version="1.0"?>\r\n<?mso-application progid="Excel.Sheet"?>\r\n';
-  xml += '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">\r\n';
-
-  sheets.forEach(sh=>{
-    xml += `<Worksheet ss:Name="${escapeXML(sh.name)}">\r\n<Table>`;
-    // header
-    xml += '<Row>';
-    ['Date','Time','Category','Amount'].forEach(h=>{ xml += `<Cell><Data ss:Type="String">${escapeXML(h)}</Data></Cell>`; });
-    xml += '</Row>';
-
-    // rows
-    (sh.rows || []).forEach(r=>{
-      xml += '<Row>';
-      xml += `<Cell><Data ss:Type="String">${escapeXML(r.date||'')}</Data></Cell>`;
-      xml += `<Cell><Data ss:Type="String">${escapeXML(r.time||'')}</Data></Cell>`;
-      xml += `<Cell><Data ss:Type="String">${escapeXML(r.category||'')}</Data></Cell>`;
-      xml += `<Cell><Data ss:Type="Number">${Number(r.amount||0)}</Data></Cell>`;
-      xml += '</Row>';
+    let cat = document.getElementById("category");
+    categories.forEach(c => {
+      let o = document.createElement("option");
+      o.textContent = c;
+      cat.appendChild(o);
     });
 
-    xml += '</Table>\r\n</Worksheet>\r\n';
-  });
+    /* MONTHS */
+    function loadMonths() {
+      let select = document.getElementById("monthSelect");
+      select.innerHTML = "";
 
-  xml += '</Workbook>';
-
-  const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `expenses_${YEAR}.xls`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
-
-/* THEME: light/dark toggle */
-function setTheme(mode){
-  if (mode === 'light') {
-    document.documentElement.classList.add('light-mode');
-    if (document.body) document.body.classList.add('light-mode');
-  } else {
-    document.documentElement.classList.remove('light-mode');
-    if (document.body) document.body.classList.remove('light-mode');
-  }
-  localStorage.setItem('theme', mode);
-  updateThemeButton();
-  // refresh UI immediately so canvas/text colors reflect the new theme
-  try { render(); } catch (e) { /* ignore if render not ready */ }
-}
-
-function toggleTheme(){
-  const cur = localStorage.getItem('theme') || 'dark';
-  setTheme(cur === 'dark' ? 'light' : 'dark');
-}
-
-function updateThemeButton(){
-  const b = document.getElementById('themeToggleBtn');
-  const t = document.getElementById('topThemeBtn');
-  const cur = localStorage.getItem('theme') || 'dark';
-  if (b) b.innerText = cur === 'dark' ? 'Switch to Light' : 'Switch to Dark';
-  if (t) t.innerText = cur === 'dark' ? '☀' : '🌙';
-}
-
-function initTheme(){
-  const saved = localStorage.getItem('theme');
-  if (saved) setTheme(saved);
-  else setTheme('dark');
-}
-
-/* CHART - animated slices + tooltip */
-let chartAnimId = null;
-let chartSlices = [];
-function drawChart() {
-  const canvas = document.getElementById('chart');
-  const tooltip = document.getElementById('chartTooltip');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width;
-  const h = canvas.height;
-  ctx.clearRect(0, 0, w, h);
-
-  // aggregate totals per category
-  const totals = {};
-  data.forEach(e => { totals[e.category] = (totals[e.category] || 0) + Number(e.amount); });
-  const labels = Object.keys(totals);
-  const sum = labels.reduce((s, l) => s + totals[l], 0);
-
-  if (sum === 0) {
-    // respect theme for the "no data" canvas message
-    const isLight = document.documentElement.classList.contains('light-mode');
-    ctx.fillStyle = isLight ? '#000000' : '#ffffff';
-    ctx.font = '14px Arial';
-    ctx.fillText('No expenses for this month', 10, 20);
-    return;
-  }
-
-  const colors = ['#4dd0e1','#ffb74d','#e57373','#aed581','#ba68c8','#64b5f6','#ffd54f','#f06292'];
-  const cx = w / 2;
-  const cy = h / 2;
-  const radius = Math.min(w, h) / 2 - 12;
-
-    // build slices metadata (use budget as denominator when budget > sum)
-    chartSlices = [];
-    let start = -0.5 * Math.PI;
-    let denom = sum;
-    if (typeof budget === 'number' && budget > sum) denom = budget;
-
-    labels.forEach((l, i) => {
-      const value = totals[l];
-      const sliceFrac = value / denom;
-      const end = start + sliceFrac * Math.PI * 2;
-      chartSlices.push({ label: l, value, start, end, color: colors[i % colors.length] });
-      start = end;
-    });
-
-    // if budget is larger than spent, add a "Remaining" slice to fill up to budget
-    if (denom === budget && budget > sum) {
-      const remaining = budget - sum;
-      if (remaining > 0) {
-        const sliceFrac = remaining / denom;
-                const end = start + sliceFrac * Math.PI * 2;
-                chartSlices.push({ label: 'Remaining', value: remaining, start, end, color: '#ff9800' });
-        start = end;
-      }
-    }
-
-  // animate drawing
-  const duration = 700; // ms
-  const startTime = performance.now();
-  if (chartAnimId) cancelAnimationFrame(chartAnimId);
-
-  function frame(now) {
-    const t = Math.min(1, (now - startTime) / duration);
-    ctx.clearRect(0, 0, w, h);
-
-    // draw slices up to progress
-    chartSlices.forEach((s, idx) => {
-      const drawEnd = s.start + (s.end - s.start) * t;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, radius, s.start, drawEnd);
-      ctx.closePath();
-      ctx.fillStyle = s.color;
-      ctx.fill();
-    });
-
-    // render legend below chart using DOM
-    renderLegend(chartSlices, denom);
-
-    if (t < 1) chartAnimId = requestAnimationFrame(frame);
-    else chartAnimId = null;
-  }
-
-  chartAnimId = requestAnimationFrame(frame);
-
-  // attach hover handlers once
-  canvas.onmousemove = (ev) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
-    const y = ev.clientY - rect.top;
-    const dx = x - cx;
-    const dy = y - cy;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    let found = null;
-    if (dist <= radius + 6) {
-      let ang = Math.atan2(dy, dx);
-      if (ang < -Math.PI/2) ang += 2*Math.PI; // normalize to match start/end range
-      // find slice
-      for (let i=0;i<chartSlices.length;i++){
-        const s = chartSlices[i];
-        if (ang >= s.start && ang <= s.end) { found = {i,s}; break; }
-        // edge-case wrap around at -PI/2
-        if (s.start > s.end && (ang >= s.start || ang <= s.end)) { found = {i,s}; break; }
-      }
-    }
-
-    if (found) {
-      // redraw with highlight
-      ctx.clearRect(0, 0, w, h);
-      chartSlices.forEach((s, idx) => {
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        const r = (idx === found.i) ? radius + 8 : radius;
-        ctx.arc(cx, cy, r, s.start, s.end);
-        ctx.closePath();
-        ctx.fillStyle = s.color;
-        ctx.fill();
+      months.forEach(m => {
+        let key = `${YEAR}-${m}`;
+        let o = document.createElement("option");
+        o.value = key;
+        o.textContent = `${m} ${YEAR}`;
+        select.appendChild(o);
       });
-      // render legend below chart using DOM
-      renderLegend(chartSlices, denom);
 
-      // tooltip content and position
-      tooltip.style.display = 'block';
-      tooltip.textContent = `${found.s.label}: ₹${found.s.value} (${((found.s.value/denom)*100).toFixed(1)}%)`;
-      tooltip.style.left = (ev.clientX - rect.left) + 'px';
-      tooltip.style.top = (ev.clientY - rect.top) + 'px';
-    } else {
-      // redraw base (non-highlight) if not animating
-      if (!chartAnimId) {
+      select.value = activeMonth;
+    }
+
+    loadMonths();
+
+    // helper to get/set budget per month
+    function getBudgetForMonth(monthKey) {
+      const b = localStorage.getItem(`${monthKey}-budget`);
+      return b !== null ? Number(b) : 0;
+    }
+
+    // initialize budget for the restored active month
+    budget = getBudgetForMonth(activeMonth);
+    const budgetInputEl = document.getElementById('budgetInput');
+    if (budgetInputEl) budgetInputEl.value = budget || '';
+    /* SWITCH MONTH */
+    function switchMonth() {
+      activeMonth = document.getElementById("monthSelect").value;
+      data = JSON.parse(localStorage.getItem(activeMonth)) || [];
+      // load budget for selected month
+      budget = getBudgetForMonth(activeMonth);
+      const bi = document.getElementById('budgetInput'); if (bi) bi.value = budget || '';
+      render();
+      localStorage.setItem('activeMonth', activeMonth);
+    }
+
+    /* SAVE */
+    function save() {
+      localStorage.setItem(activeMonth, JSON.stringify(data));
+    }
+
+    /* ADD */
+    function addExpense() {
+      let amount = parseFloat(document.getElementById("amount").value);
+      let category = document.getElementById("category").value;
+
+      if (!amount || amount <= 0) return;
+
+      const now = new Date();
+      if (editingId) {
+        // update existing
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].id === editingId) {
+            data[i].amount = amount;
+            data[i].category = category;
+            data[i].time = now.toLocaleTimeString();
+            break;
+          }
+        }
+        editingId = null;
+        const btn = document.getElementById('addBtn'); if (btn) btn.innerText = 'Add Expense';
+      } else {
+        data.push({
+          id: Date.now(),
+          amount,
+          category,
+          date: now.toDateString(),
+          time: now.toLocaleTimeString(),
+          source: 'ui'
+        });
+      }
+
+      save();
+      render();
+      document.getElementById('amount').value = '';
+    }
+
+    /* DELETE */
+    function deleteExpense(id) {
+      data = data.filter(e => e.id !== id);
+      save();
+      render();
+    }
+
+    function editExpense(id) {
+      const item = data.find(d => d.id === id);
+      if (!item) return;
+      document.getElementById('amount').value = item.amount;
+      document.getElementById('category').value = item.category;
+      editingId = id;
+      const btn = document.getElementById('addBtn'); if (btn) btn.innerText = 'Update Expense';
+      // focus amount input for quick edit
+      const amt = document.getElementById('amount'); if (amt) { amt.focus(); amt.select(); }
+    }
+
+    /* TOTAL */
+    function getTotal() {
+      return data.reduce((s, e) => s + e.amount, 0);
+    }
+
+    /* BUDGET */
+    function setBudget() {
+      const b = Number(document.getElementById("budgetInput").value) || 0;
+      budget = b;
+      // persist budget for the currently active month only
+      if (activeMonth) localStorage.setItem(`${activeMonth}-budget`, budget);
+      render();
+    }
+
+    /* render HTML legend below the chart */
+    function renderLegend(slices, denom) {
+      const el = document.getElementById('chartLegend');
+      if (!el) return;
+      el.innerHTML = '';
+      slices.forEach(s => {
+        const pct = ((s.value / (denom || 1)) * 100).toFixed(1);
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        const sw = document.createElement('span');
+        sw.className = 'legend-swatch';
+        sw.style.background = s.color;
+        const label = document.createElement('span');
+        label.textContent = `${s.label}: ${pct}% (₹${s.value})`;
+        item.appendChild(sw);
+        item.appendChild(label);
+        el.appendChild(item);
+      });
+    }
+
+    /* Export all months into a multi-sheet Excel (SpreadsheetML) file */
+    function escapeXML(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function downloadAllMonths() {
+      const sheets = [];
+      months.forEach(m => {
+        const key = `${YEAR}-${m}`;
+        const arr = JSON.parse(localStorage.getItem(key) || '[]');
+        if (arr && arr.length > 0) sheets.push({ name: `${m} ${YEAR}`, rows: arr });
+      });
+
+      // build SpreadsheetML
+      let xml = '<?xml version="1.0"?>\r\n<?mso-application progid="Excel.Sheet"?>\r\n';
+      xml += '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">\r\n';
+
+      sheets.forEach(sh => {
+        xml += `<Worksheet ss:Name="${escapeXML(sh.name)}">\r\n<Table>`;
+        // header
+        xml += '<Row>';
+        ['Date', 'Time', 'Category', 'Amount'].forEach(h => { xml += `<Cell><Data ss:Type="String">${escapeXML(h)}</Data></Cell>`; });
+        xml += '</Row>';
+
+        // rows
+        (sh.rows || []).forEach(r => {
+          xml += '<Row>';
+          xml += `<Cell><Data ss:Type="String">${escapeXML(r.date || '')}</Data></Cell>`;
+          xml += `<Cell><Data ss:Type="String">${escapeXML(r.time || '')}</Data></Cell>`;
+          xml += `<Cell><Data ss:Type="String">${escapeXML(r.category || '')}</Data></Cell>`;
+          xml += `<Cell><Data ss:Type="Number">${Number(r.amount || 0)}</Data></Cell>`;
+          xml += '</Row>';
+        });
+
+        xml += '</Table>\r\n</Worksheet>\r\n';
+      });
+
+      xml += '</Workbook>';
+
+      const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `expenses_${YEAR}.xls`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    /* THEME: light/dark toggle */
+    function setTheme(mode) {
+      if (mode === 'light') {
+        document.documentElement.classList.add('light-mode');
+        if (document.body) document.body.classList.add('light-mode');
+      } else {
+        document.documentElement.classList.remove('light-mode');
+        if (document.body) document.body.classList.remove('light-mode');
+      }
+      localStorage.setItem('theme', mode);
+      updateThemeButton();
+      // refresh UI immediately so canvas/text colors reflect the new theme
+      try { render(); } catch (e) { /* ignore if render not ready */ }
+    }
+
+    function toggleTheme() {
+      const cur = localStorage.getItem('theme') || 'dark';
+      setTheme(cur === 'dark' ? 'light' : 'dark');
+    }
+
+    function updateThemeButton() {
+      const b = document.getElementById('themeToggleBtn');
+      const t = document.getElementById('topThemeBtn');
+      const cur = localStorage.getItem('theme') || 'dark';
+      if (b) b.innerText = cur === 'dark' ? 'Switch to Light' : 'Switch to Dark';
+      if (t) t.innerText = cur === 'dark' ? '☀' : '🌙';
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) setTheme(saved);
+      else setTheme('dark');
+    }
+
+    /* CHART - animated slices + tooltip */
+    let chartAnimId = null;
+    let chartSlices = [];
+    function drawChart() {
+      const canvas = document.getElementById('chart');
+      const tooltip = document.getElementById('chartTooltip');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // aggregate totals per category
+      const totals = {};
+      data.forEach(e => { totals[e.category] = (totals[e.category] || 0) + Number(e.amount); });
+      const labels = Object.keys(totals);
+      const sum = labels.reduce((s, l) => s + totals[l], 0);
+
+      if (sum === 0) {
+        // respect theme for the "no data" canvas message
+        const isLight = document.documentElement.classList.contains('light-mode');
+        ctx.fillStyle = isLight ? '#000000' : '#ffffff';
+        ctx.font = '14px Arial';
+        ctx.fillText('No expenses for this month', 10, 20);
+        return;
+      }
+
+      const colors = ['#4dd0e1', '#ffb74d', '#e57373', '#aed581', '#ba68c8', '#64b5f6', '#ffd54f', '#f06292'];
+      const cx = w / 2;
+      const cy = h / 2;
+      const radius = Math.min(w, h) / 2 - 12;
+
+      // build slices metadata (use budget as denominator when budget > sum)
+      chartSlices = [];
+      let start = -0.5 * Math.PI;
+      let denom = sum;
+      if (typeof budget === 'number' && budget > sum) denom = budget;
+
+      labels.forEach((l, i) => {
+        const value = totals[l];
+        const sliceFrac = value / denom;
+        const end = start + sliceFrac * Math.PI * 2;
+        chartSlices.push({ label: l, value, start, end, color: colors[i % colors.length] });
+        start = end;
+      });
+
+      // if budget is larger than spent, add a "Remaining" slice to fill up to budget
+      if (denom === budget && budget > sum) {
+        const remaining = budget - sum;
+        if (remaining > 0) {
+          const sliceFrac = remaining / denom;
+          const end = start + sliceFrac * Math.PI * 2;
+          chartSlices.push({ label: 'Remaining', value: remaining, start, end, color: '#ff9800' });
+          start = end;
+        }
+      }
+
+      // animate drawing
+      const duration = 700; // ms
+      const startTime = performance.now();
+      if (chartAnimId) cancelAnimationFrame(chartAnimId);
+
+      function frame(now) {
+        const t = Math.min(1, (now - startTime) / duration);
         ctx.clearRect(0, 0, w, h);
-        chartSlices.forEach((s) => {
+
+        // draw slices up to progress
+        chartSlices.forEach((s, idx) => {
+          const drawEnd = s.start + (s.end - s.start) * t;
           ctx.beginPath();
           ctx.moveTo(cx, cy);
-          ctx.arc(cx, cy, radius, s.start, s.end);
+          ctx.arc(cx, cy, radius, s.start, drawEnd);
           ctx.closePath();
           ctx.fillStyle = s.color;
           ctx.fill();
         });
+
         // render legend below chart using DOM
         renderLegend(chartSlices, denom);
-        tooltip.textContent = `${found.s.label}: ₹${found.s.value} (${((found.s.value/denom)*100).toFixed(1)}%)`;
+
+        if (t < 1) chartAnimId = requestAnimationFrame(frame);
+        else chartAnimId = null;
       }
-      tooltip.style.display = 'none';
+
+      chartAnimId = requestAnimationFrame(frame);
+
+      // attach hover handlers once
+      canvas.onmousemove = (ev) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+        const dx = x - cx;
+        const dy = y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        let found = null;
+        if (dist <= radius + 6) {
+          let ang = Math.atan2(dy, dx);
+          if (ang < -Math.PI / 2) ang += 2 * Math.PI; // normalize to match start/end range
+          // find slice
+          for (let i = 0; i < chartSlices.length; i++) {
+            const s = chartSlices[i];
+            if (ang >= s.start && ang <= s.end) { found = { i, s }; break; }
+            // edge-case wrap around at -PI/2
+            if (s.start > s.end && (ang >= s.start || ang <= s.end)) { found = { i, s }; break; }
+          }
+        }
+
+        if (found) {
+          // redraw with highlight
+          ctx.clearRect(0, 0, w, h);
+          chartSlices.forEach((s, idx) => {
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            const r = (idx === found.i) ? radius + 8 : radius;
+            ctx.arc(cx, cy, r, s.start, s.end);
+            ctx.closePath();
+            ctx.fillStyle = s.color;
+            ctx.fill();
+          });
+          // render legend below chart using DOM
+          renderLegend(chartSlices, denom);
+
+          // tooltip content and position
+          tooltip.style.display = 'block';
+          tooltip.textContent = `${found.s.label}: ₹${found.s.value} (${((found.s.value / denom) * 100).toFixed(1)}%)`;
+          tooltip.style.left = (ev.clientX - rect.left) + 'px';
+          tooltip.style.top = (ev.clientY - rect.top) + 'px';
+        } else {
+          // redraw base (non-highlight) if not animating
+          if (!chartAnimId) {
+            ctx.clearRect(0, 0, w, h);
+            chartSlices.forEach((s) => {
+              ctx.beginPath();
+              ctx.moveTo(cx, cy);
+              ctx.arc(cx, cy, radius, s.start, s.end);
+              ctx.closePath();
+              ctx.fillStyle = s.color;
+              ctx.fill();
+            });
+            // render legend below chart using DOM
+            renderLegend(chartSlices, denom);
+            tooltip.textContent = `${found.s.label}: ₹${found.s.value} (${((found.s.value / denom) * 100).toFixed(1)}%)`;
+          }
+          tooltip.style.display = 'none';
+        }
+      };
+
+      canvas.onmouseleave = () => { const tooltip = document.getElementById('chartTooltip'); if (tooltip) tooltip.style.display = 'none'; };
     }
-  };
 
-  canvas.onmouseleave = () => { const tooltip = document.getElementById('chartTooltip'); if (tooltip) tooltip.style.display='none'; };
-}
+    /* RENDER */
+    function render() {
+      let total = getTotal();
+      let remaining = budget - total;
 
-/* RENDER */
-function render() {
-  let total = getTotal();
-  let remaining = budget - total;
+      document.getElementById("total").innerText = "₹" + total;
+      document.getElementById("remaining").innerText = "₹" + remaining;
 
-  document.getElementById("total").innerText = "₹" + total;
-  document.getElementById("remaining").innerText = "₹" + remaining;
+      const totalBudgetEl = document.getElementById('totalBudget');
+      if (totalBudgetEl) totalBudgetEl.innerText = "₹" + (budget || 0);
 
-  const totalBudgetEl = document.getElementById('totalBudget');
-  if (totalBudgetEl) totalBudgetEl.innerText = "₹" + (budget || 0);
+      document.getElementById("budgetStatus").innerText =
+        total > budget ? "⚠ Over Budget" : "✔ Within Budget";
 
-  document.getElementById("budgetStatus").innerText =
-    total > budget ? "⚠ Over Budget" : "✔ Within Budget";
+      /* TABLE RENDER */
+      let list = document.getElementById("list");
+      list.innerHTML = "";
 
-  /* TABLE RENDER */
-  let list = document.getElementById("list");
-  list.innerHTML = "";
+      data.slice().reverse().forEach(e => {
+        let row = document.createElement("tr");
 
-  data.slice().reverse().forEach(e=>{
-    let row = document.createElement("tr");
-
-    row.innerHTML = `
+        row.innerHTML = `
       <td>${e.date}</td>
       <td>${e.time ? e.time : new Date().toLocaleTimeString()}</td>
       <td>${e.category}</td>
@@ -771,282 +949,401 @@ function render() {
       </td>
     `;
 
-    list.appendChild(row);
-  });
+        list.appendChild(row);
+      });
 
-  drawChart();
-}
-
-initTheme();
-render();
-
-/* ------------------ Chatbot: parse natural language instructions ------------------ */
-
-const chatWindow = document.getElementById('chatWindow');
-
-function appendBot(text) {
-  const el = document.createElement('div');
-  el.className = 'bot-msg';
-  el.textContent = text;
-  chatWindow.appendChild(el);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-  // show chat window when there's content
-  if (chatWindow) chatWindow.style.display = 'block';
-}
-
-function appendUser(text) {
-  const el = document.createElement('div');
-  el.className = 'user-msg';
-  el.textContent = text;
-  chatWindow.appendChild(el);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-  // show chat window when user sends
-  if (chatWindow) chatWindow.style.display = 'block';
-}
-
-// hide chat window initially if empty
-if (chatWindow && chatWindow.children.length === 0) chatWindow.style.display = 'none';
-
-// --- Voice / Speech recognition integration ---
-const voiceBtn = document.getElementById('voiceBtn');
-let recognizing = false;
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
-let recognition = null;
-let commandRecognition = null;
-if (SpeechRecognition) {
-  recognition = new SpeechRecognition();
-  recognition.lang = 'en-IN';
-  recognition.interimResults = true; // allow detecting wake word in interim
-  recognition.continuous = true; // keep listening for wake word or direct commands
-  recognition.maxAlternatives = 1;
-
-  recognition.onstart = () => {
-    recognizing = true;
-    if (voiceBtn) { voiceBtn.classList.add('voice-btn-listening'); voiceBtn.textContent = '🎙︎…'; }
-    if (chatWindow) { appendBot('Voice active — say "Hey Tracker" to wake, or speak an expense.'); }
-  };
-
-  recognition.onresult = (e) => {
-    // process all results since last event
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      const resItem = e.results[i];
-      const transcript = resItem[0].transcript.trim();
-      const lower = transcript.toLowerCase();
-
-      // wake-word detection
-      if (lower.includes('hey tracker') || lower.includes('hey, tracker') || lower.includes('heytracker')) {
-        appendBot('Heard wake word — listening for your command...');
-        // start a one-shot command recognizer to capture the next phrase
-        startCommandRecognition();
-        continue;
-      }
-
-      // if this result is final, treat as direct command (user spoke without wake word while mic active)
-      if (resItem.isFinal) {
-        appendUser(transcript);
-        const parsed = parseMessage(transcript);
-        appendBot(parsed.reply);
-        if (parsed.added) render();
-      }
-    }
-  };
-
-  recognition.onerror = (ev) => {
-    if (chatWindow) appendBot('Voice error: ' + (ev.error || ev.message || 'unknown'));
-  };
-
-  recognition.onend = () => {
-    recognizing = false;
-    if (voiceBtn) { voiceBtn.classList.remove('voice-btn-listening'); voiceBtn.textContent = '🎙'; }
-  };
-}
-
-function startCommandRecognition() {
-  if (!SpeechRecognition) return;
-  // create a short-lived recognition instance to capture the next spoken command
-  try {
-    commandRecognition = new SpeechRecognition();
-    commandRecognition.lang = 'en-IN';
-    commandRecognition.interimResults = false;
-    commandRecognition.maxAlternatives = 1;
-
-    commandRecognition.onresult = (ev) => {
-      const t = ev.results[0][0].transcript.trim();
-      if (t) {
-        appendUser(t);
-        const r = parseMessage(t);
-        appendBot(r.reply);
-        if (r.added) render();
-      }
-    };
-
-    commandRecognition.onerror = (ev) => { if (chatWindow) appendBot('Command listening error'); };
-    commandRecognition.onend = () => { commandRecognition = null; };
-    commandRecognition.start();
-  } catch (err) {
-    console.warn('startCommandRecognition failed', err);
-  }
-}
-
-if (voiceBtn) {
-  voiceBtn.addEventListener('click', () => {
-    if (!SpeechRecognition) {
-      const txt = prompt('Voice not supported. Type your expense, e.g. "I spent 50 on tea today"');
-      if (txt) {
-        appendUser(txt);
-        const res = parseMessage(txt);
-        appendBot(res.reply);
-        if (res.added) render();
-      }
-      return;
-    }
-
-    if (recognizing) {
-      stopContinuousRecognition();
-    } else {
-      startContinuousRecognition();
-    }
-  });
-}
-
-function startContinuousRecognition(){
-  if (!SpeechRecognition) return;
-  try {
-    recognition.start();
-    recognizing = true;
-    if (voiceBtn) { voiceBtn.classList.add('voice-btn-listening'); voiceBtn.textContent = '🎙︎…'; }
-  } catch (err) {
-    console.warn('startContinuousRecognition failed', err);
-    appendBot('Unable to start continuous listening — please click the mic to allow microphone access.');
-  }
-}
-
-function stopContinuousRecognition(){
-  try { recognition.stop(); } catch (e) {}
-  recognizing = false;
-  if (voiceBtn) { voiceBtn.classList.remove('voice-btn-listening'); voiceBtn.textContent = '🎙'; }
-}
-
-function sendChat() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  appendUser(text);
-  input.value = '';
-  // process message
-  setTimeout(() => {
-    const res = parseMessage(text);
-    appendBot(res.reply);
-    if (res.added) {
-      render();
       drawChart();
     }
-  }, 200);
-}
 
-// basic synonym mapping to categories
-const categoryKeywords = {
-  food: ['tea','coffee','restaurant','cafe','lunch','dinner','snack','food','meal'],
-  'Grocery for Kitchen': ['grocery','groceries','supermarket','vegetable','veggies'],
-  Rent: ['rent','housing'],
-  Travel: ['taxi','uber','ola','train','flight','bus','travel','trip'],
-  Shopping: ['shopping','clothes','mall','shop'],
-  Entertainment: ['movie','cinema','netflix','entertainment'],
-  Health: ['doctor','pharmacy','medicine','health'],
-  Petrol: ['petrol','fuel','gas']
-};
+    initTheme();
+    render();
 
-function findCategoryFromText(text) {
-  const t = text.toLowerCase();
-  for (const [cat, keys] of Object.entries(categoryKeywords)) {
-    for (const k of keys) if (t.includes(k)) return cat;
-  }
-  return null;
-}
+    /* ------------------ Chatbot: parse natural language instructions ------------------ */
 
-function parseDateToken(token) {
-  const now = new Date();
-  if (!token) return null;
-  token = token.toLowerCase();
-  if (token.includes('today')) return now;
-  if (token.includes('yesterday')) { const d = new Date(); d.setDate(d.getDate()-1); return d; }
-  // date formats dd/mm/yyyy or dd-mm-yyyy or yyyy-mm-dd
-  const m1 = token.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
-  if (m1) {
-    let d = parseInt(m1[1],10), mo = parseInt(m1[2],10)-1, y = parseInt(m1[3],10);
-    if (y < 100) y += 2000;
-    return new Date(y, mo, d);
-  }
-  const m2 = token.match(/(\d{4})[\-](\d{1,2})[\-](\d{1,2})/);
-  if (m2) return new Date(parseInt(m2[1],10), parseInt(m2[2],10)-1, parseInt(m2[3],10));
-  return null;
-}
+    const chatWindow = document.getElementById('chatWindow');
 
-function parseMessage(text) {
-  // Attempt to extract amount
-  const numMatch = text.match(/(\d+[\.,]?\d*)/);
-  const amountVal = numMatch ? parseFloat(numMatch[1].replace(',','.')) : null;
-
-  // attempt to find explicit date token like 'today', 'yesterday', 'on 05/06/2026'
-  let date = null;
-  const dateWords = text.match(/(today|yesterday|on\s+\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|on\s+\d{4}-\d{1,2}-\d{1,2})/i);
-  if (dateWords) date = parseDateToken(dateWords[0]);
-
-  // find category after 'for' or 'on' or by keywords
-  let category = null;
-  const forMatch = text.match(/for\s+([a-zA-Z ]+)/i);
-  if (forMatch) category = findCategoryFromText(forMatch[1]) || capitalize(forMatch[1].trim());
-  if (!category) {
-    const byKeyword = findCategoryFromText(text);
-    if (byKeyword) category = byKeyword;
-  }
-
-  // default date
-  if (!date) date = new Date();
-
-  if (!amountVal) return { reply: "Sorry, I couldn't find an amount in that message. Try: 'I spent 50 on tea today'", added: false };
-
-  // map small names like 'tea' -> 'Food'
-  if (category && typeof category === 'string') {
-    // if category matches one of our actual select values, keep; otherwise use mapping
-    const existing = Array.from(document.getElementById('category').options).map(o=>o.textContent.toLowerCase());
-    if (!existing.includes(category.toLowerCase())) {
-      // try mapping the word to our categories again
-      const mapped = findCategoryFromText(category);
-      if (mapped) category = mapped; else category = capitalize(category);
+    function appendBot(text) {
+      const el = document.createElement('div');
+      el.className = 'bot-msg';
+      el.textContent = text;
+      chatWindow.appendChild(el);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      // show chat window when there's content
+      if (chatWindow) chatWindow.style.display = 'block';
     }
+
+    function appendUser(text) {
+      const el = document.createElement('div');
+      el.className = 'user-msg';
+      el.textContent = text;
+      chatWindow.appendChild(el);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      // show chat window when user sends
+      if (chatWindow) chatWindow.style.display = 'block';
+    }
+
+    // hide chat window initially if empty
+    if (chatWindow && chatWindow.children.length === 0) chatWindow.style.display = 'none';
+
+    // --- Voice / Speech recognition integration ---
+    const voiceBtn = document.getElementById('voiceBtn');
+    let recognizing = false;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+    let recognition = null;
+    let commandRecognition = null;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = 'en-IN';
+      recognition.interimResults = true; // allow detecting wake word in interim
+      recognition.continuous = true; // keep listening for wake word or direct commands
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        recognizing = true;
+        if (voiceBtn) { voiceBtn.classList.add('voice-btn-listening'); voiceBtn.textContent = '🎙︎…'; }
+        if (chatWindow) { appendBot('Voice active — say "Hey Tracker" to wake, or speak an expense.'); }
+      };
+
+      recognition.onresult = (e) => {
+        // process all results since last event
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const resItem = e.results[i];
+          const transcript = resItem[0].transcript.trim();
+          const lower = transcript.toLowerCase();
+
+          // wake-word detection
+          if (lower.includes('hey tracker') || lower.includes('hey, tracker') || lower.includes('heytracker')) {
+            appendBot('Heard wake word — listening for your command...');
+            // start a one-shot command recognizer to capture the next phrase
+            startCommandRecognition();
+            continue;
+          }
+
+          // if this result is final, treat as direct command (user spoke without wake word while mic active)
+          if (resItem.isFinal) {
+            appendUser(transcript);
+            const parsed = parseMessage(transcript);
+            appendBot(parsed.reply);
+            if (parsed.added) render();
+          }
+        }
+      };
+
+      recognition.onerror = (ev) => {
+        if (chatWindow) appendBot('Voice error: ' + (ev.error || ev.message || 'unknown'));
+      };
+
+      recognition.onend = () => {
+        recognizing = false;
+        if (voiceBtn) { voiceBtn.classList.remove('voice-btn-listening'); voiceBtn.textContent = '🎙'; }
+      };
+    }
+
+    function startCommandRecognition() {
+      if (!SpeechRecognition) return;
+      // create a short-lived recognition instance to capture the next spoken command
+      try {
+        commandRecognition = new SpeechRecognition();
+        commandRecognition.lang = 'en-IN';
+        commandRecognition.interimResults = false;
+        commandRecognition.maxAlternatives = 1;
+
+        commandRecognition.onresult = (ev) => {
+          const t = ev.results[0][0].transcript.trim();
+          if (t) {
+            appendUser(t);
+            const r = parseMessage(t);
+            appendBot(r.reply);
+            if (r.added) render();
+          }
+        };
+
+        commandRecognition.onerror = (ev) => { if (chatWindow) appendBot('Command listening error'); };
+        commandRecognition.onend = () => { commandRecognition = null; };
+        commandRecognition.start();
+      } catch (err) {
+        console.warn('startCommandRecognition failed', err);
+      }
+    }
+
+    if (voiceBtn) {
+      voiceBtn.addEventListener('click', () => {
+        if (!SpeechRecognition) {
+          const txt = prompt('Voice not supported. Type your expense, e.g. "I spent 50 on tea today"');
+          if (txt) {
+            appendUser(txt);
+            const res = parseMessage(txt);
+            appendBot(res.reply);
+            if (res.added) render();
+          }
+          return;
+        }
+
+        if (recognizing) {
+          stopContinuousRecognition();
+        } else {
+          startContinuousRecognition();
+        }
+      });
+    }
+
+    function startContinuousRecognition() {
+      if (!SpeechRecognition) return;
+      try {
+        recognition.start();
+        recognizing = true;
+        if (voiceBtn) { voiceBtn.classList.add('voice-btn-listening'); voiceBtn.textContent = '🎙︎…'; }
+      } catch (err) {
+        console.warn('startContinuousRecognition failed', err);
+        appendBot('Unable to start continuous listening — please click the mic to allow microphone access.');
+      }
+    }
+
+    function stopContinuousRecognition() {
+      try { recognition.stop(); } catch (e) { }
+      recognizing = false;
+      if (voiceBtn) { voiceBtn.classList.remove('voice-btn-listening'); voiceBtn.textContent = '🎙'; }
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      appendUser(text);
+      input.value = '';
+      // process message
+      setTimeout(() => {
+        const res = parseMessage(text);
+        appendBot(res.reply);
+        if (res.added) {
+          render();
+          drawChart();
+        }
+      }, 200);
+    }
+
+    // basic synonym mapping to categories
+    const categoryKeywords = {
+      food: ['tea', 'coffee', 'restaurant', 'cafe', 'lunch', 'dinner', 'snack', 'food', 'meal'],
+      'Grocery for Kitchen': ['grocery', 'groceries', 'supermarket', 'vegetable', 'veggies'],
+      Rent: ['rent', 'housing'],
+      Travel: ['taxi', 'uber', 'ola', 'train', 'flight', 'bus', 'travel', 'trip'],
+      Shopping: ['shopping', 'clothes', 'mall', 'shop'],
+      Entertainment: ['movie', 'cinema', 'netflix', 'entertainment'],
+      Health: ['doctor', 'pharmacy', 'medicine', 'health'],
+      Petrol: ['petrol', 'fuel', 'gas']
+    };
+
+    function findCategoryFromText(text) {
+      const t = text.toLowerCase();
+      for (const [cat, keys] of Object.entries(categoryKeywords)) {
+        for (const k of keys) if (t.includes(k)) return cat;
+      }
+      return null;
+    }
+
+    function parseDateToken(token) {
+      const now = new Date();
+      if (!token) return null;
+      token = token.toLowerCase();
+      if (token.includes('today')) return now;
+      if (token.includes('yesterday')) { const d = new Date(); d.setDate(d.getDate() - 1); return d; }
+      // date formats dd/mm/yyyy or dd-mm-yyyy or yyyy-mm-dd
+      const m1 = token.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+      if (m1) {
+        let d = parseInt(m1[1], 10), mo = parseInt(m1[2], 10) - 1, y = parseInt(m1[3], 10);
+        if (y < 100) y += 2000;
+        return new Date(y, mo, d);
+      }
+      const m2 = token.match(/(\d{4})[\-](\d{1,2})[\-](\d{1,2})/);
+      if (m2) return new Date(parseInt(m2[1], 10), parseInt(m2[2], 10) - 1, parseInt(m2[3], 10));
+      return null;
+    }
+
+    function parseMessage(text) {
+      // Attempt to extract amount
+      const numMatch = text.match(/(\d+[\.,]?\d*)/);
+      const amountVal = numMatch ? parseFloat(numMatch[1].replace(',', '.')) : null;
+
+      // attempt to find explicit date token like 'today', 'yesterday', 'on 05/06/2026'
+      let date = null;
+      const dateWords = text.match(/(today|yesterday|on\s+\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|on\s+\d{4}-\d{1,2}-\d{1,2})/i);
+      if (dateWords) date = parseDateToken(dateWords[0]);
+
+      // find category after 'for' or 'on' or by keywords
+      let category = null;
+      const forMatch = text.match(/for\s+([a-zA-Z ]+)/i);
+      if (forMatch) category = findCategoryFromText(forMatch[1]) || capitalize(forMatch[1].trim());
+      if (!category) {
+        const byKeyword = findCategoryFromText(text);
+        if (byKeyword) category = byKeyword;
+      }
+
+      // default date
+      if (!date) date = new Date();
+
+      if (!amountVal) return { reply: "Sorry, I couldn't find an amount in that message. Try: 'I spent 50 on tea today'", added: false };
+
+      // map small names like 'tea' -> 'Food'
+      if (category && typeof category === 'string') {
+        // if category matches one of our actual select values, keep; otherwise use mapping
+        const existing = Array.from(document.getElementById('category').options).map(o => o.textContent.toLowerCase());
+        if (!existing.includes(category.toLowerCase())) {
+          // try mapping the word to our categories again
+          const mapped = findCategoryFromText(category);
+          if (mapped) category = mapped; else category = capitalize(category);
+        }
+      }
+
+      // final fallback
+      if (!category) category = 'Food';
+
+      // add expense into correct month storage
+      addExpenseFromChat(amountVal, category, date);
+
+      const prettyDate = date.toDateString();
+      return { reply: `Added ₹${amountVal} — ${category} on ${prettyDate}.`, added: true };
+    }
+
+    function addExpenseFromChat(amount, category, dateObj) {
+      const key = `${YEAR}-${months[dateObj.getMonth()]}`;
+      const monthData = JSON.parse(localStorage.getItem(key)) || [];
+      const timeStr = (dateObj && dateObj.toLocaleTimeString()) || new Date().toLocaleTimeString();
+      monthData.push({ id: Date.now() + Math.floor(Math.random() * 1000), amount, category, date: dateObj.toDateString(), time: timeStr, source: 'chat' });
+      localStorage.setItem(key, JSON.stringify(monthData));
+      // make the added expense visible immediately by switching the active month to the expense's month
+      activeMonth = key;
+      localStorage.setItem('activeMonth', activeMonth);
+      const monthSelectEl = document.getElementById('monthSelect');
+      if (monthSelectEl) monthSelectEl.value = key;
+      data = monthData; // reflect change in UI
+    }
+
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    let chartType = "pie";
+    function switchChart(type) {
+
+      chartType = type;
+
+      if (type === "pie") {
+        document.getElementById("pieBtn")
+          .classList.toggle("active", type === "pie");
+        drawChart();
+      } else if (type === "bar") {
+        document.getElementById("barBtn")
+          .classList.toggle("active", type === "bar");
+        const totals = {};
+        data.forEach(e => { totals[e.category] = (totals[e.category] || 0) + Number(e.amount); });
+        drawBarChart(totals);
+      }
+
+    }
+    function drawBarChart(totals) {
+
+      const canvas = document.getElementById("chart");
+      const ctx = canvas.getContext("2d");
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const labels = Object.keys(totals);
+
+      if (labels.length === 0) {
+        ctx.fillStyle = "white";
+        ctx.fillText("No expenses for this month", 10, 20);
+        return;
+      }
+
+      const values = Object.values(totals);
+
+      const max = Math.max(...values);
+
+      const colors = [
+        "#4dd0e1",
+        "#ffb74d",
+        "#e57373",
+        "#aed581",
+        "#ba68c8",
+        "#64b5f6",
+        "#ffd54f",
+        "#f06292"
+      ];
+
+      let startY = 30;
+      const barHeight = 25;
+
+      labels.forEach((label, index) => {
+
+        const value = values[index];
+
+        const width =
+          (value / max) *
+          (canvas.width - 140);
+
+        ctx.fillStyle = colors[index % colors.length];
+
+        ctx.fillRect(
+          120,
+          startY,
+          width,
+          barHeight
+        );
+
+        ctx.fillStyle =
+          document.documentElement.classList.contains("light-mode")
+            ? "#000"
+            : "#fff";
+
+        ctx.font = "13px Arial";
+
+        ctx.fillText(
+          label,
+          10,
+          startY + 17
+        );
+
+        ctx.fillText(
+          "₹" + value,
+          width + 130,
+          startY + 17
+        );
+
+        startY += 40;
+      });
+
+      renderBarLegend(labels, values, colors);
+    }
+    function renderBarLegend(labels, values, colors) {
+
+      const legend =
+        document.getElementById("chartLegend");
+
+      legend.innerHTML = "";
+
+      labels.forEach((label, index) => {
+
+        const item =
+          document.createElement("div");
+
+        item.className = "legend-item";
+
+        item.innerHTML = `
+        <span class="legend-swatch"
+              style="background:${colors[index]}">
+        </span>
+
+        <span>
+            ${label}: ₹${values[index]}
+        </span>
+      `;
+
+        legend.appendChild(item);
+      });
   }
 
-  // final fallback
-  if (!category) category = 'Food';
 
-  // add expense into correct month storage
-  addExpenseFromChat(amountVal, category, date);
-
-  const prettyDate = date.toDateString();
-  return { reply: `Added ₹${amountVal} — ${category} on ${prettyDate}.`, added: true };
-}
-
-function addExpenseFromChat(amount, category, dateObj) {
-  const key = `${YEAR}-${months[dateObj.getMonth()]}`;
-  const monthData = JSON.parse(localStorage.getItem(key)) || [];
-  const timeStr = (dateObj && dateObj.toLocaleTimeString()) || new Date().toLocaleTimeString();
-  monthData.push({ id: Date.now() + Math.floor(Math.random()*1000), amount, category, date: dateObj.toDateString(), time: timeStr, source: 'chat' });
-  localStorage.setItem(key, JSON.stringify(monthData));
-  // make the added expense visible immediately by switching the active month to the expense's month
-  activeMonth = key;
-  localStorage.setItem('activeMonth', activeMonth);
-  const monthSelectEl = document.getElementById('monthSelect');
-  if (monthSelectEl) monthSelectEl.value = key;
-  data = monthData; // reflect change in UI
-}
-
-function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-// welcome message removed per request
-
-
-</script>
+  </script>
 
 </body>
+
 </html>

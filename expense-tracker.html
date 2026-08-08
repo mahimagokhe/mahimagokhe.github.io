@@ -23,17 +23,41 @@
     </style>
 </head>
 <body>
-    <h1>📊 Expense Tracker</h1>
-    <p><strong>Technologies:</strong> Angular, AI, Firebase, Material-UI</p>
-    <p>This project is an intelligent expense tracker with AI-powered spending classification, budget forecasting,
-        and automated receipt parsing. It helps users monitor expenses, identify saving opportunities, and stay on
-        top of monthly budgets through an interactive, responsive dashboard.</p>
+    <h1>📊 SpendSense — Expense Tracker</h1>
+    <p><strong>Technologies:</strong> HTML, CSS, JavaScript (vanilla), Canvas, Web Speech API, localStorage</p>
+    <p>This is a lightweight, client-side expense tracker focused on quick entry and visibility. It supports
+        typed and voice/chat input, animated category charts, light/dark theming, per-month budgets stored
+        in <code>localStorage</code>, and a simple Excel export (SpreadsheetML) for backups.</p>
     <h2>Key Features</h2>
     <ul class="feature-list">
-        <li>AI-driven spend categorization and trend visualization</li>
-        <li>Budget recommendation engine with forecast alerts</li>
-        <li>Firebase authentication and real-time expense sync</li>
-        <li>Responsive Angular dashboard with Material Design</li>
+        <li>Voice-driven expense entry using the Web Speech API (click the mic or say the wake word).</li>
+        <li>Chat / natural-language parsing to extract amount, date, and category from free text.</li>
+        <li>Animated canvas-based category chart with hover tooltips and an HTML legend.</li>
+        <li>Light and dark theme toggle persisted to <code>localStorage</code>.</li>
+        <li>Per-month storage and export to a SpreadsheetML <code>.xls</code> file.</li>
+    </ul>
+    <hr>
+    <h2>Project Features</h2>
+    <ul class="feature-list">
+        <li><strong>Expense Tracker (UI):</strong> A lightweight expense manager implemented in HTML/CSS/JavaScript. See <a href="expense-tracker.component.html">expense-tracker</a> for the full implementation. Core UI functions include <code>addExpense()</code>, <code>deleteExpense()</code>, <code>editExpense()</code>, <code>render()</code> and <code>save()</code> which manage the entry lifecycle and persistence.</li>
+
+        <li><strong>Microphone / Voice Input:</strong> Voice-driven expense entry uses the Web Speech API (<code>SpeechRecognition</code>). The microphone control is <code>voiceBtn</code> in <a href="expense-tracker.component.html">expense-tracker</a>. Key code elements: <code>recognition</code> (continuous listening), <code>startContinuousRecognition()</code> / <code>stopContinuousRecognition()</code> to control listening, and <code>startCommandRecognition()</code> to capture one-shot commands after a wake word. Recognized text is passed to <code>parseMessage()</code> for extraction.</li>
+
+        <li><strong>Chatbot / Natural Language Parsing:</strong> A small rule-based parser converts natural language into expenses. Implemented in <code>parseMessage()</code> and helper functions in <a href="expense-tracker.component.html">expense-tracker</a>. It extracts amounts (regex), dates (<code>parseDateToken()</code>), and categories (<code>findCategoryFromText()</code> using the <code>categoryKeywords</code> mapping), then calls <code>addExpenseFromChat()</code> to persist the parsed expense.</li>
+
+        <li><strong>Dark / Light Theme:</strong> Theme toggling is implemented using a <code>light-mode</code> CSS class on the document root and <code>localStorage</code> to persist the choice. Relevant functions: <code>setTheme()</code>, <code>toggleTheme()</code>, and <code>initTheme()</code> (see <a href="expense-tracker.component.html">expense-tracker</a>). Global site-level variables and dark-mode styles also appear in <a href="index.html">My Portfolio</a>.</li>
+
+        <li><strong>Charts &amp; Visuals:</strong> Category percentage chart is drawn on a <code>&lt;canvas&gt;</code> by <code>drawChart()</code> with animated slices and interactive hover tooltips. The HTML legend is built by <code>renderLegend()</code> (see <a href="expense-tracker.component.html">expense-tracker</a>).</li>
+
+        <li><strong>Persistence &amp; Export:</strong> Expenses and per-month budgets are stored in <code>localStorage</code> under keys like <code>YEAR-MONTH</code> and <code>YEAR-MONTH-budget</code>. Export to Excel is provided by <code>downloadAllMonths()</code> which generates a SpreadsheetML <code>.xls</code> file.</li>
+
+        <li><strong>How to use key features:</strong>
+            <ul>
+                <li><strong>Theme:</strong> Click the floating Theme button (top-right) to toggle light/dark; the selection is saved to <code>localStorage</code>.</li>
+                <li><strong>Voice:</strong> Click the mic (<code>voiceBtn</code>) and allow microphone access; say a phrase like "I spent 50 on tea today" or use the wake word ("Hey Tracker") then speak a command.</li>
+                <li><strong>Chat:</strong> Type in the chat input and click Send — the message is parsed by <code>parseMessage()</code> and added if it contains an amount.</li>
+            </ul>
+        </li>
     </ul>
     <p><a href="index.html" class="back-link">&larr; Back to home</a></p>
 </body>
