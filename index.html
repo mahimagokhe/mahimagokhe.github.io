@@ -7,38 +7,54 @@
     <title>Mahima Gokhe - Frontend Engineer</title>
     <style>
         :root {
-            /* Professional, high-contrast palette (light mode) */
-            --primary-color: #0f1724;   /* near-black slate for primary text */
-            --secondary-color: #ffffff; /* secondary (light) */
-            --accent-color: #1e40af;    /* indigo blue accent */
-            --background-color: #fbfdff;/* very light background */
-            --border-color: #e6edf3;    /* subtle border */
-            --header-bg: #f1f5ff;       /* pale indigo header */
-            --card-bg: #ffffff;         /* card background in light mode */
-            --text-color: #0f1724;      /* card text color */
+            --primary-color: #0f172a;
+            --secondary-color: #ffffff;
+            --accent-color: #4f46e5;
+            --accent-strong: #312e81;
+            --accent-soft: #e0e7ff;
+            --accent-cyan: #38bdf8;
+            --background-color: #f4f7fb;
+            --background-gradient: radial-gradient(circle at top, rgba(79, 70, 229, 0.12), transparent 38%), linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
+            --border-color: #dfe7f5;
+            --header-bg: #eef2ff;
+            --card-bg: #ffffff;
+            --surface-soft: rgba(79, 70, 229, 0.06);
+            --text-color: #0f172a;
+            --muted-color: #475569;
+            --shadow-soft: 0 10px 32px rgba(15, 23, 42, 0.06);
+            --shadow-strong: 0 18px 48px rgba(79, 70, 229, 0.16);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
             line-height: 1.6;
             color: var(--primary-color);
-            background-color: var(--background-color);
-            max-width: 800px;
+            background: var(--background-gradient);
+            width: min(100%, 1200px);
+            min-height: 100vh;
             margin: 0 auto;
-            padding: 20px;
-            transition: background-color 0.3s, color 0.3s;
+            padding: 20px clamp(16px, 3vw, 32px) 40px;
+            box-sizing: border-box;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body.dark-mode {
-            /* Dark-mode palette tuned for readability */
-            --primary-color: #e6eef8;   /* light text */
-            --secondary-color: #0f1724; /* dark underlying */
-            --accent-color: #60a5fa;    /* lighter indigo for accents */
-            --background-color: #071133;/* deep navy background */
-            --border-color: #23304a;    /* soft dark border */
-            --header-bg: rgba(12,24,48,0.6); /* subtle header in dark mode */
-            --card-bg: #0f1b2d;         /* dark card background */
-            --text-color: #e6eef8;      /* card text color in dark mode */
+            --primary-color: #e2e8f0;
+            --secondary-color: #0b1220;
+            --accent-color: #8b5cf6;
+            --accent-strong: #c4b5fd;
+            --accent-soft: rgba(139, 92, 246, 0.16);
+            --accent-cyan: #22d3ee;
+            --background-color: #020817;
+            --background-gradient: radial-gradient(circle at top, rgba(139, 92, 246, 0.2), transparent 35%), linear-gradient(180deg, #020817 0%, #0b1220 100%);
+            --border-color: rgba(148, 163, 184, 0.18);
+            --header-bg: rgba(15, 23, 42, 0.9);
+            --card-bg: rgba(15, 23, 42, 0.9);
+            --surface-soft: rgba(139, 92, 246, 0.08);
+            --text-color: #e2e8f0;
+            --muted-color: #94a3b8;
+            --shadow-soft: 0 10px 30px rgba(2, 8, 23, 0.38);
+            --shadow-strong: 0 20px 48px rgba(139, 92, 246, 0.18);
         }
 
         h1,
@@ -82,6 +98,17 @@
             100% { transform: translateY(0) scale(1); opacity: 1; }
         }
 
+        @keyframes panelReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(18px) scale(0.985);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         .name-pop, .subtitle-pop {
             display: inline-block;
             opacity: 0;
@@ -105,6 +132,54 @@
 
         @media (prefers-reduced-motion: reduce) {
             .name-pop, .subtitle-pop { animation: none; opacity: 1; transform: none; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                width: 100%;
+                padding: 16px 14px 30px;
+            }
+
+            .theme-switch-wrapper {
+                position: static;
+                justify-content: flex-end;
+                margin-bottom: 10px;
+            }
+
+            .tabs {
+                justify-content: flex-start;
+            }
+
+            .tab-button {
+                flex: 1 1 calc(50% - 10px);
+                text-align: center;
+            }
+
+            .header {
+                margin-bottom: 24px;
+            }
+
+            h1 {
+                font-size: 2.1em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-card,
+            .flip-front,
+            .flip-back {
+                min-height: 260px;
+            }
         }
 
         table {
@@ -132,9 +207,105 @@
             padding-left: 20px;
         }
 
-        .header {
+.header {
             text-align: center;
             margin-bottom: 40px;
+        }
+
+        .hero-panel {
+            display: grid;
+            grid-template-columns: 1.45fr 0.95fr;
+            gap: 18px;
+            align-items: stretch;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.06), rgba(56, 189, 248, 0.08));
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: clamp(18px, 2vw, 28px);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-panel::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--accent-color), var(--accent-cyan));
+            border-radius: 12px;
+        }
+
+        .hero-copy {
+            text-align: left;
+            padding-left: 18px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(79, 70, 229, 0.08);
+            border: 1px solid rgba(79, 70, 229, 0.14);
+            color: var(--accent-color);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hero-panel h1 {
+            border: none;
+            margin: 0 0 10px;
+            padding: 0;
+            text-align: left;
+        }
+
+        .hero-panel h3 {
+            border: none;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(120px, 1fr));
+            gap: 12px;
+            align-content: center;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-start;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+        }
+
+        body.dark-mode .stat-card {
+            background: rgba(15, 23, 42, 0.78);
+        }
+
+        .stat-number {
+            font-size: clamp(1.5rem, 2vw, 2rem);
+            font-weight: 800;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--muted-color);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
         }
 
         .footer {
@@ -142,6 +313,100 @@
             margin-top: 40px;
             font-size: 0.9em;
             color: #666;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0 24px;
+            justify-content: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.35);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+        }
+
+        .tab-button {
+            position: relative;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--muted-color);
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            transition: all 0.25s ease;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .tab-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(56, 189, 248, 0.08));
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: -1;
+        }
+
+        .tab-button::after {
+            content: "";
+            position: absolute;
+            inset: auto 12px 8px 12px;
+            height: 3px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.25s ease;
+            opacity: 0.8;
+        }
+
+        .tab-button:hover {
+            color: var(--accent-color);
+            border-color: rgba(79, 70, 229, 0.18);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.08);
+        }
+
+        .tab-button:hover::before,
+        .tab-button.active::before {
+            opacity: 1;
+        }
+
+        .tab-button:hover::after,
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-cyan));
+            border-color: transparent;
+            color: var(--secondary-color);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .tab-button:focus-visible {
+            outline: 3px solid rgba(79, 70, 229, 0.25);
+            outline-offset: 2px;
+        }
+
+        .tab-panel {
+            display: none;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.28s ease, transform 0.28s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: panelReveal 0.38s cubic-bezier(0.2, 0.9, 0.2, 1) both;
         }
 
         .theme-switch-wrapper {
@@ -217,131 +482,553 @@
             border-radius: 50%;
         }
 
-        .animated {
+        .animated,
+        .animated-card {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            transform: translateY(18px);
+            transition: opacity 0.45s ease-out, transform 0.45s ease-out;
         }
 
-        .animated.visible {
+        .animated.visible,
+        .animated-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
+        .animated-card {
+            transition-delay: 0.05s;
+        }
+
+        .overview-card,
+        .project,
+        .skill-card,
+        .experience-item,
+        .cert-item {
+            animation: none;
+        }
+
+        .tab-panel {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.62);
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: 24px 22px;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(10px);
+        }
+
+        body.dark-mode .tab-panel {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .tab-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto auto 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-cyan), #a78bfa);
+            opacity: 0.9;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
         .project {
-            margin-bottom: 20px;
-            border-left: 3px solid var(--accent-color);
-            padding-left: 15px;
+            display: grid;
+            grid-template-rows: 170px 1fr;
+            margin-bottom: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.04);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
+        .project:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 32px rgba(15, 23, 42, 0.08);
+            border-color: rgba(79, 70, 229, 0.2);
+        }
+
+        .project-visual {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.9), rgba(56, 189, 248, 0.75));
+        }
+
+        .project-visual::before,
+        .project-visual::after {
+            content: "";
+            position: absolute;
+            inset: auto 16px 16px 16px;
+            height: 56%;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(2px);
+        }
+
+        .project-visual::after {
+            inset: 18px 20px auto auto;
+            width: 90px;
+            height: 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .project-visual.visual-dashboard {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.88), rgba(59, 130, 246, 0.72));
+        }
+
+        .project-visual.visual-weather {
+            background: linear-gradient(135deg, rgba(14, 116, 144, 0.9), rgba(34, 211, 238, 0.7));
+        }
+
+        .project-visual.visual-expense {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(168, 85, 247, 0.72));
+        }
+
+        .project-visual span {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #fff;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .project-content {
+            padding: 18px 18px 16px;
         }
 
         .project h3 {
             border-bottom: none;
             margin-bottom: 5px;
+            padding-bottom: 0;
+        }
+
+        .project-meta {
+            display: inline-block;
+            background: rgba(30, 64, 175, 0.08);
+            border: 1px solid rgba(30, 64, 175, 0.14);
+            border-radius: 999px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin: 12px 0 14px;
+        }
+
+        .metric-pill {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 10px 8px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(79, 70, 229, 0.06), rgba(255,255,255,0.02));
+            border: 1px solid rgba(79, 70, 229, 0.12);
+        }
+
+        .metric-pill strong {
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+
+        .metric-pill small {
+            font-size: 0.76rem;
+            color: var(--muted-color);
+            line-height: 1.45;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .section-header .section-kicker {
+            display: inline-block;
+            background: rgba(30, 64, 175, 0.08);
+            color: var(--accent-color);
+            border: 1px solid rgba(30, 64, 175, 0.12);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 24px 0 18px;
+        }
+
+        .overview-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(30, 64, 175, 0.25);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        .overview-card .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .overview-card h4 {
+            margin: 0 0 8px;
+            border: none;
+            padding: 0;
+            color: var(--accent-color);
+            font-size: 1.05rem;
+        }
+
+        .overview-card p {
+            margin: 0;
+            font-size: 0.96rem;
+        }
+
+        .overview-focus {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 18px;
+            margin: 18px 0 24px;
+        }
+
+        .focus-panel,
+        .impact-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+        }
+
+        .focus-panel h3,
+        .impact-panel h3 {
+            border-bottom: none;
+            margin: 0 0 14px;
+            padding: 0;
+        }
+
+        .focus-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .focus-list li {
+            background: rgba(30, 64, 175, 0.06);
+            border: 1px solid rgba(30, 64, 175, 0.12);
+            color: var(--primary-color);
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .impact-panel .mini-stat {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .impact-panel .mini-stat:last-child {
+            border-bottom: none;
+        }
+
+        .mini-stat strong {
+            font-size: 1.05rem;
+            color: var(--accent-color);
+        }
+
+        .profile-intro {
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .overview-focus {
+                grid-template-columns: 1fr;
+            }
         }
         
         /* Skills grid (flip cards) */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 18px;
             margin-top: 12px;
-            grid-auto-rows: 1fr; /* make grid rows equal height */
+            align-items: stretch;
         }
 
         .skill-card {
-            perspective: 1100px;
-            min-height: 320px; /* increase to fit tags without scrolling */
             position: relative;
-            border-radius: 12px;
-            overflow: visible;
-            transition: transform 220ms ease;
-            display: flex;
+            height: 290px;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 220ms ease, box-shadow 220ms ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 26px rgba(30, 64, 175, 0.08);
         }
 
         .flip {
             position: relative;
             width: 100%;
             height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(.2,.9,.3,1);
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
         }
-
-        .flip.is-flipped { transform: rotateY(180deg); }
 
         .flip-front,
         .flip-back {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
             position: absolute;
             inset: 0;
-            padding: 14px;
-            border-radius: 10px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            transition: transform 0.38s ease, opacity 0.38s ease, visibility 0.38s ease;
         }
 
         .flip-front {
-            background: transparent; /* flat look */
-            border: 1px solid rgba(0,0,0,0.06);
-            padding: 18px;
-            transition: opacity 220ms ease, transform 220ms ease;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:flex-start;
-            height:100%;
-            box-sizing:border-box;
-            background-color: var(--card-bg, #ffffff); /* light card bg */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 18px 18px 16px;
+            background: linear-gradient(180deg, rgba(30, 64, 175, 0.05), rgba(255,255,255,0.02));
             color: var(--text-color, #222);
-            box-shadow: 0 6px 18px rgba(15,15,15,0.04);
+            opacity: 1;
+            visibility: visible;
         }
 
         .flip-back {
-            background: transparent; /* flat look */
-            border: 1px solid rgba(0,0,0,0.06);
-            transform: rotateY(180deg);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding: 20px;
-            transition: opacity 220ms ease, transform 220ms ease;
-            height:100%;
-            box-sizing:border-box;
-            background-color: var(--card-bg, #ffffff);
-            color: var(--text-color, #222);
-            box-shadow: 0 6px 18px rgba(15,15,15,0.04);
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 18px 18px 12px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(105%);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.04), rgba(30, 64, 175, 0.08));
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-padding-top: 12px;
         }
 
-        /* hide/show faces explicitly when flipped to avoid overlap */
-        .flip-front { opacity: 1; pointer-events: auto; }
-        .flip-back { opacity: 0; pointer-events: none; }
-        .flip.is-flipped .flip-front { opacity: 0; pointer-events: none; }
-        .flip.is-flipped .flip-back { opacity: 1; pointer-events: auto; }
+        .flip-back > div {
+            width: 100%;
+            min-height: 100%;
+        }
 
-        .skill-name { font-weight:800; color:var(--accent-color); margin-bottom:8px; font-size:18px; }
-        .skill-desc { font-size:14px; color:var(--primary-color); margin-bottom:8px; max-width:100%; }
+        .flip.is-flipped .flip-front {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+        }
+
+        .flip.is-flipped .flip-back {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .skill-name {
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 18px;
+            line-height: 1.3;
+        }
+
+        .skill-desc {
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            max-width: 100%;
+            line-height: 1.6;
+        }
+
+        .skill-topline {
+            width: 42px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent-color), #93c5fd);
+            margin-bottom: 14px;
+        }
+
+        .flip-toggle {
+            align-self: flex-start;
+            margin-top: 18px;
+            background: rgba(30, 64, 175, 0.08);
+            border: 1px solid rgba(30, 64, 175, 0.18);
+            color: var(--accent-color);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .flip-toggle:hover {
+            background: rgba(30, 64, 175, 0.12);
+            transform: translateY(-1px);
+        }
 
         .tag-list {
             display:flex;
             flex-wrap:wrap;
-            gap:10px 14px;
+            gap:8px 10px;
             justify-content:flex-start;
-            align-items:center;
-            padding:6px 8px;
+            align-items:flex-start;
             width:100%;
+            box-sizing: border-box;
         }
+
         .tag {
-            padding:8px 12px;
+            padding:7px 10px;
             border-radius:999px;
-            background: transparent; /* no fill */
+            background: rgba(79, 70, 229, 0.06);
             color: var(--primary-color);
             font-weight:600;
-            font-size:14px;
-            border:1px solid var(--border-color, rgba(0,0,0,0.08));
-            white-space:nowrap;
+            font-size:13px;
+            border:1px solid rgba(79, 70, 229, 0.12);
+            white-space: normal;
+            word-break: break-word;
             text-align:center;
+            max-width: 100%;
         }
-        /* primary chips use same neutral styling to keep consistent color */
-        .tag.primary { border-color: rgba(0,0,0,0.08); color: var(--text-color, #222); font-weight:600 }
+
+        .tag-list .tag:first-child,
+        .tag.featured,
+        .tag.primary {
+            background: rgba(79, 70, 229, 0.12);
+            color: var(--primary-color);
+            border-color: rgba(79, 70, 229, 0.2);
+            box-shadow: 0 8px 18px rgba(79, 70, 229, 0.08);
+            font-weight: 700;
+        }
+
+        .experience-stack {
+            display: grid;
+            gap: 18px;
+        }
+
+        .experience-item,
+        .cert-item {
+            position: relative;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(30,64,175,0.02), rgba(255,255,255,0.02));
+            padding: 18px 18px 16px 18px;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.04);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .experience-item:hover,
+        .cert-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 28px rgba(15, 23, 42, 0.07);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .experience-role {
+            margin: 0;
+            border: none;
+            padding: 0;
+            font-size: 1.25rem;
+        }
+
+        .duration-badge {
+            background: rgba(30, 64, 175, 0.08);
+            color: var(--accent-color);
+            border: 1px solid rgba(30, 64, 175, 0.12);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .cert-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .cert-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .cert-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--accent-color), #7c3aed);
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 20px rgba(30, 64, 175, 0.18);
+            flex-shrink: 0;
+        }
 
         .progress { height:8px; background:rgba(0,0,0,0.06); border-radius:8px; overflow:hidden; margin-top:10px; }
         .progress > i { display:block; height:100%; background:linear-gradient(90deg,var(--accent-color),#9966CC); }
@@ -370,251 +1057,606 @@
         </label>
     </div>
 
-    <div class="header animated">
-        <h1>Hi, I'm <span class="name-pop">Mahima Gokhe</span> 👋</h1>
-        <h3><span class="subtitle-pop">Frontend Engineer | Angular Specialist | Systems Design & Performance</span></h3>
+    <div class="tabs" role="tablist" aria-label="Profile sections">
+        <button class="tab-button active" type="button" data-tab="overview" role="tab" aria-selected="true" aria-controls="overview-panel" id="overview-tab">Overview</button>
+        <button class="tab-button" type="button" data-tab="skills" role="tab" aria-selected="false" aria-controls="skills-panel" id="skills-tab">Skills</button>
+        <button class="tab-button" type="button" data-tab="experience" role="tab" aria-selected="false" aria-controls="experience-panel" id="experience-tab">Experience</button>
+        <button class="tab-button" type="button" data-tab="projects" role="tab" aria-selected="false" aria-controls="projects-panel" id="projects-tab">Projects</button>
+        <button class="tab-button" type="button" data-tab="certifications" role="tab" aria-selected="false" aria-controls="certifications-panel" id="certifications-tab">Certifications</button>
     </div>
 
-    <p class="animated">
-        Frontend Engineer specializing in scalable Angular applications with strong expertise in system design,
-        performance optimization, and reusable architecture patterns. Proven track record of delivering
-        data-driven product features that enhance user engagement, reduce latency, and improve maintainability.
-        Experienced in working within fast-paced Agile teams, driving technical improvements, and maintaining
-        high standards of code quality and engineering excellence.
-    </p>
-
-    <ul class="animated">
-        <li>🔭 <strong>Current Role:</strong> Senior Frontend Developer at <strong>NielsenIQ</strong></li>
-        <li>🚀 <strong>Core Expertise:</strong> Angular, TypeScript, RxJS, and D3.js</li>
-        <li>💡 <strong>Key Achievement:</strong> Delivered complex Angular features end-to-end, ensuring scalability and
-            high performance.</li>
-    </ul>
-
-    <div class="download-resume animated">
-        <a class="btn-download" href="Mahima_Gokhe_4+_yrs_AngularDeveloper (1).pdf" download="Mahima_Gokhe_Resume.pdf" aria-label="Download Mahima Gokhe resume">Download Resume (PDF)</a>
-    </div>
-
-    <hr>
-
-    <div class="animated">
-        <h2>🛠 Technical Skills</h2>
-
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="flip" role="group" aria-label="Frontend skill card">
-                    <div class="flip-front">
-                        <div class="skill-name">Frontend</div>
-                        <div class="skill-desc">Component-driven UI, performance & accessibility focus.</div>
-                        
-                        <button class="flip-toggle" aria-pressed="false" tabindex="0">Flip <span aria-hidden="true">🔁</span></button>
-                    </div>
-
-                    <div class="flip-back" aria-hidden="true">
-                        <div>
-                            <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Frontend — Tech</div>
-                            <div class="tag-list" aria-hidden="false">
-                                <span class="tag primary">Angular</span>
-                                <span class="tag">TypeScript</span>
-                                <span class="tag">JavaScript</span>
-                                <span class="tag">HTML5</span>
-                                <span class="tag">CSS3</span>
-                                <span class="tag">SCSS</span>
-                                <span class="tag">RxJS</span>
-                            </div>
-                        </div>
-                    </div>
+    <section class="tab-panel active animated" id="overview-panel" role="tabpanel" aria-labelledby="overview-tab">
+        <div class="header animated">
+            <div class="hero-panel">
+                <div class="hero-copy">
+                    <div class="eyebrow">Frontend Engineer</div>
+                    <h1>Hi, I'm <span class="name-pop">Mahima Gokhe</span> 👋</h1>
+                    <h3><span class="subtitle-pop">Senior Angular Developer | TypeScript | Frontend Architecture & Performance</span></h3>
                 </div>
-            </div>
 
-            <div class="skill-card">
-                <div class="flip" role="group" aria-label="Architecture & Concepts skill card">
-                    <div class="flip-front">
-                        <div class="skill-name">Architecture & Concepts</div>
-                        <div class="skill-desc">Scalable module design, lazy-loading and reusable libraries.</div>
-                        
-                        <button class="flip-toggle" aria-pressed="false" tabindex="0">Flip <span aria-hidden="true">🔁</span></button>
+                <div class="hero-stats" aria-label="Career highlights">
+                    <div class="stat-card">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Years</span>
                     </div>
-
-                    <div class="flip-back" aria-hidden="true">
-                        <div>
-                            <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Architecture & Concepts — Tech</div>
-                            <div class="tag-list">
-                                <span class="tag primary">Component-Based Architecture</span>
-                                <span class="tag">Lazy Loading</span>
-                                <span class="tag">Change Detection Strategy</span>
-                                <span class="tag">Code Refactoring</span>
-                            </div>
-                        </div>
+                    <div class="stat-card">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">Components</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="flip" role="group" aria-label="Architecture skill card">
-                    <div class="flip-front">
-                        <div class="skill-name">API & Integration</div>
-                        <div class="skill-desc">REST integrations, HTTP clients and JSON handling.</div>
-                        
-                        <button class="flip-toggle" aria-pressed="false" tabindex="0">Flip <span aria-hidden="true">🔁</span></button>
+                    <div class="stat-card">
+                        <span class="stat-number">8+</span>
+                        <span class="stat-label">Projects</span>
                     </div>
-
-                    <div class="flip-back" aria-hidden="true">
-                        <div>
-                            <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">API & Integration — Tech</div>
-                            <div class="tag-list">
-                                <span class="tag primary">REST API Integration</span>
-                                <span class="tag">HTTP Client</span>
-                                <span class="tag">JSON Handling</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="flip" role="group" aria-label="Testing & Quality skill card">
-                    <div class="flip-front">
-                        <div class="skill-name">Testing & Quality</div>
-                        <div class="skill-desc">Unit and integration testing with CI-friendly workflows.</div>
-                        
-                        <button class="flip-toggle" aria-pressed="false" tabindex="0">Flip <span aria-hidden="true">🔁</span></button>
-                    </div>
-
-                    <div class="flip-back" aria-hidden="true">
-                        <div>
-                            <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Testing — Tools</div>
-                            <div class="tag-list">
-                                <span class="tag primary">Jasmine</span>
-                                <span class="tag">Karma</span>
-                                <span class="tag">Unit Testing</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-card">
-                <div class="flip" role="group" aria-label="Backend & Tools skill card">
-                    <div class="flip-front">
-                        <div class="skill-name">Backend & Tools</div>
-                        <div class="skill-desc">Familiar with backend integration and developer tooling.</div>
-                        
-                        <button class="flip-toggle" aria-pressed="false" tabindex="0">Flip <span aria-hidden="true">🔁</span></button>
-                    </div>
-
-                    <div class="flip-back" aria-hidden="true">
-                        <div>
-                            <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Backend & Tools — Tech</div>
-                            <div class="tag-list">
-                                <span class="tag primary">Node.js</span>
-                                <span class="tag">MySQL</span>
-                                <span class="tag">Git</span>
-                                <span class="tag">GitHub</span>
-                                <span class="tag">Bitbucket</span>
-                                <span class="tag">Jira</span>
-                                <span class="tag">Jenkins</span>
-                                <span class="tag">VS Code</span>
-                                <span class="tag">Agile</span>
-                                <span class="tag">Scrum</span>
-                            </div>
-                        </div>
+                    <div class="stat-card">
+                        <span class="stat-number">Agile</span>
+                        <span class="stat-label">Delivery</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="animated">
-        <h2>🤝 Soft Skills</h2>
-        <div class="tag-list" style="margin-top:12px;">
-            <span class="tag primary">Leadership</span>
-            <span class="tag">Ownership</span>
-            <span class="tag">End-to-end Feature Ownership</span>
-            <span class="tag">Mentoring</span>
-            <span class="tag">Accountability</span>
-            <span class="tag">Cross-Functional Collaboration</span>
-            <span class="tag">Communication</span>
-            <span class="tag">Requirement Analysis</span>
-            <span class="tag">Stakeholder Interaction</span>
-            <span class="tag">Problem Solving</span>
-            <span class="tag">Debugging</span>
-            <span class="tag">Analytical Thinking</span>
-            <span class="tag">Performance Troubleshooting</span>
-            <span class="tag">Time Management</span>
-            <span class="tag">Adaptability</span>
-            <span class="tag">Attention to Detail</span>
+        <div class="profile-intro animated">
+            <p>
+                I am a frontend engineer focused on building scalable, user-friendly digital products that perform well under real business pressure.
+                Over the last 5+ years, I have designed and delivered enterprise-grade Angular applications for data-heavy workflows, dashboards,
+                and customer-facing experiences where speed, maintainability, and clarity matter just as much as visual polish.
+            </p>
+            <p>
+                My work sits at the intersection of product thinking and engineering execution — turning complex requirements into clean interfaces,
+                modular code, and reliable user experiences. I enjoy solving the real challenges behind product growth: performance bottlenecks,
+                state complexity, code quality, and helping teams ship features that are both stable and scalable.
+            </p>
         </div>
 
-    <hr>
+        <div class="overview-grid animated">
+            <div class="overview-card">
+                <span class="card-icon">🏗️</span>
+                <h4>What I build</h4>
+                <p>Enterprise Angular applications, dashboards, internal tooling, and scalable UX systems that balance business complexity with clean interaction design.</p>
+            </div>
+            <div class="overview-card">
+                <span class="card-icon">⚡</span>
+                <h4>How I work</h4>
+                <p>I focus on reusable component design, modular architecture, performance tuning, and strong collaboration across product, QA, and backend teams.</p>
+            </div>
+            <div class="overview-card">
+                <span class="card-icon">📊</span>
+                <h4>Business value</h4>
+                <p>I help translate technical requirements into efficient features, reduced rework, better observability, and improved experience for end users.</p>
+            </div>
+            <div class="overview-card">
+                <span class="card-icon">🤝</span>
+                <h4>Team impact</h4>
+                <p>From code review to sprint delivery, I contribute with ownership, clarity, and a practical eye for production readiness and maintainability.</p>
+            </div>
+        </div>
 
-    <div class="animated">
-        <h2>💼 Professional Experience</h2>
+        <div class="overview-focus animated">
+            <div class="focus-panel">
+                <h3>Current focus</h3>
+                <ul class="focus-list">
+                    <li>Angular architecture</li>
+                    <li>TypeScript systems</li>
+                    <li>RxJS & state flow</li>
+                    <li>Performance optimization</li>
+                    <li>Reusable components</li>
+                    <li>Data visualization</li>
+                    <li>API integration</li>
+                    <li>Production issue resolution</li>
+                </ul>
+            </div>
 
-        <h3><strong>NielsenIQ</strong> | Senior Frontend Developer</h3>
-        <p><em>Sep 2025 – Present</em></p>
-        <ul>
-            <li>Led peer code reviews and enforced best practices in component-based architecture.</li>
-            <li>Optimized application responsiveness for large datasets using change detection strategies.</li>
-            <li>Collaborated with cross-functional teams to implement seamless REST API integrations.</li>
+            <div class="impact-panel">
+                <h3>Impact snapshot</h3>
+                <div class="mini-stat">
+                    <span>Angular</span>
+                    <strong>14 → 22</strong>
+                </div>
+                <div class="mini-stat">
+        <span>Optimize</span>
+        <strong>UI Performance</strong>
+    </div>
+
+    <div class="mini-stat">
+        <span>Integrate</span>
+        <strong>REST APIs</strong>
+    </div>
+            </div>
+        </div>
+
+        <ul class="animated">
+            <li>🔭 <strong>Current Role:</strong> Senior Frontend Developer at <strong>NielsenIQ</strong>, building scalable frontend experiences for complex business workflows.</li>
+            <li>🚀 <strong>Core Expertise:</strong> Angular, TypeScript, JavaScript, RxJS, NgRx, Angular Signals, REST APIs, D3.js, and architecture-level frontend optimization.</li>
+            <li>💡 <strong>Key Strength:</strong> Delivering feature-rich Angular solutions end-to-end with a focus on maintainability, code quality, and high-performance user experiences.</li>
         </ul>
 
-        <h3><strong>Tata Consultancy Services (TCS)</strong> | Frontend Developer</h3>
-        <p><em>Oct 2021 – Aug 2025</em></p>
-        <p><strong>Project: NIQ Discover - Data Visualization Platform</strong></p>
-        <ul>
-            <li>Built reusable and modular Angular components, improving development efficiency.</li>
-            <li>Increased code coverage through structured unit testing using Jasmine and Karma.</li>
-        </ul>
-
-        <p><strong>Project: Walmart E-Commerce Application</strong></p>
-        <ul>
-            <li>Developed responsive interactive dashboards using <strong>Angular and D3.js</strong>.</li>
-            <li>Reduced API rendering time by optimizing UI logic.</li>
-        </ul>
-    </div>
-
-    <hr>
-
-    <div class="animated">
-        <h2>🚀 Personal Projects</h2>
-        <div class="project">
-            <h3>📊 Admin Analytics & Data Visualization Dashboard</h3>
-            <p><em>Technologies: Angular, Firebase, Material-UI</em></p>
-            <p>Admin Analytics Dashboard is an enterprise-grade data visualization platform built with Angular, Angular Material, and Firebase. It provides administrators with interactive charts, KPI monitoring, advanced filtering, drill-down analytics, user management, role-based access control, reports, and audit tracking. The platform is designed to provide a Discover-style analytics experience where users can explore business data through configurable dashboards and interactive visualizations.</p>
-            <p><a href="admin-dashboard.html">More Details</a> | <a href="admin-dashboard.component.html">Live Demo</a></p>
+        <div class="download-resume animated">
+            <a class="btn-download" href="Mahima_5yrs_Angular_Developer.pdf" download="Mahima_Gokhe_Resume.pdf" aria-label="Download Mahima Gokhe resume">Download Resume (PDF)</a>
         </div>
-        <div class="project">
-            <h3>✅ Weather App</h3>
-            <p><em>Technologies: Angular, D3.js, Node.js</em></p>
-            <p>A weather dashboard built with Angular and D3.js that visualizes real-time forecast data, temperature
-                trends,
-                and weather alerts. Includes API integration, responsive charts, and a clean component-based UI for a
-                smooth
-                user experience.</p>
-            <p><a href="weather-app.html">More Details</a> | <a href="weather-app.component.html">Live Demo</a></p>
+    </section>
+
+    <section class="tab-panel" id="skills-panel" role="tabpanel" aria-labelledby="skills-tab">
+        <div class="animated">
+            <h2>🛠 Technical Skills</h2>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="Frontend skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">Frontend</div>
+                                <div class="skill-desc">Modern Angular UI engineering with type-safe, scalable frontend development.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Frontend — Tech</div>
+                                <div class="tag-list" aria-hidden="false">
+                                    <span class="tag">Angular (14, 17, 19)</span>
+                                    <span class="tag">TypeScript</span>
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">HTML5</span>
+                                    <span class="tag">CSS3</span>
+                                    <span class="tag">SCSS</span>
+                                    <span class="tag">Angular Signals</span>
+                                    <span class="tag">Reactive Forms</span>
+                                    <span class="tag">Angular Router</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="Architecture & Performance skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">Architecture & Performance</div>
+                                <div class="skill-desc">Scalable Angular architecture, optimization, and maintainable UI systems.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Architecture & Performance — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">Component-Based Architecture</span>
+                                    <span class="tag">Reusable Components</span>
+                                    <span class="tag">Lazy Loading</span>
+                                    <span class="tag">OnPush Change Detection</span>
+                                    <span class="tag">Change Detection Optimization</span>
+                                    <span class="tag">Code Splitting</span>
+                                    <span class="tag">Tree Shaking</span>
+                                    <span class="tag">Bundle Optimization</span>
+                                    <span class="tag">Responsive Design</span>
+                                    <span class="tag">Cross-Browser Compatibility</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="RxJS & State Management skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">RxJS & State Management</div>
+                                <div class="skill-desc">Reactive programming and async state flows for complex data-driven applications.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">RxJS & State Management — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">Observables</span>
+                                    <span class="tag">Subjects</span>
+                                    <span class="tag">BehaviorSubject</span>
+                                    <span class="tag">RxJS Operators</span>
+                                    <span class="tag">Reactive Programming</span>
+                                    <span class="tag">Asynchronous Programming</span>
+                                    <span class="tag">State Management</span>
+                                    <span class="tag">NgRx Store</span>
+                                    <span class="tag">Actions</span>
+                                    <span class="tag">Reducers</span>
+                                    <span class="tag">Selectors</span>
+                                    <span class="tag">Effects</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="API integration skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">API & Integration</div>
+                                <div class="skill-desc">RESTful services, backend integration, auth flows, and resilient API handling.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">API & Integration — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">REST APIs</span>
+                                    <span class="tag">Angular HttpClient</span>
+                                    <span class="tag">HTTP Interceptors</span>
+                                    <span class="tag">Authentication</span>
+                                    <span class="tag">Authorization</span>
+                                    <span class="tag">API Error Handling</span>
+                                    <span class="tag">Microservices Integration</span>
+                                    <span class="tag">Postman</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="Data visualization skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">Data Visualization</div>
+                                <div class="skill-desc">Interactive dashboards and data-driven UI experiences for enterprise analytics.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Data Visualization — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">D3.js</span>
+                                    <span class="tag">Interactive Dashboards</span>
+                                    <span class="tag">Data Visualization</span>
+                                    <span class="tag">Data-Driven UI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="Testing & Quality skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">Testing & Quality</div>
+                                <div class="skill-desc">Unit and component testing for reliable, production-ready Angular applications.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Testing — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">Jasmine</span>
+                                    <span class="tag">Karma</span>
+                                    <span class="tag">Unit Testing</span>
+                                    <span class="tag">Component Testing</span>
+                                    <span class="tag">Testable Architecture</span>
+                                    <span class="tag">Code Review</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="Backend & data skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">Backend, DB & Cloud</div>
+                                <div class="skill-desc">Java backend awareness, SQL data work, and cloud deployment fundamentals.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Backend, Databases & Cloud — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">Java</span>
+                                    <span class="tag">Spring Boot</span>
+                                    <span class="tag">Hibernate/JPA</span>
+                                    <span class="tag">JDBC</span>
+                                    <span class="tag">RESTful Services</span>
+                                    <span class="tag">Microservices</span>
+                                    <span class="tag">SQL</span>
+                                    <span class="tag">MySQL</span>
+                                    <span class="tag">PostgreSQL</span>
+                                    <span class="tag">MongoDB</span>
+                                    <span class="tag">AWS</span>
+                                    <span class="tag">ECS</span>
+                                    <span class="tag">S3</span>
+                                    <span class="tag">Docker</span>
+                                    <span class="tag">Jenkins</span>
+                                    <span class="tag">GitHub Actions</span>
+                                    <span class="tag">CI/CD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="AI and tooling skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">AI & Productivity</div>
+                                <div class="skill-desc">Developer productivity improvements with AI and modern collaboration tooling.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">AI & Tools — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">Generative AI</span>
+                                    <span class="tag">Prompt Engineering</span>
+                                    <span class="tag">GitHub Copilot</span>
+                                    <span class="tag">AI-Assisted Development</span>
+                                    <span class="tag">Git</span>
+                                    <span class="tag">GitHub</span>
+                                    <span class="tag">Bitbucket</span>
+                                    <span class="tag">Jira</span>
+                                    <span class="tag">Confluence</span>
+                                    <span class="tag">VS Code</span>
+                                    <span class="tag">npm</span>
+                                    <span class="tag">Angular CLI</span>
+                                    <span class="tag">Datadog</span>
+                                    <span class="tag">Coralogix</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="flip" role="group" aria-label="Methodology skill card">
+                        <div class="flip-front">
+                            <div>
+                                <div class="skill-topline"></div>
+                                <div class="skill-name">Methodologies</div>
+                                <div class="skill-desc">Agile delivery, code quality review, and SDLC execution in team environments.</div>
+                            </div>
+                            <button class="flip-toggle" aria-pressed="false" tabindex="0">View details <span aria-hidden="true">→</span></button>
+                        </div>
+
+                        <div class="flip-back" aria-hidden="true">
+                            <div>
+                                <div style="text-align:center;margin-bottom:10px;font-weight:700;color:var(--accent-color)">Methodologies — Tech</div>
+                                <div class="tag-list">
+                                    <span class="tag">Agile</span>
+                                    <span class="tag">Scrum</span>
+                                    <span class="tag">SDLC</span>
+                                    <span class="tag">Code Review</span>
+                                    <span class="tag">Continuous Integration</span>
+                                    <span class="tag">Continuous Delivery</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="project">
-            <h3>📋 Expense Tracker</h3>
-            <p><em>Technologies: Angular, AI, Firebase, Material-UI</em></p>
-            <p>An intelligent expense tracker built with Angular and AI-powered insights for spending trends, budget
-                suggestions, and automated receipt parsing.</p>
-            <p><a href="expense-tracker.html">More Details</a> | <a href="expense-tracker.component.html">Live Demo</a></p>
+
+        <div class="animated">
+            <h2>🤝 Soft Skills</h2>
+            <div class="tag-list" style="margin-top:12px;">
+                <span class="tag">Leadership</span>
+                <span class="tag">Ownership</span>
+                <span class="tag">End-to-end Feature Ownership</span>
+                <span class="tag">Mentoring</span>
+                <span class="tag">Accountability</span>
+                <span class="tag">Cross-Functional Collaboration</span>
+                <span class="tag">Communication</span>
+                <span class="tag">Requirement Analysis</span>
+                <span class="tag">Stakeholder Interaction</span>
+                <span class="tag">Problem Solving</span>
+                <span class="tag">Debugging</span>
+                <span class="tag">Analytical Thinking</span>
+                <span class="tag">Performance Troubleshooting</span>
+                <span class="tag">Time Management</span>
+                <span class="tag">Adaptability</span>
+                <span class="tag">Attention to Detail</span>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <hr>
+    <section class="tab-panel" id="experience-panel" role="tabpanel" aria-labelledby="experience-tab">
+        <div class="animated">
+            <div class="section-header">
+                <h2>💼 Professional Experience</h2>
+                <span class="section-kicker">Career Journey</span>
+            </div>
 
-    <div class="animated">
-        <h2>🏆 Certifications & Awards</h2>
-        <ul>
-            <li><strong>Microsoft Certified:</strong> Azure Administrator Associate</li>
-            <li><strong>Microsoft Certified:</strong> Azure Security Engineer Associate</li>
-            <li><strong>Angular Advanced Level Learning</strong></li>
-            <li><strong>Awards:</strong> "On-the-Spot Team Award" for exceptional project delivery.</li>
-        </ul>
-    </div>
+            <div class="experience-stack">
+                <article class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-role"><strong>NielsenIQ (NIQ)</strong> | Senior Frontend Developer</h3>
+                        <span class="duration-badge">Sep 2025 – Present</span>
+                    </div>
+                    <ul>
+                        <li>Develop and deliver scalable frontend features for NIQ Discover, an enterprise data visualization platform, using Angular, TypeScript, RxJS, Angular Signals, HTML5, CSS3, and SCSS.</li>
+                        <li>Design and develop 20+ reusable Angular components for enterprise workflows, improving UI consistency and reducing duplicate development effort across application features.</li>
+                        <li>Build responsive and data-driven user interfaces for complex business workflows and interactive visualization experiences, ensuring usability and cross-browser compatibility.</li>
+                        <li>Optimize data-intensive Angular screens using OnPush change detection, lazy loading, RxJS optimization, and rendering techniques, reducing unnecessary UI updates and improving application responsiveness.</li>
+                        <li>Integrate Angular applications with RESTful backend services using Angular HttpClient, HTTP Interceptors, asynchronous programming, authentication and authorization, and structured API error handling.</li>
+                        <li>Apply RxJS and reactive programming patterns to manage asynchronous data streams, API calls, subscriptions, and complex frontend workflows while minimizing unnecessary network requests.</li>
+                        <li>Analyze and troubleshoot frontend issues using browser developer tools, application logs, API debugging, and root-cause analysis to improve application stability and production reliability.</li>
+                        <li>Conduct peer code reviews and contribute to technical design discussions, ensuring adherence to clean coding standards, reusable architecture, scalability, and frontend best practices.</li>
+                        <li>Collaborate with Product, Backend, QA, UI/UX, and cross-functional teams to analyze requirements, estimate work, resolve technical issues, and deliver production-ready features within Agile/Scrum sprints.</li>
+                    </ul>
+                </article>
 
-    <hr>
+                <article class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-role"><strong>Tata Consultancy Services (TCS)</strong> | Frontend Developer</h3>
+                        <span class="duration-badge">Oct 2021 – Aug 2025</span>
+                    </div>
+                    <p><strong>Project: NIQ Discover – Data Visualization Platform</strong></p>
+                    <ul>
+                        <li>Built reusable and modular Angular components for a data-driven visualization platform, improving consistency, maintainability, and component reusability across application features.</li>
+                        <li>Developed responsive frontend features using Angular, TypeScript, RxJS, HTML5, CSS3, and SCSS while following component-based architecture and clean coding practices.</li>
+                        <li>Integrated frontend modules with REST APIs and collaborated with Backend and QA teams to deliver scalable, production-ready features.</li>
+                        <li>Refactored legacy frontend code to improve maintainability, reduce technical debt, and simplify future feature development.</li>
+                        <li>Increased application reliability through structured unit and component testing using Jasmine and Karma.</li>
+                        <li>Participated in code reviews, defect troubleshooting, requirement analysis, sprint planning, estimation, and Agile delivery activities.</li>
+                    </ul>
+
+                    <p><strong>Project: Walmart E-Commerce Application</strong></p>
+                    <ul>
+                        <li>Developed responsive and interactive dashboards using Angular, TypeScript, and D3.js to support data visualization and data-driven user experiences.</li>
+                        <li>Implemented reusable UI components and frontend enhancements while maintaining responsive design and cross-browser compatibility.</li>
+                        <li>Optimized Angular rendering and UI logic for data-intensive screens by improving change detection and frontend processing strategies.</li>
+                        <li>Integrated frontend functionality with backend REST APIs and handled asynchronous data flows using RxJS.</li>
+                        <li>Investigated and resolved UI defects and performance issues while collaborating with cross-functional development and QA teams.</li>
+                    </ul>
+                </article>
+            </div>
+    </section>
+
+    <section class="tab-panel" id="projects-panel" role="tabpanel" aria-labelledby="projects-tab">
+        <div class="animated">
+            <div class="section-header">
+                <h2>🚀 Personal Projects</h2>
+                <span class="section-kicker">Case Studies</span>
+            </div>
+
+            <div class="projects-grid">
+                <article class="project animated-card">
+                    <div class="project-visual visual-dashboard"><span>Analytics</span></div>
+                    <div class="project-content">
+                        <span class="project-meta">Angular • Firebase • Data Analytics</span>
+                        <div class="project-metrics">
+                            <div class="metric-pill"><strong>Challenge</strong><small>Actionable KPI visibility</small></div>
+                            <div class="metric-pill"><strong>Solution</strong><small>Role-based dashboard UX</small></div>
+                            <div class="metric-pill"><strong>Outcome</strong><small>Faster business decisions</small></div>
+                        </div>
+                        <h3>📊 Admin Analytics & Data Visualization Dashboard</h3>
+                        <p><em>Technologies: Angular, Firebase, Material-UI</em></p>
+                        <p><strong>What it is:</strong> An enterprise-style admin dashboard designed to help business teams monitor performance, track KPIs, and analyze operational trends in real time.</p>
+                        <p><strong>Core functionality:</strong> It includes interactive charts, summary cards, role-based access, advanced filter controls, report generation, user management, audit tracking, and drill-down views for deeper analytics.</p>
+                        <p><strong>Why it matters:</strong> It demonstrates the ability to build data-heavy, business-focused interfaces that convert raw numbers into actionable insights while keeping the experience intuitive and scalable for teams.</p>
+                        <p><a href="admin-dashboard.html">More Details</a> | <a href="admin-dashboard.component.html">Live Demo</a></p>
+                    </div>
+                </article>
+
+                <article class="project animated-card">
+                    <div class="project-visual visual-weather"><span>Forecast</span></div>
+                    <div class="project-content">
+                        <span class="project-meta">Angular • D3.js • Live APIs</span>
+                        <div class="project-metrics">
+                            <div class="metric-pill"><strong>Challenge</strong><small>Complex weather trends</small></div>
+                            <div class="metric-pill"><strong>Solution</strong><small>Live data visualization</small></div>
+                            <div class="metric-pill"><strong>Outcome</strong><small>Clear forecast context</small></div>
+                        </div>
+                        <h3>✅ Weather App</h3>
+                        <p><em>Technologies: Angular, D3.js, Node.js</em></p>
+                        <p><strong>What it is:</strong> A responsive weather dashboard that helps users track daily and hourly weather conditions, temperature changes, and forecast trends for a selected location.</p>
+                        <p><strong>Core functionality:</strong> The app fetches live weather data from an external API, visualizes temperature and forecast changes using D3.js charts, highlights weather alerts, and presents the information in a clean, mobile-friendly dashboard layout.</p>
+                        <p><strong>Why it matters:</strong> This project reflects frontend engineering skills in API integration, data visualization, and building clean user interfaces for information-dense applications.</p>
+                        <p><a href="weather-app.html">More Details</a> | <a href="weather-app.component.html">Live Demo</a></p>
+                    </div>
+                </article>
+
+                <article class="project animated-card">
+                    <div class="project-visual visual-expense"><span>Finance</span></div>
+                    <div class="project-content">
+                        <span class="project-meta">Angular • AI • Finance</span>
+                        <div class="project-metrics">
+                            <div class="metric-pill"><strong>Challenge</strong><small>Budget visibility gaps</small></div>
+                            <div class="metric-pill"><strong>Solution</strong><small>Smart spending insights</small></div>
+                            <div class="metric-pill"><strong>Outcome</strong><small>Smarter financial decisions</small></div>
+                        </div>
+                        <h3>📋 Expense Tracker</h3>
+                        <p><em>Technologies: Angular, AI, Firebase, Material-UI</em></p>
+                        <p><strong>What it is:</strong> A smart personal finance dashboard designed to help users manage spending, review categories, and monitor budget health over time.</p>
+                        <p><strong>Core functionality:</strong> It includes transaction entry, category-wise expense summaries, monthly budget tracking, spending trend analysis, and AI-assisted insights that suggest patterns, highlight overspending, and recommend better budgeting decisions.</p>
+                        <p><strong>Why it matters:</strong> It demonstrates end-to-end product thinking: user-facing financial workflows, data-driven insights, and a modern interface built for everyday decision-making.</p>
+                        <p><a href="expense-tracker.html">More Details</a> | <a href="expense-tracker.component.html">Live Demo</a></p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="tab-panel" id="certifications-panel" role="tabpanel" aria-labelledby="certifications-tab">
+        <div class="animated">
+            <div class="section-header">
+                <h2>🏆 Certifications & Awards</h2>
+                <span class="section-kicker">Recognition</span>
+            </div>
+
+            <div class="cert-list">
+                <div class="cert-item">
+                    <div class="cert-badge">✓</div>
+                    <div>
+                        <strong>Microsoft Certified:</strong> Azure Administrator Associate
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-badge">✓</div>
+                    <div>
+                        <strong>Microsoft Certified:</strong> Azure Security Engineer Associate
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-badge">★</div>
+                    <div>
+                        <strong>Angular Advanced Level Learning</strong>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-badge">✦</div>
+                    <div>
+                        <strong>Introduction to Prompt Engineering for Generative AI</strong>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-badge">🏅</div>
+                    <div>
+                        <strong>Awards:</strong> "On-the-Spot Team Award" for exceptional project delivery.
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-badge">🏅</div>
+                    <div>
+                        <strong>Awards:</strong> "Applause for Team Award" for key feature contributions and effective team collaboration.
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-badge">🏅</div>
+                    <div>
+                        <strong>Awards:</strong> "Service and Commitment Award" for sustained project contribution and delivery excellence.
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-badge">🏅</div>
+                    <div>
+                        <strong>Awards:</strong> "Manager Appreciation" for exceeding performance expectations and demonstrating strong ownership.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="footer animated">
         <p>
@@ -625,7 +1667,29 @@
     <script>
         const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
         const currentTheme = localStorage.getItem('theme');
-        // Flip card interaction
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const target = button.dataset.tab;
+
+                tabButtons.forEach(btn => {
+                    const isActive = btn === button;
+                    btn.classList.toggle('active', isActive);
+                    btn.setAttribute('aria-selected', isActive.toString());
+                });
+
+                tabPanels.forEach(panel => {
+                    const isActive = panel.id === `${target}-panel`;
+                    panel.classList.toggle('active', isActive);
+                    panel.hidden = !isActive;
+                });
+            });
+        });
+
+        // Skill card interaction: fixed-size detail panel instead of a content-dependent flip
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.flip-toggle').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -633,13 +1697,16 @@
                     flip.classList.toggle('is-flipped');
                     const pressed = flip.classList.contains('is-flipped');
                     btn.setAttribute('aria-pressed', pressed.toString());
-                    // ensure front/back are exposed correctly for screen-readers and visibility
                     const front = flip.querySelector('.flip-front');
                     const back = flip.querySelector('.flip-back');
                     if (front) front.setAttribute('aria-hidden', pressed ? 'true' : 'false');
-                    if (back) back.setAttribute('aria-hidden', pressed ? 'false' : 'true');
-                    // update button label for clarity
-                    btn.innerHTML = pressed ? 'Back <span aria-hidden="true">⤺</span>' : 'Flip <span aria-hidden="true">🔁</span>';
+                    if (back) {
+                        back.setAttribute('aria-hidden', pressed ? 'false' : 'true');
+                        if (pressed) {
+                            back.scrollTop = 0;
+                        }
+                    }
+                    btn.innerHTML = pressed ? 'Hide details <span aria-hidden="true">←</span>' : 'View details <span aria-hidden="true">→</span>';
                 });
                 btn.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
@@ -648,14 +1715,14 @@
                     }
                 });
             });
-            // ensure initial aria-hidden states and button labels
+
             document.querySelectorAll('.flip').forEach(flip => {
                 const front = flip.querySelector('.flip-front');
                 const back = flip.querySelector('.flip-back');
                 const btn = flip.closest('.skill-card').querySelector('.flip-toggle');
                 if (front) front.setAttribute('aria-hidden', 'false');
                 if (back) back.setAttribute('aria-hidden', 'true');
-                if (btn) btn.innerHTML = 'Flip <span aria-hidden="true">🔁</span>';
+                if (btn) btn.innerHTML = 'View details <span aria-hidden="true">→</span>';
             });
         });
 
@@ -678,7 +1745,7 @@
 
         toggleSwitch.addEventListener('change', switchTheme, false);
 
-        const animatedEls = document.querySelectorAll('.animated');
+        const animatedEls = document.querySelectorAll('.animated, .animated-card');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -686,7 +1753,7 @@
                 }
             });
         }, {
-            threshold: 0.1
+            threshold: 0.12
         });
 
         animatedEls.forEach(el => {
