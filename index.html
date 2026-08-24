@@ -148,16 +148,21 @@
 
             .tabs {
                 justify-content: flex-start;
+                gap: 8px;
                 padding: 10px;
             }
 
             .tab-button {
-                flex: 1 1 calc(50% - 10px);
+                flex: 1 1 calc(33.333% - 8px);
+                min-width: 0;
                 text-align: center;
+                padding: 10px 10px;
+                font-size: 0.9rem;
             }
 
             .hero-panel {
                 grid-template-columns: 1fr;
+                gap: 14px;
             }
 
             .hero-copy {
@@ -170,16 +175,32 @@
 
             .projects-grid,
             .overview-focus,
-            .skills-grid {
+            .skills-grid,
+            .cert-list {
                 grid-template-columns: 1fr;
+                gap: 14px;
             }
 
             .project {
                 grid-template-rows: 150px 1fr;
             }
 
+            .project-content {
+                padding: 16px 14px 14px;
+            }
+
             .project-metrics {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 6px;
+                margin: 10px 0 12px;
+            }
+
+            .metric-pill {
+                padding: 9px 7px;
+            }
+
+            .metric-pill small {
+                font-size: 0.7rem;
             }
 
             .header {
@@ -187,7 +208,7 @@
             }
 
             .tab-panel {
-                padding: 20px 16px;
+                padding: 18px 14px;
             }
 
             .experience-header {
@@ -202,7 +223,7 @@
             .skill-card,
             .flip-front,
             .flip-back {
-                min-height: 260px;
+                min-height: 250px;
             }
         }
 
@@ -217,17 +238,45 @@
             }
 
             .tabs {
-                gap: 8px;
+                gap: 6px;
+                padding: 8px;
             }
 
             .tab-button {
-                flex: 1 1 100%;
-                padding: 10px 12px;
-                font-size: 0.92rem;
+                flex: 1 1 calc(50% - 6px);
+                padding: 8px 8px;
+                font-size: 0.82rem;
+                min-height: 38px;
+                border-radius: 10px;
+            }
+
+            .hero-panel {
+                padding: 14px 14px 16px;
+            }
+
+            .hero-copy {
+                gap: 6px;
+            }
+
+            .eyebrow {
+                margin-bottom: 8px;
+                padding: 5px 8px;
+                font-size: 0.68rem;
+            }
+
+            .hero-panel h1 {
+                margin: 0 0 6px;
+                line-height: 1.2;
+            }
+
+            .hero-panel h3 {
+                margin: 0;
+                line-height: 1.4;
             }
 
             .hero-stats {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
             }
 
             h1 {
@@ -254,17 +303,71 @@
                 font-size: 0.8rem;
             }
 
+            .project {
+                grid-template-rows: 120px 1fr;
+                border-radius: 14px;
+                box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+            }
+
             .project-content {
-                padding: 16px 14px 14px;
+                padding: 14px 12px 12px;
+            }
+
+            .project h3 {
+                font-size: 1.05rem;
+                margin: 0 0 6px;
+            }
+
+            .overview-card,
+            .experience-item,
+            .cert-item,
+            .skill-card,
+            .flip {
+                border-radius: 14px;
+                box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+            }
+
+            .project p {
+                font-size: 0.82rem;
+                line-height: 1.5;
+                margin: 0 0 8px;
+            }
+
+            .project-meta {
+                font-size: 0.72rem;
+                padding: 5px 8px;
+            }
+
+            .project-metrics {
+                grid-template-columns: 1fr;
+                gap: 6px;
             }
 
             .project-visual {
                 min-height: 110px;
+                padding: 12px;
             }
 
             .btn-download {
                 width: 100%;
                 text-align: center;
+            }
+
+            .skill-card {
+                height: 260px;
+            }
+
+            .flip-front,
+            .flip-back {
+                padding: 14px 12px 12px;
+            }
+
+            .skill-name {
+                font-size: 1.05rem;
+            }
+
+            .skill-desc {
+                font-size: 0.8rem;
             }
         }
 
@@ -1034,7 +1137,7 @@
             max-width: 100%;
         }
 
-        .tag-list .tag:first-child,
+        /* .tag-list .tag:first-child,
         .tag.featured,
         .tag.primary {
             background: rgba(79, 70, 229, 0.12);
@@ -1042,7 +1145,7 @@
             border-color: rgba(79, 70, 229, 0.2);
             box-shadow: 0 8px 18px rgba(79, 70, 229, 0.08);
             font-weight: 700;
-        }
+        } */
 
         .experience-stack {
             display: grid;
