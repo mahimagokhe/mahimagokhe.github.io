@@ -20,14 +20,15 @@
         .feature-list { margin: 16px 0 24px; padding-left: 20px; }
         .feature-list li { margin-bottom: 10px; }
         .back-link { margin-top: 24px; display: inline-block; }
+        :root{--accent:#7c3aed;--ink:#211b2b;--muted:#6f687b;--paper:#faf8ff;--panel:#fff;--line:#e9e3f2;--shadow:0 18px 45px rgba(65,38,105,.09)}*{box-sizing:border-box}body{max-width:980px;padding:30px 24px 60px;background:radial-gradient(circle at 90% 0,#eee6ff,transparent 34%),var(--paper);color:var(--ink);font-family:Georgia,serif}body:before{content:'CASE STUDY';display:block;color:var(--accent);font:700 12px 'Trebuchet MS',sans-serif;letter-spacing:.16em;margin-bottom:26px}h1{font-size:clamp(36px,7vw,68px);line-height:1.02;letter-spacing:-.04em;margin:0 0 16px;color:var(--ink)}h2{font-size:28px;margin-top:38px;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:10px}a{color:var(--accent);font-weight:600}.meta{display:flex;flex-wrap:wrap;gap:8px;color:var(--accent);margin:20px 0 28px}.meta strong{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 12px;font:700 12px 'Trebuchet MS',sans-serif}.hero{background:var(--ink);color:#fff;border-radius:20px;padding:24px;margin:20px 0 34px;box-shadow:var(--shadow)}.hero strong{display:block;color:#d8c8ff;font:700 12px 'Trebuchet MS',sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}.hero p{margin:0;color:#eee8f8}.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.insight{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 8px 22px rgba(65,38,105,.04)}.insight b{display:block;font:700 12px 'Trebuchet MS',sans-serif;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}.insight span{font-size:15px;color:var(--muted)}details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:11px 0;box-shadow:0 6px 18px rgba(65,38,105,.04)}summary{cursor:pointer;font-weight:700;color:var(--accent)}details p{color:var(--muted);margin:12px 0 0}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.action{display:inline-block;padding:11px 15px;border-radius:9px;background:var(--accent);color:#fff;text-decoration:none}.action.secondary{background:var(--panel);border:1px solid var(--line);color:var(--accent)}@media(max-width:600px){body{padding:22px 16px 44px}.insight-grid{grid-template-columns:1fr}h2{font-size:24px}}
     </style>
 </head>
 <body>
-    <h1>📊 SpendSense — Expense Tracker</h1>
-    <p><strong>Technologies:</strong> HTML, CSS, JavaScript (vanilla), Canvas, Web Speech API, localStorage</p>
-    <p>This is a lightweight, client-side expense tracker focused on quick entry and visibility. It supports
-        typed and voice/chat input, animated category charts, light/dark theming, per-month budgets stored
-        in <code>localStorage</code>, and a simple Excel export (SpreadsheetML) for backups.</p>
+    <h1>SpendSense</h1>
+    <p><strong>Expense & personal finance workflow</strong></p><p>This client-side finance tool turns quick typed or spoken inputs into structured spending records, giving users immediate budget and category visibility without requiring a server.</p>
+    <div class="meta"><strong>Vanilla JavaScript</strong><strong>Canvas charts</strong><strong>Web Speech API</strong><strong>localStorage</strong></div>
+    <section class="hero"><strong>The product problem</strong><p>Expense capture often fails when it takes too many fields or screens. SpendSense focuses on fast entry, natural language, voice interaction, and trustworthy local persistence so users can record a purchase in the moment and understand their month later.</p></section>
+    <div class="insight-grid"><div class="insight"><b>Capture</b><span>Typed, chat-style, and voice-led expense entry</span></div><div class="insight"><b>Understand</b><span>Category charts, budgets, and month-level summaries</span></div><div class="insight"><b>Take away</b><span>SpreadsheetML export for portable backups</span></div></div>
     <h2>Key Features</h2>
     <ul class="feature-list">
         <li>Voice-driven expense entry using the Web Speech API (click the mic or say the wake word).</li>
@@ -59,6 +60,8 @@
             </ul>
         </li>
     </ul>
-    <p><a href="index.html" class="back-link">&larr; Back to home</a></p>
+    <h2>Engineering decisions</h2><details open><summary>Natural-language input pipeline</summary><p><code>parseMessage()</code> extracts amount, date, and category from free text before handing the normalized record to the same entry lifecycle as form input. This keeps chat and UI behavior consistent.</p></details><details><summary>Resilient local product architecture</summary><p>Month-scoped keys keep reads focused, theme state is isolated, and the browser-only design makes the demo usable without account setup or network availability.</p></details><details><summary>Interaction and accessibility</summary><p>Canvas visuals are paired with an HTML legend, while voice controls, theme state, edit, delete, and export actions expose a complete everyday workflow.</p></details>
+    <h2>Why it reflects experienced frontend work</h2><p>The interesting part is not the form itself: it is joining multiple input modes, parsing, derived financial views, persistence, export, and theme behavior without fragmenting the user experience. That is the same kind of state and interaction coordination found in larger enterprise workflows.</p>
+    <div class="actions"><a class="action" href="expense-tracker.component.html">Open interactive demo ↗</a><a class="action secondary" href="index.html">Back to portfolio</a></div>
 </body>
 </html>
