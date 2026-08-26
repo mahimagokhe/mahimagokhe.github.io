@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoodFlow Case Study | Mahima Gokhe</title>
+  <style>
+    :root{--ink:#202328;--muted:#667078;--paper:#f7f8f5;--panel:#fff;--green:#23785f;--mint:#b9e5d2;--line:#e1e8e3;--shadow:0 16px 42px rgba(32,35,40,.08)}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0,#dff5e9,transparent 34%),var(--paper);color:var(--ink);font:16px/1.65 Georgia,serif}.wrap{max-width:920px;margin:auto;padding:32px 24px 60px}.back{display:inline-block;color:var(--green);font:700 14px/1.2 'Trebuchet MS',sans-serif;text-decoration:none;margin-bottom:42px}.back:hover{text-decoration:underline}.kicker{color:var(--green);font:700 12px/1.2 'Trebuchet MS',sans-serif;letter-spacing:.14em;text-transform:uppercase}h1{font-size:clamp(36px,7vw,70px);line-height:1.02;margin:12px 0 18px;letter-spacing:-.03em}h2{font-size:29px;line-height:1.1;margin:38px 0 13px}p{max-width:760px}.lede{color:var(--muted);font-size:19px;max-width:700px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 34px}.tag{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 12px;font:700 12px 'Trebuchet MS',sans-serif;color:var(--green)}.hero{background:var(--ink);color:#fff;border-radius:22px;padding:26px;margin:24px 0 38px;box-shadow:var(--shadow)}.hero strong{display:block;color:var(--mint);font:700 12px 'Trebuchet MS',sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}.hero p{margin:0;color:#d5ddd9}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0 34px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 24px rgba(32,35,40,.04)}.card h3{font-size:18px;margin:0 0 7px}.card p{margin:0;color:var(--muted);font-size:15px}.features{padding-left:22px}.features li{margin:10px 0}.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.button{display:inline-block;border-radius:9px;padding:11px 15px;background:var(--green);color:#fff;text-decoration:none;font:700 14px 'Trebuchet MS',sans-serif}.button.secondary{background:#fff;border:1px solid var(--line);color:var(--green)}code{font:14px Consolas,monospace;color:var(--green)}@media(max-width:600px){.wrap{padding:22px 16px 44px}.grid{grid-template-columns:1fr}.hero{padding:21px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="index.html">← Back to portfolio</a>
+    <div class="kicker">Case study · Product thinking</div>
+    <h1>MoodFlow</h1>
+    <p class="lede">An emotion analytics portal that turns quick daily check-ins into a private, useful picture of emotional patterns over time.</p>
+    <div class="meta"><span class="tag">HTML · CSS · JavaScript</span><span class="tag">IndexedDB</span><span class="tag">SVG data visualization</span><span class="tag">Responsive UX</span></div>
+    <section class="hero"><strong>The product challenge</strong><p>Mood tracking should feel as easy as a two-minute check-in, but still give people meaningful context when they return. The experience needed a low-friction entry flow, durable local persistence, and visual feedback without a backend dependency.</p></section>
+    <h2>What I built</h2>
+    <p>MoodFlow combines an expressive entry surface with a compact analytics dashboard. Users choose an emotion, set intensity from 1–10, add a reflection, and immediately see the entry reflected in their personal dashboard.</p>
+    <div class="grid"><article class="card"><h3>Fast capture</h3><p>Eight emotion choices, an intensity slider, and an optional note keep the primary action focused and approachable.</p></article><article class="card"><h3>Time-based insight</h3><p>Interactive trend views aggregate intensity by day, hour, or minute so the same data can support reflection at different scales.</p></article><article class="card"><h3>Personal analytics</h3><p>Average intensity, frequent mood, streak, mood mix, and recent reflections turn raw entries into readable signals.</p></article><article class="card"><h3>Private persistence</h3><p>IndexedDB stores entries locally in the browser, with migration from the original localStorage format and a fallback for older environments.</p></article></div>
+    <h2>Frontend engineering decisions</h2>
+    <ul class="features"><li>Separated storage concerns into database open, read, write, migration, and fallback paths so the UI can load asynchronously without losing existing data.</li><li>Used derived rendering functions for statistics, SVG charts, distribution, recent entries, and responsive empty states.</li><li>Added accessible buttons, keyboard-focusable chart points, native tooltips, semantic sections, and mobile-first layout behavior.</li><li>Kept the product self-contained and dependency-light while preserving a clear path to a future API-backed account model.</li></ul>
+    <h2>Why it represents senior frontend work</h2>
+    <p>The project demonstrates more than styling: interaction design, client-side data architecture, persistence strategy, derived state, data visualization, accessibility, responsive behavior, and careful handling of sparse time-series data. It is a small product surface with the same engineering tradeoffs found in larger dashboard workflows.</p>
+    <div class="links"><a class="button" href="moodflow/index.html">Open live demo ↗</a><a class="button secondary" href="index.html#projects-panel">View all projects</a></div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chai Theory — Built By Mahima</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@8..144,700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="ct-app" class="ct-canvas">
+
+    <header class="site-nav">
+      <a class="nav-mark" href="#hero" aria-label="Chai Theory home">CT<span>.</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#coffee">Coffee</a>
+        <a href="#exploded">Thali</a>
+        <a href="#sweets">Sweets</a>
+        <a href="#gallery">Gallery</a>
+      </nav>
+      <a class="nav-action" href="#finale">Reserve <span aria-hidden="true">↗</span></a>
+    </header>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <!-- Preloader -->
+    <div id="preloader" class="preloader" aria-hidden="false">
+      <div class="preloader-inner">
+        <div id="pre-text" class="pre-text"></div>
+        <div class="pre-bar"><div class="pre-bar-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero" class="section hero">
+      <video id="heroVideo" class="bg-video" autoplay muted loop playsinline>
+        <source src="/assets/video/hero-chai-pour.mp4" type="video/mp4">
+      </video>
+      <div class="hero-inner">
+        <div class="kicker">MASALA CHAI · FILTER COFFEE · STREET FOOD</div>
+        <h1 id="brandTitle" class="brand">CHAI THEORY</h1>
+        <p class="subtitle">Built By Mahima</p>
+      </div>
+      <div class="scroll-indicator" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- Our Coffee -->
+    <section id="coffee" class="section split coffee">
+      <div class="media">
+        <video id="coffeeVideo" autoplay playsinline muted loop>
+          <source src="/assets/video/filter-coffee-pour.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="copy">
+        <h2>Our Coffee</h2>
+        <p class="lead">Slow-brewed · South Indian style · Since 2026</p>
+        <p>Roasted with care and served warm — filter coffee that holds up beside our chai.</p>
+        <div class="stats">
+          <div class="stat">Slow-brewed</div>
+          <div class="stat">South Indian style</div>
+          <div class="stat">Since 2026</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exploded Thali (pinned scrub) -->
+    <section id="exploded" class="section exploded">
+      <h2 class="section-title saffron">What We Serve — Ingredients</h2>
+      <div class="exploded-wrap">
+        <img id="thaliVid" src="/assets/video/thali.jpg" alt="South Indian thali with assorted dishes">
+      </div>
+    </section>
+
+    <!-- Exploded Samosa -->
+    <section id="exploded-samosa" class="section exploded samosa">
+      <h2 class="section-title chili">STREET FOOD, ELEVATED</h2>
+      <div class="exploded-wrap">
+        <video id="samosaVid" autoplay playsinline muted loop>
+          <source src="/assets/video/exploded-samosa.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
+    <!-- Sweets -->
+    <section id="sweets" class="section sweets">
+      <h2 class="section-title gold">OUR SWEETS</h2>
+      <div class="sweets-media">
+        <video id="sweetsVid" autoplay playsinline muted loop>
+          <source src="/assets/video/sweets-macro.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="sweets-gallery">
+        <img src="/assets/video/gulab-jamun.jpg" alt="Gulab Jamun" onerror="this.style.display='none'"> 
+        <img src="/assets/video/icecream.jpg" alt="ice cream" onerror="this.style.display='none'">
+      </div>
+    </section>
+
+    <!-- Cold & Fusion -->
+    <section id="cold" class="section split cold">
+      <div class="copy two">
+        <h3 class="mango">MANGO LASSI</h3>
+        <h3 class="matcha">MATCHA CHAI FUSION</h3>
+      </div>
+      <div class="media">
+        <video id="coldVid"autoplay playsinline muted loop>
+          <source src="/assets/video/lassi-matcha-pour.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
+    <!-- Ingredient Gallery -->
+    <section id="gallery" class="section gallery">
+      <h2 class="section-title">Textures & Ingredients</h2>
+      <div class="h-scroll" id="hscroll">
+        <div class="item"><img src="/assets/video/samosa.jpg" alt="samosa" onerror="this.dataset.missing=1"></div>
+        <div class="item"><img src="/assets/video/panipuri.jpg" alt="pani-puri" onerror="this.dataset.missing=1"></div>
+        <div class="item"><img src="/assets/video/momo.jpg" alt="momo" onerror="this.dataset.missing=1"></div>
+        <div class="item"><img src="/assets/video/teaLeave.jpg" alt="tea leaves" onerror="this.dataset.missing=1"></div>
+        <div class="item"><img src="/assets/video/burger.jpg" alt="cutting chai" onerror="this.dataset.missing=1"></div>
+      </div>
+    </section>
+
+    <!-- Finale / CTA -->
+    <section id="finale" class="section finale">
+      <video id="finaleVid" class="bg-video" autoplay muted loop playsinline>
+        <source src="/assets/video/finale-table-spread.mp4" type="video/mp4">
+      </video>
+      <div class="finale-inner">
+        <h2 class="last">Book your moment</h2>
+        <button id="reserve" class="cta">RESERVE YOUR TABLE</button>
+        <p class="credit">Built by Mahima | CT</p>
+      </div>
+    </section>
+
+    <div id="reservationModal" class="reservation-modal" aria-hidden="true">
+      <div class="reservation-backdrop" data-close-reservation></div>
+      <section class="reservation-panel" role="dialog" aria-modal="true" aria-labelledby="reservationTitle">
+        <button class="reservation-close" type="button" aria-label="Close reservation form" data-close-reservation>×</button>
+        <p class="form-kicker">CT. CAFE</p>
+        <h2 id="reservationTitle">Reserve your table</h2>
+        <p class="form-intro">A warm table, something sweet, and time to linger.</p>
+        <form id="reservationForm">
+          <div class="form-grid">
+            <label>Full name<input name="name" type="text" autocomplete="name" required></label>
+            <label>Phone or email<input name="contact" type="text" autocomplete="email" required></label>
+            <label>Date<input name="date" type="date" required></label>
+            <label>Time<input name="time" type="time" required></label>
+            <label>Guests<select name="guests"><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5+ guests</option></select></label>
+            <label>Occasion<select name="occasion"><option>Just because</option><option>Birthday</option><option>Celebration</option></select></label>
+          </div>
+          <button class="form-submit" type="submit">REQUEST RESERVATION <span>↗</span></button>
+          <p id="reservationStatus" class="reservation-status" role="status"></p>
+        </form>
+      </section>
+    </div>
+    <div id="reservationToast" class="reservation-toast" role="status" aria-live="polite"></div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

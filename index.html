@@ -727,6 +727,52 @@
             gap: 18px;
         }
 
+        .projects-intro {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 18px;
+            margin: 4px 0 20px;
+        }
+
+        .projects-intro p {
+            max-width: 570px;
+            margin: 0;
+            color: var(--muted-color);
+        }
+
+        .project-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            justify-content: flex-end;
+        }
+
+        .project-filter {
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            background: var(--card-bg);
+            color: var(--muted-color);
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 7px 11px;
+            transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .project-filter:hover,
+        .project-filter.active {
+            color: var(--secondary-color);
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-1px);
+        }
+
+        .project.is-hidden {
+            display: none;
+        }
+
         .project {
             display: grid;
             grid-template-rows: 170px 1fr;
@@ -743,6 +789,16 @@
             transform: translateY(-4px);
             box-shadow: 0 18px 32px rgba(15, 23, 42, 0.08);
             border-color: rgba(79, 70, 229, 0.2);
+        }
+
+        .project.featured {
+            grid-column: span 2;
+            grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.15fr);
+            grid-template-rows: 1fr;
+        }
+
+        .project.featured .project-visual {
+            min-height: 280px;
         }
 
         .project-visual {
@@ -784,6 +840,35 @@
 
         .project-visual.visual-expense {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(168, 85, 247, 0.72));
+        }
+
+        .project-visual.visual-chai {
+            background: linear-gradient(135deg, #7c2d12, #f59e0b 58%, #fde68a);
+        }
+
+        .project-visual.visual-moodflow {
+            background: linear-gradient(135deg, #0f766e, #14b8a6 58%, #99f6e4);
+        }
+
+        .project-visual .visual-mark {
+            position: absolute;
+            top: 26px;
+            right: 26px;
+            z-index: 1;
+            font-size: clamp(3rem, 8vw, 5.4rem);
+            filter: drop-shadow(0 8px 12px rgba(15, 23, 42, 0.18));
+            transition: transform 0.35s ease;
+        }
+
+        .project:hover .visual-mark {
+            transform: rotate(-8deg) scale(1.08);
+        }
+
+        .project-visual.visual-feast {
+            background: linear-gradient(180deg, rgba(11,11,11,0.3), rgba(11,11,11,0.3)), url('feast-immersive/thumbnail.jpg');
+            background-size: cover;
+            background-position: center center;
+            color: #fff;
         }
 
         .project-visual span {
@@ -828,6 +913,45 @@
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 8px;
             margin: 12px 0 14px;
+        }
+
+        .project-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .project-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 8px;
+            padding: 8px 11px;
+            background: var(--surface-soft);
+            border: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            font-weight: 800;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .project-actions a:first-child {
+            color: var(--secondary-color);
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .project-actions a:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+            background: var(--accent-strong);
+        }
+
+        @media (max-width: 900px) {
+            .projects-intro { align-items: flex-start; flex-direction: column; }
+            .project-filters { justify-content: flex-start; }
+            .project.featured { grid-column: span 1; grid-template-columns: 1fr; grid-template-rows: 170px 1fr; }
+            .project.featured .project-visual { min-height: 0; }
         }
 
         .metric-pill {
@@ -1729,9 +1853,19 @@
                 <span class="section-kicker">Case Studies</span>
             </div>
 
+            <div class="projects-intro">
+                <p>A small collection of interfaces built to explore data, motion, and everyday workflows. Pick a lane and browse the work.</p>
+                <div class="project-filters" role="group" aria-label="Filter personal projects">
+                    <button class="project-filter active" type="button" data-filter="all" aria-pressed="true">All work</button>
+                    <button class="project-filter" type="button" data-filter="data" aria-pressed="false">Data & analytics</button>
+                    <button class="project-filter" type="button" data-filter="experience" aria-pressed="false">Interactive UX</button>
+                    <button class="project-filter" type="button" data-filter="utility" aria-pressed="false">Useful tools</button>
+                </div>
+            </div>
+
             <div class="projects-grid">
-                <article class="project animated-card">
-                    <div class="project-visual visual-dashboard"><span>Analytics</span></div>
+                <article class="project featured animated-card" data-category="data">
+                    <div class="project-visual visual-dashboard"><span>Analytics</span><b class="visual-mark" aria-hidden="true">◈</b></div>
                     <div class="project-content">
                         <span class="project-meta">Angular • Firebase • Data Analytics</span>
                         <div class="project-metrics">
@@ -1744,12 +1878,12 @@
                         <p><strong>What it is:</strong> An enterprise-style admin dashboard designed to help business teams monitor performance, track KPIs, and analyze operational trends in real time.</p>
                         <p><strong>Core functionality:</strong> It includes interactive charts, summary cards, role-based access, advanced filter controls, report generation, user management, audit tracking, and drill-down views for deeper analytics.</p>
                         <p><strong>Why it matters:</strong> It demonstrates the ability to build data-heavy, business-focused interfaces that convert raw numbers into actionable insights while keeping the experience intuitive and scalable for teams.</p>
-                        <p><a href="admin-dashboard.html">More Details</a> | <a href="admin-dashboard.component.html">Live Demo</a></p>
+                        <div class="project-actions"><a href="admin-dashboard.html">Explore case study <span aria-hidden="true">↗</span></a><a href="admin-dashboard.component.html">Open demo <span aria-hidden="true">→</span></a></div>
                     </div>
                 </article>
 
-                <article class="project animated-card">
-                    <div class="project-visual visual-weather"><span>Forecast</span></div>
+                <article class="project animated-card" data-category="data utility">
+                    <div class="project-visual visual-weather"><span>Forecast</span><b class="visual-mark" aria-hidden="true">☼</b></div>
                     <div class="project-content">
                         <span class="project-meta">Angular • D3.js • Live APIs</span>
                         <div class="project-metrics">
@@ -1762,12 +1896,48 @@
                         <p><strong>What it is:</strong> A responsive weather dashboard that helps users track daily and hourly weather conditions, temperature changes, and forecast trends for a selected location.</p>
                         <p><strong>Core functionality:</strong> The app fetches live weather data from an external API, visualizes temperature and forecast changes using D3.js charts, highlights weather alerts, and presents the information in a clean, mobile-friendly dashboard layout.</p>
                         <p><strong>Why it matters:</strong> This project reflects frontend engineering skills in API integration, data visualization, and building clean user interfaces for information-dense applications.</p>
-                        <p><a href="weather-app.html">More Details</a> | <a href="weather-app.component.html">Live Demo</a></p>
+                        <div class="project-actions"><a href="weather-app.html">Explore case study <span aria-hidden="true">↗</span></a><a href="weather-app.component.html">Open demo <span aria-hidden="true">→</span></a></div>
                     </div>
                 </article>
 
-                <article class="project animated-card">
-                    <div class="project-visual visual-expense"><span>Finance</span></div>
+                <article class="project animated-card" data-category="experience">
+                    <div class="project-visual visual-chai"><span>Chai</span><b class="visual-mark" aria-hidden="true">☕</b></div>
+                    <div class="project-content">
+                        <span class="project-meta">Prototype • GSAP • ScrollTrigger</span>
+                        <div class="project-metrics">
+                            <div class="metric-pill"><strong>Challenge</strong><small>Stop-the-scroll engagement</small></div>
+                            <div class="metric-pill"><strong>Solution</strong><small>Scroll-scrubbed video interactions</small></div>
+                            <div class="metric-pill"><strong>Outcome</strong><small>High-retention reel-ready beats</small></div>
+                        </div>
+                        <h3>☕ Chai Theory — Scroll Site</h3>
+                        <p><em>Technologies: HTML, CSS, JavaScript, GSAP, ScrollTrigger, Lenis</em></p>
+                        <p><strong>What it is:</strong> A premium, single-page scroll-animated prototype for an Indian café. Uses pinned scrub videos and parallax scenes to create strong, camera-friendly scroll beats.</p>
+                        <p><strong>Core functionality:</strong> Autoplay background hero, pinned exploded-thali and samosa videos controlled by scroll, horizontal ingredient gallery, and magnetic CTA — all tuned for 1920×1080 screen recording.</p>
+                        <p><strong>Why it matters:</strong> Demonstrates frontend animation systems, performance-aware media handling, and designing micro-interactions for short-form video capture.</p>
+                        <div class="project-actions"><a href="chai-theory.html">Explore case study <span aria-hidden="true">↗</span></a><a href="chai-theory/index.html">Open demo <span aria-hidden="true">→</span></a></div>
+                    </div>
+                </article>
+
+                <article class="project animated-card" data-category="experience utility">
+                    <div class="project-visual visual-moodflow"><span>Mood</span><b class="visual-mark" aria-hidden="true">⌁</b></div>
+                    <div class="project-content">
+                        <span class="project-meta">Angular Prototype • UX • Analytics</span>
+                        <div class="project-metrics">
+                            <div class="metric-pill"><strong>Challenge</strong><small>Emotion capture & insights</small></div>
+                            <div class="metric-pill"><strong>Solution</strong><small>Reactive mood entry + analytics</small></div>
+                            <div class="metric-pill"><strong>Outcome</strong><small>Interactive emotion dashboard</small></div>
+                        </div>
+                        <h3>😊 MoodFlow — Emotion Analytics Portal</h3>
+                        <p><em>Technologies: Angular, TypeScript, RxJS, Signals, Chart.js</em></p>
+                        <p><strong>What it is:</strong> A polished portal for recording emotions (emoji + intensity + note) and visualizing trends via interactive charts, calendar heatmaps and derived insights.</p>
+                        <p><strong>Core functionality:</strong> Mood entry, intensity scoring, tags, reactive dashboards (trend line, distribution, streaks) and a mood calendar for long-term review.</p>
+                        <p><strong>Why it matters:</strong> Shows architecture, state management, and UX for emotion analytics — great resume project for a senior frontend role.</p>
+                        <div class="project-actions"><a href="moodflow.html">Explore case study <span aria-hidden="true">↗</span></a><a href="moodflow/index.html">Open demo <span aria-hidden="true">→</span></a></div>
+                    </div>
+                </article>
+
+                <article class="project animated-card" data-category="utility data">
+                    <div class="project-visual visual-expense"><span>Finance</span><b class="visual-mark" aria-hidden="true">$</b></div>
                     <div class="project-content">
                         <span class="project-meta">Angular • AI • Finance</span>
                         <div class="project-metrics">
@@ -1780,7 +1950,7 @@
                         <p><strong>What it is:</strong> A smart personal finance dashboard designed to help users manage spending, review categories, and monitor budget health over time.</p>
                         <p><strong>Core functionality:</strong> It includes transaction entry, category-wise expense summaries, monthly budget tracking, spending trend analysis, and AI-assisted insights that suggest patterns, highlight overspending, and recommend better budgeting decisions.</p>
                         <p><strong>Why it matters:</strong> It demonstrates end-to-end product thinking: user-facing financial workflows, data-driven insights, and a modern interface built for everyday decision-making.</p>
-                        <p><a href="expense-tracker.html">More Details</a> | <a href="expense-tracker.component.html">Live Demo</a></p>
+                        <div class="project-actions"><a href="expense-tracker.html">Explore case study <span aria-hidden="true">↗</span></a><a href="expense-tracker.component.html">Open demo <span aria-hidden="true">→</span></a></div>
                     </div>
                 </article>
             </div>
@@ -1874,6 +2044,21 @@
                     const isActive = panel.id === `${target}-panel`;
                     panel.classList.toggle('active', isActive);
                     panel.hidden = !isActive;
+                });
+            });
+        });
+
+        document.querySelectorAll('.project-filter').forEach(filter => {
+            filter.addEventListener('click', () => {
+                const selected = filter.dataset.filter;
+                document.querySelectorAll('.project-filter').forEach(button => {
+                    const isActive = button === filter;
+                    button.classList.toggle('active', isActive);
+                    button.setAttribute('aria-pressed', isActive.toString());
+                });
+                document.querySelectorAll('.project[data-category]').forEach(project => {
+                    const visible = selected === 'all' || project.dataset.category.split(' ').includes(selected);
+                    project.classList.toggle('is-hidden', !visible);
                 });
             });
         });

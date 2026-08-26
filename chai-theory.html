@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chai Theory Case Study | Mahima Gokhe</title>
+  <style>
+    :root{--ink:#251914;--muted:#75645d;--paper:#fff8ee;--panel:#fffdf9;--chai:#9b3f1e;--gold:#d88a22;--line:#eadbca;--shadow:0 16px 42px rgba(80,42,20,.1)}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0,#ffe6bb,transparent 34%),var(--paper);color:var(--ink);font:16px/1.65 Georgia,serif}.wrap{max-width:920px;margin:auto;padding:32px 24px 60px}.back{display:inline-block;color:var(--chai);font:700 14px/1.2 'Trebuchet MS',sans-serif;text-decoration:none;margin-bottom:42px}.back:hover{text-decoration:underline}.kicker{color:var(--chai);font:700 12px/1.2 'Trebuchet MS',sans-serif;letter-spacing:.14em;text-transform:uppercase}h1{font-size:clamp(36px,7vw,70px);line-height:1.02;margin:12px 0 18px;letter-spacing:-.03em}h2{font-size:29px;line-height:1.1;margin:38px 0 13px}p{max-width:760px}.lede{color:var(--muted);font-size:19px;max-width:700px}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 34px}.tag{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:7px 12px;font:700 12px 'Trebuchet MS',sans-serif;color:var(--chai)}.hero{background:linear-gradient(135deg,#5d2414,#b95720);color:#fff;border-radius:22px;padding:26px;margin:24px 0 38px;box-shadow:var(--shadow)}.hero strong{display:block;color:#ffd89a;font:700 12px 'Trebuchet MS',sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}.hero p{margin:0;color:#fff1df}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0 34px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 24px rgba(80,42,20,.04)}.card h3{font-size:18px;margin:0 0 7px}.card p{margin:0;color:var(--muted);font-size:15px}.features{padding-left:22px}.features li{margin:10px 0}.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.button{display:inline-block;border-radius:9px;padding:11px 15px;background:var(--chai);color:#fff;text-decoration:none;font:700 14px 'Trebuchet MS',sans-serif}.button.secondary{background:#fff;border:1px solid var(--line);color:var(--chai)}code{font:14px Consolas,monospace;color:var(--chai)}@media(max-width:600px){.wrap{padding:22px 16px 44px}.grid{grid-template-columns:1fr}.hero{padding:21px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="index.html">← Back to portfolio</a>
+    <div class="kicker">Case study · Motion-led storytelling</div>
+    <h1>Chai Theory</h1>
+    <p class="lede">A premium scroll experience for an Indian café, designed around tactile food storytelling, cinematic pacing, and camera-friendly interaction beats.</p>
+    <div class="meta"><span class="tag">HTML · CSS · JavaScript</span><span class="tag">GSAP · ScrollTrigger</span><span class="tag">Lenis smooth scroll</span><span class="tag">Motion design</span></div>
+    <section class="hero"><strong>The experience goal</strong><p>Build a café site that feels more like a short film than a menu page. Each scroll should create a deliberate reveal, while the experience stays resilient when media assets are missing or autoplay is restricted.</p></section>
+    <h2>What I built</h2>
+    <p>Chai Theory is a single-page prototype with a full-bleed hero, scroll-controlled product moments, and a visual rhythm shaped for both real browsing and short-form video capture.</p>
+    <div class="grid"><article class="card"><h3>Scroll choreography</h3><p>GSAP and ScrollTrigger coordinate pinned sections, scrubbed transitions, parallax movement, and timed visual reveals.</p></article><article class="card"><h3>Food as the interface</h3><p>Exploded thali and samosa scenes make ingredients and craft feel tangible rather than presenting another static card grid.</p></article><article class="card"><h3>Smooth navigation</h3><p>Lenis creates a controlled scroll rhythm that lets large media moments land cleanly without making the page feel abrupt.</p></article><article class="card"><h3>Resilient media</h3><p>Missing videos and images fall back gracefully so the layout remains usable during development, review, and deployment.</p></article></div>
+    <h2>Frontend engineering decisions</h2>
+    <ul class="features"><li>Separated the visual system, interaction logic, and page structure across <code>styles.css</code>, <code>main.js</code>, and <code>index.html</code>.</li><li>Designed the motion system around scroll position rather than isolated decorative animations, keeping narrative and interaction connected.</li><li>Added a <code>?reel=1</code> playback mode for consistent automated scroll timing and a repeatable 1920×1080 capture workflow.</li><li>Handled autoplay and missing-asset constraints so the core composition still communicates when the ideal media environment is unavailable.</li></ul>
+    <h2>Why it represents senior frontend work</h2>
+    <p>The project demonstrates component-minded page composition, animation sequencing, media performance awareness, graceful degradation, and an understanding of how interaction design changes the perceived value of a product. It turns a visual brief into a controlled, testable frontend experience.</p>
+    <div class="links"><a class="button" href="chai-theory/index.html">Open live experience ↗</a><a class="button secondary" href="index.html#projects-panel">View all projects</a></div>
+  </main>
+</body>
+</html>

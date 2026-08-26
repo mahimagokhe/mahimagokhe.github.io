@@ -1251,11 +1251,80 @@
       font-weight: 600;
 
     }
+
+    /* Dashboard polish */
+    body {
+      padding: 34px clamp(16px, 4vw, 58px) 50px;
+      background: linear-gradient(135deg, #1d4ed8 0%, #38bdf8 52%, #dbeafe 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 12% 15%, rgba(255,255,255,.2), transparent 28%), radial-gradient(circle at 90% 80%, rgba(255,255,255,.14), transparent 26%);
+    }
+
+    body > h1 {
+      position: relative;
+      max-width: 1240px;
+      margin: 0 auto 26px;
+      text-align: left;
+      color: #fff;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -.04em;
+    }
+
+    body > h1::after {
+      content: "Live conditions and the next 24 hours";
+      display: block;
+      margin-top: 7px;
+      color: rgba(255,255,255,.78);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .controls.center { position: relative; margin-bottom: 26px; }
+    .search-container { width: min(780px, 100%); padding: 10px; background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.35); }
+    .search-box { flex: 1; width: auto; }
+    #citySearch { height: 52px; background: rgba(255,255,255,.96); }
+    #searchBtn, #refresh { height: 52px; min-width: 116px; padding: 0 18px; border-radius: 12px; }
+    #refresh { background: rgba(15,23,42,.78); box-shadow: 0 8px 20px rgba(15,23,42,.18); }
+    #refresh:hover { background: rgba(15,23,42,.94); }
+    .grid { position: relative; max-width: 1240px; margin: 0 auto; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 20px; }
+    .card { border: 1px solid rgba(255,255,255,.55); border-radius: 22px; padding: clamp(18px, 3vw, 30px); background: rgba(255,255,255,.82); box-shadow: 0 24px 60px rgba(15,23,42,.16); }
+    .card:hover { transform: translateY(-3px); }
+    .card h3 { color: #1e3a8a; margin-bottom: 14px; }
+    .current-weather { padding: 12px 0 4px; }
+    .weather-icon { font-size: 82px; filter: drop-shadow(0 10px 12px rgba(15,23,42,.14)); }
+    #condition { color: #2563eb; }
+    .weather-stats { gap: 10px; margin: 22px 0 30px; }
+    .stat-card { padding: 14px 12px; border: 1px solid rgba(37,99,235,.1); background: rgba(255,255,255,.7); }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card i { font-size: 28px; }
+    .chart-container { height: 290px; padding: 12px; background: rgba(219,234,254,.42); border: 1px solid rgba(37,99,235,.1); }
+    .summary-list { margin-top: 4px; }
+    .summary-row { padding: 14px 4px; }
+    .summary-row i { color: #2563eb; }
+    .hour-title { margin: 26px 0 14px; color: #1e3a8a; }
+    .hourly-header { padding: 9px 0; }
+    .hour-row { padding: 13px 0; }
+    .forecast-container { margin-top: 24px; }
+    .forecast-container h3 { color: #1e3a8a; }
+    .forecast-card { min-width: 104px; padding: 15px 12px; border-radius: 14px; border: 1px solid rgba(37,99,235,.12); transition: transform .25s, box-shadow .25s; }
+    .forecast-card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px rgba(37,99,235,.16); }
+    .updated-live { color: #2563eb !important; font-weight: 600; }
+    .back { position: relative; display: block; max-width: 1240px; margin: 24px auto 0; color: #fff; }
+    @media(max-width:900px) { .grid { grid-template-columns: 1fr; } }
+    @media(max-width:768px) { body { padding: 24px 14px 40px; } body > h1 { margin-bottom: 20px; } .search-container { padding: 10px; } .search-box { width: 100%; } .weather-stats { grid-template-columns: repeat(4, 1fr); } }
+    @media(max-width:520px) { .weather-stats { grid-template-columns: repeat(2, 1fr); } .current-weather { gap: 15px; } .weather-icon { font-size: 64px; } }
   </style>
 </head>
 
 <body>
-  <h1>Weather App</h1>
+  <h1>Weather dashboard</h1>
   <div id="weatherAnimation" class="weather-animation"></div>
 
   <div class="controls center">
@@ -1288,7 +1357,7 @@
         <i class="wi wi-search"></i>
         Search
       </button>
-      <button id="refresh">Generate Sample Data</button>
+      <button id="refresh" title="Refresh sample conditions">↻ Refresh</button>
 
     </div>
 
@@ -1924,6 +1993,7 @@
     }
 
     searchBtn.addEventListener("click", update);
+    refresh.addEventListener("click", update);
 
     citySearch.addEventListener("keypress", function (e) {
 
